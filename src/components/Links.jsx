@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 
 export default function Links() {
   const [scrollingDown, setScrollingDown] = useState(false);
+  const navigate = useNavigate();  // Hook to navigate to different routes
   let lastScrollY = 0;
 
   // Handle scroll event to detect scroll direction
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > lastScrollY) {
-        // Scrolling down
         setScrollingDown(true);
       } else {
-        // Scrolling up
         setScrollingDown(false);
       }
       lastScrollY = window.scrollY <= 0 ? 0 : window.scrollY; // Reset scrollY at the top
     };
 
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -38,55 +36,52 @@ export default function Links() {
 
     // After the scroll ends, navigate to the link
     setTimeout(() => {
-      window.location.href = link;
+      navigate(link);  // Use React Router's navigate to change routes without full page reload
     }, 700); // Delay to wait for the scroll effect to complete
   };
 
   return (
     <div className="relative p-20 m-30 flex flex-col justify-center items-center text-center bg-cover bg-center border-b-8">
-      {/* Motion div for 'Main Page' Link */}
       <motion.div
         className="p-4 text-center"
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: scrollingDown ? 1 : 0, x: scrollingDown ? 0 : -100 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }} // Smooth transition with slight delay
+        transition={{ duration: 0.6, ease: 'easeOut' }}
       >
         <Link
           to="/"
           className="text-4xl font-bold text-gray-500 hover:text-teal-500 transition-all duration-300 mb-6"
-          onClick={(e) => handleLinkClick(e, '/')} // Scroll to top and then navigate to main page
+          onClick={(e) => handleLinkClick(e, '/')}
         >
           Main Page
         </Link>
       </motion.div>
 
-      {/* Motion div for 'My Projects' Link */}
       <motion.div
         className="p-4 text-center"
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: scrollingDown ? 1 : 0, x: scrollingDown ? 0 : -100 }}
-        transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }} // Slight delay
+        transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
       >
         <Link
           to="/projects"
           className="text-4xl font-bold text-gray-500 hover:text-teal-500 transition-all duration-300 mb-6"
-          onClick={(e) => handleLinkClick(e, '/projects')} // Scroll to top and then navigate to projects
+          onClick={(e) => handleLinkClick(e, '/projects')}
         >
           My Projects
         </Link>
       </motion.div>
 
-      {/* Motion div for 'Contact' Link */}
       <motion.div
         className="p-4 text-center"
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: scrollingDown ? 1 : 0, x: scrollingDown ? 0 : -100 }}
-        transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }} // Slight delay
+        transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
       >
         <Link
           to="/aboutme"
           className="text-4xl font-bold text-gray-500 hover:text-teal-500 transition-all duration-300"
-          onClick={(e) => handleLinkClick(e, '/aboutme')} // Scroll to top and then navigate to contact page
+          onClick={(e) => handleLinkClick(e, '/aboutme')}
         >
           Contact
         </Link>
