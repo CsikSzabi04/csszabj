@@ -1,26 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Portfolio.css"
-
 const Portfolio = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   useEffect(() => {
-    // Mobile menu toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileMenuButton && mobileMenu) {
-      mobileMenuButton.addEventListener('click', function () {
-        mobileMenu.classList.toggle('hidden');
+    // Close mobile menu when clicking on a link
+    const mobileLinks = document.querySelectorAll('#mobile-menu a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        setIsMobileMenuOpen(false);
       });
+    });
 
-      // Close mobile menu when clicking a link
-      document.querySelectorAll('#mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.add('hidden');
-        });
-      });
-    }
-
-    // Enhanced smooth scrolling function
+    // Smooth scrolling function
     function smoothScroll(targetId) {
       const targetElement = document.querySelector(targetId);
       if (!targetElement) return;
@@ -39,7 +35,6 @@ const Portfolio = () => {
         if (timeElapsed < duration) requestAnimationFrame(animation);
       }
 
-      // Easing function for smooth acceleration/deceleration
       function ease(t, b, c, d) {
         t /= d / 2;
         if (t < 1) return c / 2 * t * t * t + b;
@@ -50,21 +45,79 @@ const Portfolio = () => {
       requestAnimationFrame(animation);
     }
 
-    // Apply smooth scrolling to all buttons and navigation links
+    // Apply smooth scrolling to all navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
-        // Skip if it's an external link or has target="_blank"
         if (this.target === '_blank' || this.href.startsWith('http')) return;
-
         e.preventDefault();
         const targetId = this.getAttribute('href');
         smoothScroll(targetId);
       });
     });
 
-    // Scroll animation observer
-    const fadeElements = document.querySelectorAll('.fade-in');
+    // Cleanup function
+    return () => {
+      mobileLinks.forEach(link => {
+        link.removeEventListener('click', () => {
+          setIsMobileMenuOpen(false);
+        });
+      });
+    };
+  }, []);
+  useEffect(() => {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
 
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
+      });
+    }
+
+    function smoothScroll(targetId) {
+      const targetElement = document.querySelector(targetId);
+      if (!targetElement) return;
+
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = Math.min(1500, Math.abs(distance) * 1.2);
+      let startTime = null;
+
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const run = ease(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+      }
+
+      function ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t * t + b;
+        t -= 2;
+        return c / 2 * (t * t * t + 2) + b;
+      }
+
+      requestAnimationFrame(animation);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        if (this.target === '_blank' || this.href.startsWith('http')) return;
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        smoothScroll(targetId);
+      });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-in');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -84,21 +137,17 @@ const Portfolio = () => {
       observer.observe(element);
     });
 
-    // Add momentum to manual scrolling
     let isScrolling = false;
     const scrollContainer = document.querySelector('.scroll-container');
     let scrollEndTimer;
 
     if (scrollContainer) {
       scrollContainer.addEventListener('scroll', () => {
-        // Clear any pending snap
         clearTimeout(scrollEndTimer);
 
-        // If we're not already handling a scroll
         if (!isScrolling) {
           isScrolling = true;
 
-          // After scroll ends, snap to nearest section
           scrollEndTimer = setTimeout(() => {
             const sections = document.querySelectorAll('.section');
             let closestSection = null;
@@ -134,7 +183,6 @@ const Portfolio = () => {
                 }
               }
 
-              // Easing function for smooth snap
               function easeInOutQuad(t, b, c, d) {
                 t /= d / 2;
                 if (t < 1) return c / 2 * t * t + b;
@@ -151,7 +199,6 @@ const Portfolio = () => {
       });
     }
 
-    // Cleanup function
     return () => {
       if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.removeEventListener('click', function () {
@@ -189,9 +236,9 @@ const Portfolio = () => {
   };
 
   return (
-    <div className="text-gray-100 font-sans antialiased ">
-      {/* Header */}
-      <header className="fixed w-full z-50 bg-opacity-20 backdrop-filter backdrop-blur-sm shadow-lg">
+    <div className="text-gray-100 font-sans antialiased">
+     {/* Improved Responsive Header */}
+     <header className="fixed w-full z-50 bg-opacity-20 backdrop-filter backdrop-blur-sm shadow-lg">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             {/* Logo/Brand */}
@@ -200,8 +247,8 @@ const Portfolio = () => {
               <span className="text-xl font-bold">Szabolcs Csík</span>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className=" md:flex space-x-6">
+            {/* Desktop Navigation - Hidden on mobile */}
+            <nav className="hidden md:flex space-x-6">
               <a href="#home" className="nav-link text-gray-300 hover:text-white transition">Home</a>
               <a href="#portfolio" className="nav-link text-gray-300 hover:text-white transition">Portfolio</a>
               <a href="https://www.wattpad.com/user/thejasonronin04" target="_blank" rel="noopener noreferrer"
@@ -210,18 +257,30 @@ const Portfolio = () => {
                 className="nav-link text-gray-300 hover:text-white transition">My Songs</a>
             </nav>
 
-            {/* Mobile Menu Button */}
-            <button id="mobile-menu-button" className="md:hidden text-gray-300 focus:outline-none">
+            {/* Mobile Menu Button - Visible only on mobile */}
+            <button 
+              id="mobile-menu-button" 
+              className="md:hidden text-gray-300 focus:outline-none"
+              onClick={toggleMobileMenu}
+              aria-label="Toggle menu"
+            >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"></path>
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                )}
               </svg>
             </button>
           </div>
 
-          {/* Mobile Menu */}
-          <div id="mobile-menu"
-            className="mobile-menu hidden md:hidden absolute top-16 left-0 right-0 bg-gray-800 p-4 rounded-lg shadow-xl">
+          {/* Mobile Menu - Animated and responsive */}
+          <div 
+            id="mobile-menu"
+            className={`md:hidden absolute top-16 left-0 right-0 bg-gray-800 p-4 rounded-lg shadow-xl transition-all duration-300 ease-in-out ${
+              isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+            }`}
+          >
             <div className="flex flex-col space-y-4">
               <a href="#home" className="text-gray-300 hover:text-white transition py-2">Home</a>
               <a href="#portfolio" className="text-gray-300 hover:text-white transition py-2">Portfolio</a>
@@ -234,9 +293,7 @@ const Portfolio = () => {
         </div>
       </header>
 
-      {/* Full page scroll container */}
       <div className="scroll-container pt-16">
-        {/* Home Section */}
         <section id="home" className="section">
           <div className="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center">
             <div className="md:w-1/2 mt-10 md:mt-0">
@@ -287,7 +344,6 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* About Section */}
         <section id="about" className="section">
           <div className="container mx-auto px-6">
             <h2 className="text-4xl font-bold text-center mb-16 fade-in">
@@ -297,7 +353,6 @@ const Portfolio = () => {
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="md:w-1/3 flex flex-col items-center fade-in">
                 <img src="45.png" alt="Profile" className="rounded-lg w-64 h-64 object-cover shadow-2xl mb-4" />
-                {/* Download CV Button */}
                 <button onClick={handleDownloadCV}
                   className="mt-4 px-6 py-2 bg-gradient-to-r from-gray-600 to-gray-800 text-white rounded-full font-medium hover:opacity-90 transition transform hover:-translate-y-1 shadow-lg">
                   <i className="fas fa-download mr-2"></i> Click to Download CV
@@ -310,12 +365,9 @@ const Portfolio = () => {
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Software Developer Card */}
-                  <div
-                    className="bg-gray-800 p-6 rounded-xl border-l-4 border-gray-100 transform hover:-translate-y-2 transition duration-500 shadow-lg fade-in delay-200">
+                  <div className="bg-gray-800 p-6 rounded-xl border-l-4 border-gray-100 transform hover:-translate-y-2 transition duration-500 shadow-lg fade-in delay-200">
                     <div className="flex items-center mb-4">
-                      <div
-                        className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mr-4">
+                      <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mr-4">
                         <i className="fas fa-code text-gray-200"></i>
                       </div>
                       <h4 className="text-xl font-semibold">Software Developer</h4>
@@ -326,12 +378,9 @@ const Portfolio = () => {
                     </p>
                   </div>
 
-                  {/* Frontend & Design Card */}
-                  <div
-                    className="bg-gradient-to-r from-gray-700 to-gray-800 p-6 rounded-xl border-l-4 border-gray-500 transform hover:-translate-y-2 transition duration-500 shadow-lg fade-in delay-300">
+                  <div className="bg-gradient-to-r from-gray-700 to-gray-800 p-6 rounded-xl border-l-4 border-gray-500 transform hover:-translate-y-2 transition duration-500 shadow-lg fade-in delay-300">
                     <div className="flex items-center mb-4">
-                      <div
-                        className="w-10 h-10 rounded-full bg-gray-500/20 flex items-center justify-center mr-4">
+                      <div className="w-10 h-10 rounded-full bg-gray-500/20 flex items-center justify-center mr-4">
                         <i className="fas fa-paint-brush text-gray-500"></i>
                       </div>
                       <h4 className="text-xl font-semibold">Frontend & Design</h4>
@@ -342,12 +391,9 @@ const Portfolio = () => {
                     </p>
                   </div>
 
-                  {/* Cloud & DevOps Card */}
-                  <div
-                    className="bg-gradient-to-r from-gray-700 to-gray-800 p-6 rounded-xl border-l-4 border-gray-700 transform hover:-translate-y-2 transition duration-500 shadow-lg fade-in delay-400">
+                  <div className="bg-gradient-to-r from-gray-700 to-gray-800 p-6 rounded-xl border-l-4 border-gray-700 transform hover:-translate-y-2 transition duration-500 shadow-lg fade-in delay-400">
                     <div className="flex items-center mb-4">
-                      <div
-                        className="w-10 h-10 rounded-full bg-gray-500/20 flex items-center justify-center mr-4">
+                      <div className="w-10 h-10 rounded-full bg-gray-500/20 flex items-center justify-center mr-4">
                         <i className="fas fa-cloud text-gray-400"></i>
                       </div>
                       <h4 className="text-xl font-semibold">Cloud & DevOps</h4>
@@ -359,9 +405,7 @@ const Portfolio = () => {
                   </div>
                 </div>
 
-                {/* Additional Details */}
-                <div
-                  className="mt-8 bg-stone-800/50 p-6 rounded-xl border border-gray-700 backdrop-blur-sm fade-in delay-500">
+                <div className="mt-8 bg-stone-800/50 p-6 rounded-xl border border-gray-700 backdrop-blur-sm fade-in delay-500">
                   <h4 className="text-xl font-semibold mb-4 flex items-center">
                     <span className="w-3 h-3 bg-red-500 rounded-full mr-3 animate-pulse"></span>
                     <span className="gradient-text">Technical </span>
@@ -406,7 +450,6 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* Portfolio Section */}
         <section id="portfolio" className="section">
           <div className="container mx-auto px-6">
             <h2 className="text-5xl font-bold text-center mb-16 fade-in">
@@ -414,11 +457,8 @@ const Portfolio = () => {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Project 1 - GameDataHub */}
-              <div
-                className="bg-gradient-to-r from-gray-700 to-zinc-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-2 fade-in delay-100">
-                <div
-                  className="h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center overflow-hidden">
+              <div className="bg-gradient-to-r from-gray-700 to-zinc-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-2 fade-in delay-100">
+                <div className="h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center overflow-hidden">
                   <img src="./main.png" alt="GameDataHub" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
@@ -434,11 +474,8 @@ const Portfolio = () => {
                 </div>
               </div>
 
-              {/* Project 2 - Business Card */}
-              <div
-                className="bg-gradient-to-r from-gray-700 to-zinc-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-2 fade-in delay-200">
-                <div
-                  className="h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center overflow-hidden">
+              <div className="bg-gradient-to-r from-gray-700 to-zinc-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-2 fade-in delay-200">
+                <div className="h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center overflow-hidden">
                   <img src="./p2.png" alt="My Business Card" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
@@ -454,11 +491,8 @@ const Portfolio = () => {
                 </div>
               </div>
 
-              {/* Project 3 - Money Tracker */}
-              <div
-                className="bg-gradient-to-r from-gray-700 to-zinc-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-2 fade-in delay-300">
-                <div
-                  className="h-48 bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center overflow-hidden">
+              <div className="bg-gradient-to-r from-gray-700 to-zinc-700 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition duration-500 transform hover:-translate-y-2 fade-in delay-300">
+                <div className="h-48 bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center overflow-hidden">
                   <img src="./p3.png" alt="Money Tracker" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
@@ -484,7 +518,6 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* Contact Section */}
         <section id="contact" className="section">
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-4xl font-bold mb-16 fade-in">
@@ -499,8 +532,7 @@ const Portfolio = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
                 <div className="bg-gradient-to-r from-gray-800 to-zinc-700 p-6 rounded-xl fade-in delay-200">
-                  <div
-                    className="w-12 h-12 mx-auto bg-gray-600 rounded-full flex items-center justify-center text-xl text-gray-100 mb-4">
+                  <div className="w-12 h-12 mx-auto bg-gray-600 rounded-full flex items-center justify-center text-xl text-gray-100 mb-4">
                     <i className="fas fa-envelope"></i>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Email</h3>
@@ -508,8 +540,7 @@ const Portfolio = () => {
                 </div>
 
                 <div className="bg-gradient-to-r from-gray-800 to-zinc-700 p-6 rounded-xl fade-in delay-300">
-                  <div
-                    className="w-12 h-12 mx-auto bg-gray-600 rounded-full flex items-center justify-center text-xl text-gray-400 mb-4">
+                  <div className="w-12 h-12 mx-auto bg-gray-600 rounded-full flex items-center justify-center text-xl text-gray-400 mb-4">
                     <i className="fas fa-phone-alt"></i>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Phone</h3>
@@ -517,8 +548,7 @@ const Portfolio = () => {
                 </div>
 
                 <div className="bg-gradient-to-r from-gray-800 to-zinc-700 p-6 rounded-xl fade-in delay-400">
-                  <div
-                    className="w-12 h-12 mx-auto bg-gray-600 rounded-full flex items-center justify-center text-xl text-gray-800 mb-4">
+                  <div className="w-12 h-12 mx-auto bg-gray-600 rounded-full flex items-center justify-center text-xl text-gray-800 mb-4">
                     <i className="fas fa-map-marker-alt"></i>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Location</h3>
@@ -548,7 +578,6 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* Footer */}
         <footer className="py-8 bg-gray-900">
           <div className="container mx-auto px-6 text-center">
             <p className="text-gray-500 text-sm">
