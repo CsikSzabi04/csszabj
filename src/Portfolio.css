@@ -1,0 +1,132 @@
+
+
+        /* Completely hide scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            overflow-x: hidden;
+
+        }
+
+        /* Ultra-smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Custom scroll container with momentum scrolling */
+        .scroll-container {
+            scroll-snap-type: y mandatory;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-image: url("https://wallpapers.com/images/hd/4k-laptop-on-gloomy-desk-f7k0g3xufpxxwjk9.jpg");
+            height: 100vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            /* For smooth scrolling on iOS */
+
+        }
+
+        /* Section styling with momentum */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 0;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        /* Smooth transitions for all animated properties */
+        * {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animation classes with slower timing */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom animation delays */
+        .delay-100 {
+            transition-delay: 150ms;
+        }
+
+        .delay-200 {
+            transition-delay: 300ms;
+        }
+
+        .delay-300 {
+            transition-delay: 450ms;
+        }
+
+        .delay-400 {
+            transition-delay: 600ms;
+        }
+
+        .delay-500 {
+            transition-delay: 750ms;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, #777777, #5c5c5c, #797878);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+
+        }
+
+        /* Floating animation */
+        .hero-image {
+            animation: float 8s ease-in-out infinite;
+            /* Slowed down float animation */
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Nav link hover effect */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #444444;
+            transition: width 0.5s ease;
+            /* Slowed down hover effect */
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }

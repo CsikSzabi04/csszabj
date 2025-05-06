@@ -1,0 +1,63 @@
+@import "tailwindcss";
+/* styles/Lu.css */
+.lu-interface {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    height: 500px;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+  }
+  
+  .lu-header {
+    cursor: pointer;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .lu-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  
+  .lu-input {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Minimized state */
+  .lu-minimized {
+    height: 60px;
+    width: 200px;
+  }
+  
+  .lu-minimized .lu-messages,
+  .lu-minimized .lu-input {
+    display: none;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .lu-interface {
+      width: 100%;
+      max-width: 100%;
+      right: 0;
+      bottom: 0;
+      border-radius: 0;
+    }
+    
+    .lu-minimized {
+      width: 150px;
+      right: 10px;
+      bottom: 10px;
+      border-radius: 16px;
+    }
+  }
