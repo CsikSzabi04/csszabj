@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const Mains = () => {
   return (
@@ -14,16 +15,38 @@ const Mains = () => {
             I build exceptional digital experiences with clean, efficient code.
             All about creating solutions that make an impact.
           </p>
-          <div className="flex flex-wrap gap-4 fade-in delay-300">
-            <a href="#contact"
-              className="px-8 py-3 bg-gradient-to-r from-gray-500 to-gray-700 rounded-full font-medium hover:opacity-90 transition transform hover:-translate-y-1">
-              Contact Me
-            </a>
-            <a href="#portfolio"
-              className="px-8 py-3 border border-gray-700 rounded-full font-medium hover:bg-gray-800 transition">
-              View Work
-            </a>
+          <div className="fade-in delay-300">
+            <div className="flex flex-wrap gap-4 mb-4">
+              <a
+                href="#contact"
+                className="px-8 py-3 bg-gradient-to-r from-gray-500 to-gray-700 rounded-full font-medium hover:opacity-90 transition transform hover:-translate-y-1"
+              >
+                Contact Me
+              </a>
+              <a
+                href="#portfolio"
+                className="px-8 py-3 border border-gray-700 rounded-full font-medium hover:bg-gray-800 transition"
+              >
+                View Work
+              </a>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <Link
+                to="/java"
+                className="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition"
+              >
+                Konzol/Graf
+              </Link>
+              <Link
+                to="/help"
+                className="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition"
+              >
+                Back/Front - end
+              </Link>
+            </div>
           </div>
+
 
           <div className="mt-12 flex space-x-6 fade-in delay-400">
             <a href="https://www.linkedin.com/in/szabolcs-cs%C3%ADk-a4b767315/" target="_blank" rel="noopener noreferrer"

@@ -16,7 +16,7 @@ html {
     overflow-x: hidden;
 }
 
-.scroll-container {
+.scroll-container, #help {
     scroll-snap-type: y proximity; 
     background-repeat: no-repeat;
     background-size: cover;
