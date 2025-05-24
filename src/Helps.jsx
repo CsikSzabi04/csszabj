@@ -281,6 +281,35 @@ return (
 );`,
   },
 
+    {
+    title: "1 lekérdezésnél 2 vagy több lehetőséget is meg lehet adni",
+    tags: ["BackEnd"],
+    code: `const honap = [ "", "január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"];
+
+async function getNevnapok(req, res) {
+    if (req.query.nap) {
+        let ho = req.query.nap.split("-")[0]*1;
+        let nap = req.query.nap.split("-")[1];
+        let sql = "select * from nevnap where ho=? and nap=?";
+        const [ data ] = await con.execute(sql,[ho, nap]);
+        
+        if (data.length > 0) {
+            let nevek = { datum: (honap[ho] + " " + nap + "."), nevnap1: data[0].nev1, nevnap2: data[0].nev2 };
+            res.send(nevek);
+        } else res.status(404).send({ hiba:"nincs találat"});
+
+    } else if (req.query.nev) {
+        let sql = "select * from nevnap where nev1=? or nev2=?";
+        const [ data ] = await con.execute(sql,[req.query.nev, req.query.nev]);
+
+        if (data.length > 0) {
+            let nevek = { datum: (honap[data[0].ho] + " " + data[0].nap + "."), nevnap1: data[0].nev1, nevnap2: data[0].nev2 };
+            res.send(nevek);
+        } else res.status(404).send({ hiba:"nincs találat"});
+
+    } else res.status(404).send({ minta1:"/?nap=12-31", minta2:"/?nev=Szilveszter" });    
+}`,
+  },
 
 ];
 
