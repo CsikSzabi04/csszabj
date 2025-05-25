@@ -448,7 +448,236 @@ const allQuestions  = [
         ],
         correctAnswer: "Adatredundancia csökkentése",
         topic: "Adatbázis-tervezés"
-    }
+    },
+      {
+    id: 41,
+    question: "Mit jelent a 'git stash' parancs?",
+    options: [
+      "Átmeneti változtatások elmentése",
+      "Új távoli repository létrehozása",
+      "Commit előzmények törlése",
+      "Összes változtatás visszavonása"
+    ],
+    correctAnswer: "Átmeneti változtatások elmentése",
+    topic: "Git"
+  },
+  {
+    id: 42,
+    question: "Mire szolgál a '.gitignore' fájl?",
+    options: [
+      "Repository leírásának tárolására",
+      "Bizonyos fájlok figyelmen kívül hagyására",
+      "Git konfiguráció beállítására",
+      "Commit üzenetek sablonjának tárolására"
+    ],
+    correctAnswer: "Bizonyos fájlok figyelmen kívül hagyására",
+    topic: "Git"
+  },
+
+  // HTML5/CSS3 (2 more)
+  {
+    id: 43,
+    question: "Melyik CSS egység relatív a szülő elem betűméretéhez?",
+    options: ["px", "em", "rem", "vw"],
+    correctAnswer: "em",
+    topic: "CSS3"
+  },
+  {
+    id: 44,
+    question: "Melyik HTML attribútum kötelező a kép elemeknél?",
+    options: ["src", "alt", "title", "width"],
+    correctAnswer: "alt",
+    topic: "HTML5"
+  },
+
+  // JavaScript (2 more)
+  {
+    id: 45,
+    question: "Mit csinál a 'Array.prototype.map()' metódus?",
+    options: [
+      "Visszaad egy új tömböt a megadott függvény alapján",
+      "Kiválogatja a megfelelő elemeket",
+      "Összegzi a tömb elemeit",
+      "Megváltoztatja az eredeti tömböt"
+    ],
+    correctAnswer: "Visszaad egy új tömböt a megadott függvény alapján",
+    topic: "JavaScript"
+  },
+  {
+    id: 46,
+    question: "Mi az 'event bubbling' a JavaScript-ben?",
+    options: [
+      "Események feljebb terjedése a DOM fában",
+      "Aszinkron kód végrehajtása",
+      "Memória felszabadítása",
+      "Animációk létrehozása"
+    ],
+    correctAnswer: "Események feljebb terjedése a DOM fában",
+    topic: "JavaScript"
+  },
+
+  // OOP (2 more)
+  {
+    id: 47,
+    question: "Mi az absztrakció fő előnye az OOP-ban?",
+    options: [
+      "Komplexitás csökkentése",
+      "Kód újrafelhasználás",
+      "Gyorsabb végrehajtás",
+      "Kisebb memóriahasználat"
+    ],
+    correctAnswer: "Komplexitás csökkentése",
+    topic: "OOP"
+  },
+  {
+    id: 48,
+    question: "Melyik NEM OOP alapelv?",
+    options: [
+      "Egységbezárás",
+      "Polimorfizmus",
+      "Öröklődés",
+      "Függvényprogramozás"
+    ],
+    correctAnswer: "Függvényprogramozás",
+    topic: "OOP"
+  },
+
+  // SQL (2 more)
+  {
+    id: 49,
+    question: "Mire szolgál a GROUP BY záradék SQL-ben?",
+    options: [
+      "Adatok csoportosítására",
+      "Táblák összekapcsolására",
+      "Rekordok szűrésére",
+      "Oszlopok kiválasztására"
+    ],
+    correctAnswer: "Adatok csoportosítására",
+    topic: "SQL"
+  },
+  {
+    id: 50,
+    question: "Mi a különbség az INNER JOIN és LEFT JOIN között?",
+    options: [
+      "LEFT JOIN minden sort visszaad a bal oldali táblából",
+      "INNER JOIN csak egyező sorokat ad vissza",
+      "Mindkettő helyes",
+      "Egyik sem helyes"
+    ],
+    correctAnswer: "Mindkettő helyes",
+    topic: "SQL"
+  },
+
+  // Frontend frameworks (2 more)
+  {
+    id: 51,
+    question: "Melyik React hook szolgál állapot kezelésére?",
+    options: ["useEffect", "useState", "useContext", "useReducer"],
+    correctAnswer: "useState",
+    topic: "Frontend keretrendszerek"
+  },
+  {
+    id: 52,
+    question: "Mire szolgál a Angular dependency injection?",
+    options: [
+      "Komponensek függőségeinek kezelésére",
+      "Adatbázis kapcsolat létrehozására",
+      "CSS stílusok injektálására",
+      "HTTP kérések küldésére"
+    ],
+    correctAnswer: "Komponensek függőségeinek kezelésére",
+    topic: "Frontend keretrendszerek"
+  },
+
+  // Backend frameworks (2 more)
+  {
+    id: 53,
+    question: "Melyik NEM NoSQL adatbázis?",
+    options: ["MongoDB", "PostgreSQL", "Cassandra", "Redis"],
+    correctAnswer: "PostgreSQL",
+    topic: "Backend keretrendszerek"
+  },
+  {
+    id: 54,
+    question: "Mire szolgál a JWT (JSON Web Token)?",
+    options: [
+      "Hitelesítésre és engedélyezésre",
+      "Adatbázis séma létrehozására",
+      "Képfájlok tömörítésére",
+      "Frontend komponensek renderelésére"
+    ],
+    correctAnswer: "Hitelesítésre és engedélyezésre",
+    topic: "Backend keretrendszerek"
+  },
+
+  // Clean code (1 more)
+  {
+    id: 55,
+    question: "Mit jelent a KISS elv a tiszta kódban?",
+    options: [
+      "Keep It Simple, Stupid",
+      "Keep It Secure, Safe",
+      "Keep It Short, Simple",
+      "Keep It Smart, Secure"
+    ],
+    correctAnswer: "Keep It Simple, Stupid",
+    topic: "Tiszta kód"
+  },
+
+  // Testing (1 more)
+  {
+    id: 56,
+    question: "Melyik típusú teszt Ellenőrzi az egész rendszert?",
+    options: [
+      "Egységteszt",
+      "Integrációs teszt",
+      "Rendszerteszt",
+      "Felhasználói teszt"
+    ],
+    correctAnswer: "Rendszerteszt",
+    topic: "Tesztelés"
+  },
+
+  // Mobile (1 more)
+  {
+    id: 57,
+    question: "Melyik keretrendszer használ Dart programozási nyelvet?",
+    options: ["React Native", "Flutter", "Xamarin", "Ionic"],
+    correctAnswer: "Flutter",
+    topic: "Mobil fejlesztés"
+  },
+
+  // CMS (1)
+  {
+    id: 58,
+    question: "Melyik WordPress plugin biztosít e-kereskedelmi funkcionalitást?",
+    options: ["WooCommerce", "Yoast SEO", "Akismet", "Jetpack"],
+    correctAnswer: "WooCommerce",
+    topic: "CMS"
+  },
+
+  // Teamwork tools (1)
+  {
+    id: 59,
+    question: "Melyik eszköz alkalmas projektmenedzsmentre?",
+    options: ["Jira", "Git", "Postman", "Webpack"],
+    correctAnswer: "Jira",
+    topic: "Csoportmunkaeszközök"
+  },
+
+  // Database design (1)
+  {
+    id: 60,
+    question: "Mi a célja az indexeknek adatbázisban?",
+    options: [
+      "Lekérdezések gyorsítása",
+      "Adatok biztonsági mentése",
+      "Táblák összekapcsolása",
+      "Adatok titkosítása"
+    ],
+    correctAnswer: "Lekérdezések gyorsítása",
+    topic: "Adatbázis-tervezés"
+  }
 ];
 
 const Questions = () => {
@@ -529,7 +758,7 @@ const Questions = () => {
   const score = calculateScore();
 
   return (
-    <div className="scroll-container text-gray-100 font-sans antialiased p-8 flex flex-col items-center">
+   <div className="scroll-container text-gray-100 font-sans antialiased p-8 flex flex-col items-center">
       <div className="w-full max-w-2xl bg-black bg-opacity-70 rounded-2xl shadow-lg p-6 fade-in visible">
         {!showResults ? (
           <>
@@ -606,30 +835,47 @@ const Questions = () => {
             </div>
             
             <div className="space-y-6 mb-8">
-              {shuffledQuestions.map((q, index) => (
-                <div key={q.id} className="bg-gray-800 p-4 rounded-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="text-sm text-gray-400">Question {index + 1}</span>
-                    <span className="text-sm text-gray-400">{q.topic}</span>
-                  </div>
-                  
-                  <p className="font-medium mb-2">{q.question}</p>
-                  
-                  <div className="space-y-2">
-                    <p className={`text-sm ${
-                      selectedAnswers[q.id] === q.correctAnswer 
-                        ? 'text-green-400' 
-                        : 'text-red-400'
-                    }`}>
-                      Your answer: {selectedAnswers[q.id] || "Not answered"}
-                    </p>
+              {shuffledQuestions.map((q, index) => {
+                const userAnswer = selectedAnswers[q.id];
+                const isCorrect = userAnswer === q.correctAnswer;
+                
+                return (
+                  <div key={q.id} className="bg-gray-800 p-4 rounded-lg">
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-sm text-gray-400">Question {index + 1}</span>
+                      <span className="text-sm text-gray-400">{q.topic}</span>
+                    </div>
                     
-                    <p className="text-sm text-blue-400">
-                      Correct answer: {q.correctAnswer}
-                    </p>
+                    <p className="font-medium mb-3">{q.question}</p>
+                    
+                    <div className="space-y-2">
+                      {q.options.map((option, i) => {
+                        let optionClass = "text-gray-300 ml-5";
+                        let prefix = "";
+                        
+                        if (option === q.correctAnswer) {
+                          optionClass = "text-green-400 font-bold ml-5";
+                          prefix = "✓ ";
+                        } 
+                        else if (option === userAnswer && !isCorrect) {
+                          optionClass = "text-red-400 line-through";
+                          prefix = "✗ ";
+                        }
+                        
+                        return (
+                          <p key={i} className={`text-sm ${optionClass}`}>
+                            {prefix}{option}
+                          </p>
+                        );
+                      })}
+                    </div>
+                    
+                    {!userAnswer && (
+                      <p className="text-sm text-red-400 mt-2">You did not answer this question</p>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             
             <div className="flex justify-center">
