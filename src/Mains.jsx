@@ -44,6 +44,12 @@ const Mains = () => {
               >
                 Back/Front - end
               </Link>
+              <Link
+                to="/questions"
+                className="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition"
+              >
+                Questions
+              </Link>
             </div>
           </div>
 
