@@ -14,31 +14,27 @@ const Questions = () => {
     const [roundNumber, setRoundNumber] = useState(1);
     const [usedQuestionIds, setUsedQuestionIds] = useState(new Set());
     const [roundsHistory, setRoundsHistory] = useState([]);
+    const [scoresPerRound, setScoresPerRound] = useState([]);
 
     const getQuestionsForRound = () => {
-        // Reset if we've completed all rounds
         if (roundNumber > MAX_ROUNDS) {
             setUsedQuestionIds(new Set());
             setRoundNumber(1);
             setRoundsHistory([]);
+            setScoresPerRound([]);
             console.log("Resetting: cleared all saved question IDs and round history");
         }
 
-        const availableQuestions = allQuestions
-            .filter(q => !usedQuestionIds.has(q.id))
-            .map(q => q.id);
-
+        const availableQuestions = allQuestions.filter(q => !usedQuestionIds.has(q.id)).map(q => q.id);
         const countToTake = Math.min(QUESTIONS_PER_ROUND, availableQuestions.length);
         const selectedQuestions = [];
 
-        // Randomly select questions
         while (selectedQuestions.length < countToTake && availableQuestions.length > 0) {
             const randIndex = Math.floor(Math.random() * availableQuestions.length);
             selectedQuestions.push(availableQuestions[randIndex]);
             availableQuestions.splice(randIndex, 1);
         }
 
-        // Update state
         const newUsedIds = new Set(usedQuestionIds);
         selectedQuestions.forEach(id => newUsedIds.add(id));
         setUsedQuestionIds(newUsedIds);
@@ -46,7 +42,6 @@ const Questions = () => {
         const newRoundsHistory = [...roundsHistory, selectedQuestions];
         setRoundsHistory(newRoundsHistory);
 
-        console.log(`Round #${roundNumber}: selected questions:`, selectedQuestions);
         checkForDuplicates(newRoundsHistory);
 
         return selectedQuestions;
@@ -106,17 +101,30 @@ const Questions = () => {
     };
 
     const resetQuiz = () => {
+        if (roundNumber >= MAX_ROUNDS) {
+            setRoundNumber(roundNumber + 1); // Just to disable further buttons
+            return;
+        }
+
+        const score = calculateScore();
+        const updatedScores = [...scoresPerRound, score];
+        setScoresPerRound(updatedScores);
+
         setSelectedAnswers({});
         setCurrentQuestionIndex(0);
         setShowResults(false);
         setRoundNumber(prev => prev + 1);
+
         const questionIds = getQuestionsForRound();
         const filteredQuestions = allQuestions.filter(q => questionIds.includes(q.id));
         setRoundQuestions(filteredQuestions);
         setQuizStarted(true);
     };
 
+
+
     const resetQuizAtom = () => {
+        setScoresPerRound([]);
         window.location.reload();
     };
 
@@ -125,7 +133,7 @@ const Questions = () => {
             <div className="scroll-container text-gray-100 font-sans antialiased p-8 flex flex-col items-center">
                 <div className="w-full max-w-2xl bg-black bg-opacity-70 rounded-2xl shadow-lg p-6 fade-in visible text-center">
                     <h2 className="text-2xl font-bold gradient-text mb-6">Programming Quiz</h2>
-                    <p className="mb-6">Round {roundNumber}: You'll get 20 random questions from our database.</p>
+                    <p className="mb-6">Round {roundNumber}: You'll get 20 random questions from our database. <br /> <span style={{fontWeight:'bold', color:"green"}}>( You should do all 4 rounds )</span> </p>
                     <button
                         onClick={startQuiz}
                         className="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700"
@@ -157,9 +165,7 @@ const Questions = () => {
                             </span>
                         </div>
 
-                        <h2 className="text-xl font-bold gradient-text mb-6">
-                            {currentQuestion.question}
-                        </h2>
+                        <h2 className="text-xl font-bold gradient-text mb-6">{currentQuestion.question}</h2>
 
                         <div className="space-y-3 mb-6">
                             {currentQuestion.options.map((option, index) => (
@@ -197,11 +203,18 @@ const Questions = () => {
                                 </button>
                             ) : (
                                 <button
-                                    onClick={() => setShowResults(true)}
+                                    onClick={() => {
+                                        const score = calculateScore();
+                                        if (scoresPerRound.length < roundNumber) {
+                                            setScoresPerRound(prev => [...prev, score]);
+                                        }
+                                        setShowResults(true);
+                                    }}
                                     className="px-4 py-2 bg-green-600 rounded-lg hover:bg-green-700"
                                 >
                                     Show Results
                                 </button>
+
                             )}
                         </div>
                     </>
@@ -212,12 +225,8 @@ const Questions = () => {
                         </h2>
 
                         <div className="text-center mb-8">
-                            <p className="text-xl mb-2">
-                                You scored {score} out of {totalQuestions}
-                            </p>
-                            <p className="text-lg">
-                                ({Math.round((score / totalQuestions) * 100)}%)
-                            </p>
+                            <p className="text-xl mb-2">You scored {score} out of {totalQuestions}</p>
+                            <p className="text-lg">({Math.round((score / totalQuestions) * 100)}%)</p>
                         </div>
 
                         <div className="space-y-6 mb-8">
@@ -243,8 +252,9 @@ const Questions = () => {
                                                     optionClass = "text-green-400 font-bold ml-5";
                                                     prefix = "✓ ";
                                                 }
-                                                else if (option === userAnswer && !isCorrect) {
-                                                    optionClass = "text-red-400 line-through";
+
+                                                if (option === userAnswer && option !== q.correctAnswer) {
+                                                    optionClass = "text-red-400 line-through font-semibold ml-5";
                                                     prefix = "✗ ";
                                                 }
 
@@ -264,8 +274,8 @@ const Questions = () => {
                             })}
                         </div>
 
-                        <div className="flex justify-center">
-                            {roundNumber < 4 ? (
+                        <div className="flex justify-center mb-6">
+                            {roundNumber < MAX_ROUNDS ? (
                                 <button
                                     onClick={resetQuiz}
                                     className="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700"
@@ -273,14 +283,44 @@ const Questions = () => {
                                     Start Next Round
                                 </button>
                             ) : (
-                                <button
-                                    onClick={resetQuizAtom}
-                                    className="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700"
-                                >
-                                    Restart Quiz
-                                </button>
+
+
+                                <div className="mt-10 text-center bg-gray-900 p-6 rounded-xl w-full max-w-2xl">
+                                    <h3 className="text-xl font-bold text-white mb-4">Round Summary</h3>
+
+                                    <div className="space-y-3 text-left text-gray-300">
+                                        {scoresPerRound.map((score, index) => (
+                                            <div key={index} className="flex justify-between">
+                                                <span>Round {index + 1}</span>
+                                                <span>
+                                                    {score} / {QUESTIONS_PER_ROUND} ({Math.round((score / QUESTIONS_PER_ROUND) * 100)}%)
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <hr className="my-4 border-gray-600" />
+
+                                    <div className="text-white font-semibold">
+                                        Total: {scoresPerRound.reduce((acc, s) => acc + s, 0)} / {MAX_ROUNDS * QUESTIONS_PER_ROUND} (
+                                        {Math.round(
+                                            (scoresPerRound.reduce((acc, s) => acc + s, 0) / (MAX_ROUNDS * QUESTIONS_PER_ROUND)) * 100
+                                        )}%)
+                                    </div>
+                                    <button
+                                        onClick={resetQuizAtom}
+                                        className="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700 mt-10"
+                                    >
+                                        Restart Quiz
+                                    </button>
+                                </div>
+
+
                             )}
                         </div>
+
+
+
                     </div>
                 )}
             </div>
