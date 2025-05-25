@@ -3,18 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@ceramicnetwork/http-client": "^6.4.0",
     "@glazed/datamodel": "^0.3.1",
     "@tailwindcss/vite": "^4.1.5",
     "axios": "^1.9.0",
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
     "dids": "^5.0.3",
+    "express": "^5.1.0",
     "key-did-provider-ed25519": "^4.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
