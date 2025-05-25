@@ -677,7 +677,408 @@ const allQuestions  = [
     ],
     correctAnswer: "Lekérdezések gyorsítása",
     topic: "Adatbázis-tervezés"
-  }
+  },
+  // Software development life cycle (61)
+{
+  id: 61,
+  question: "A szoftverfejlesztés életciklusa alapján melyik fázis illik a kérdőjelek (????) helyére?",
+  options: [
+    "Felhasználói dokumentáció",
+    "Szerződéskötés",
+    "Tesztelés",
+    "Rendszeres mentés"
+  ],
+  correctAnswer: "Tesztelés",
+  topic: "Szoftverfejlesztés életciklusa"
+},
+// Git remote delete (62)
+{
+  id: 62,
+  question: "A következő git parancsban melyik paraméter hiányozhat a kérdőjelek helyén? A parancs a távoli remote nevű tároló repository kapcsolatát törli.\ngit remote ??? origin",
+  options: [
+    "erase",
+    "clear",
+    "delete",
+    "remove"
+  ],
+  correctAnswer: "remove",
+  topic: "Csoportmunkaeszközök, Git"
+},
+// Android native development (63)
+{
+  id: 63,
+  question: "Melyik technológia alkalmas natív alkalmazásfejlesztés megvalósítására Android operációs rendszer alatt?",
+  options: [
+    "Ionic + Angular.JS",
+    "Kotlin Multiplatform Mobile",
+    "React Native + Swift",
+    "Xcode + Objective-C"
+  ],
+  correctAnswer: "Kotlin Multiplatform Mobile",
+  topic: "Mobil alkalmazásfejlesztés"
+},
+// Git switch branch (64)
+{
+  id: 64,
+  question: "Melyik git paranccsal tudunk az issue-68 nevű meglévő ágba (branch) váltani?",
+  options: [
+    "git checkout issue-68",
+    "git load issue-68",
+    "git switch issue-68",
+    "git open issue-68"
+  ],
+  correctAnswer: "git switch issue-68",
+  topic: "Csoportmunkaeszközök, Git"
+},
+// Test pyramid base (65)
+{
+  id: 65,
+  question: "Melyik tesztelési módszer (ami a legjobban automatizálható) van a tesztelési piramis alján?",
+  options: [
+    "Egységteszt",
+    "Felhasználói felület teszt",
+    "Integrációs teszt",
+    "Manuális teszt"
+  ],
+  correctAnswer: "Egységteszt",
+  topic: "Tesztelés"
+},
+// JavaScript function returns true (66)
+{
+  id: 66,
+  question: "Melyik JavaScript függvényhívás tér vissza igaz értékkel a felsoroltak közül?",
+  options: [
+    "foo3('BMI', 'IBM')",
+    "foo3('RSB', 'SBS')",
+    "foo3('ABC', 'DBA')",
+    "foo3('ABC', 'CBA')"
+  ],
+  correctAnswer: "foo3('ABC', 'CBA')",
+  topic: "JavaScript, ECMAScript"
+},
+// Foreign key definition (67)
+{
+  id: 67,
+  question: "Melyik angol nyelvű fogalomra illik az alábbi definíció az adatbázis-kezelésben?\nOlyan mező, amelynek segítségével logikai kapcsolatot tudunk létrehozni egy másik tábla elsődleges kulcsával.",
+  options: [
+    "foreign key",
+    "unique key",
+    "primary key",
+    "secondary key"
+  ],
+  correctAnswer: "foreign key",
+  topic: "Adatbázis-tervezés, adatbázis-kezelés, SQL"
+},
+// Property definition in OOP (68)
+{
+  id: 68,
+  question: "Melyik osztálytagtípus definícióját olvashatja?\nOlyan speciális osztályelem, amely bár kifejezésekben és műveletekben mező ill. változó módjára viselkedik, olvasása és írása esetében azonban memóriaterületek közvetlen írása helyett a deklarálásakor meghatározott olvasó (getter) és/vagy író (setter) metódusok kerülnek meghívásra.",
+  options: [
+    "konstruktor",
+    "statikus metódus",
+    "jellemző",
+    "dinamikus metódus"
+  ],
+  correctAnswer: "jellemző",
+  topic: "Objektum Orientált Programozás (OOP)"
+},
+// Liskov principle (69)
+{
+  id: 69,
+  question: "Melyik tiszta kód alapelvhez kapcsolható a következő leírás?\nMinden osztály legyen helyettesíthető a leszármazott osztályával anélkül, hogy a program helyes működése megváltozna.",
+  options: [
+    "Karpinski helyettesítési elv",
+    "Liskov helyettesítési elv",
+    "Turing helyettesítési elv",
+    "Huffman helyettesítési elv"
+  ],
+  correctAnswer: "Liskov helyettesítési elv",
+  topic: "Tiszta kód alapelvek"
+},
+// Drupal CMS (70)
+{
+  id: 70,
+  question: "Igaz-e az állítás?\nA Drupal egy ingyenes, nyílt forráskódú tartalomkezelő rendszer.",
+  options: [
+    "Hamis, mert nem ingyenes.",
+    "Hamis, mert nem tartalomkezelő rendszer.",
+    "Igaz.",
+    "Hamis, mert nem nyílt forráskódú."
+  ],
+  correctAnswer: "Igaz.",
+  topic: "Tartalomkezelő rendszerek (CMS)"
+},
+// CSS shorthand property (71)
+{
+  id: 71,
+  question: "Melyik CSS tulajdonság úgynevezett \"shorthand property\" a felsoroltak közül?",
+  options: [
+    "font-size",
+    "margin-top",
+    "width",
+    "border"
+  ],
+  correctAnswer: "border",
+  topic: "HTML5, CSS3"
+},
+// SQL WHERE clause (72)
+{
+  id: 72,
+  question: "Melyik SQL záradék hiányozhat a kérdőjelek (???) helyén?\nUPDATE myTable SET c=c+1 ??? a=1;",
+  options: [
+    "IF",
+    "WHERE",
+    "FROM",
+    "WHEN"
+  ],
+  correctAnswer: "WHERE",
+  topic: "Adatbázis-tervezés, adatbázis-kezelés, SQL"
+},
+// PHP framework not among (73)
+{
+  id: 73,
+  question: "Melyik nem PHP keretrendszer az alábbiak közül?",
+  options: [
+    "Symfony",
+    "Zend Framework",
+    "Laravel",
+    "Backbone"
+  ],
+  correctAnswer: "Backbone",
+  topic: "Backend készítésre szolgáló nyelvek és keretrendszerek"
+},
+// Invalid method name (74)
+{
+  id: 74,
+  question: "Melyik nem megfelelő metódusnév (azonosító) a tiszta kód alapelvei szerint?",
+  options: [
+    "upgradeLastName()",
+    "setFirstName()",
+    "maidenName()",
+    "getName()"
+  ],
+  correctAnswer: "maidenName()",
+  topic: "Tiszta kód alapelvek"
+},
+// MVC pattern (75)
+{
+  id: 75,
+  question: "Melyik népszerű tervezési minta angol (illetve magyar) nyelvű rövidítése illik a kérdőjelek (????) helyére?\nA(z) ???? a szoftverfejlesztésben használatos programtervezési minta. Elkülöníti az adatok elérését és az üzleti logikát az adatok megjelenítésétől és a felhasználói interakciótól egy közbülső összetevő, a vezérlő bevezetésével.",
+  options: [
+    "SSH (BiH)",
+    "GUI (Gfi)",
+    "MVC (MNV)",
+    "API (APF)"
+  ],
+  correctAnswer: "MVC (MNV)",
+  topic: "Frontend készítésre szolgáló JavaScript keretrendszerek"
+},
+// HTTP Accept-Encoding header (76)
+{
+  id: 76,
+  question: "Melyik HTTP fejlécmezőnek adhatók a következő értékek: gzip, deflate ?",
+  options: [
+    "Content-Type",
+    "Cache-Control",
+    "Accept-Charset",
+    "Accept-Encoding"
+  ],
+  correctAnswer: "Accept-Encoding",
+  topic: "Backend készítésre szolgáló nyelvek és keretrendszerek"
+},
+// JavaScript loop condition (77)
+{
+  id: 77,
+  question: "Mit kell írni a kérdőjelek (???) helyére a JavaScript függvényben, hogy az arab számot római számra váltó függvény helyesen működjön?",
+  options: [
+    "i > 0",
+    "i >= 0",
+    "x++",
+    "x--"
+  ],
+  correctAnswer: "i > 0",
+  topic: "JavaScript, ECMAScript"
+},
+// JavaScript frontend framework (78)
+{
+  id: 78,
+  question: "Melyik JavaScript frontend keretrendszer a felsoroltak közül?",
+  options: [
+    "React",
+    "Mongoose",
+    "Swing",
+    "Axios"
+  ],
+  correctAnswer: "React",
+  topic: "Frontend készítésre szolgáló JavaScript keretrendszerek"
+},
+// CSS border-radius (79)
+{
+  id: 79,
+  question: "Melyik CSS jellemző segítségével lehet lekerekített szegélyt létrehozni?",
+  options: [
+    "border-rounded",
+    "border-radius",
+    "rounded",
+    "radius"
+  ],
+  correctAnswer: "border-radius",
+  topic: "HTML5, CSS3"
+},
+// Java object (80)
+{
+  id: 80,
+  question: "Mi jellemzi az alábbi kódrészletben a  dog  azonosítójú változót?\n```java\npublic class Dog {\n    String name;\n    int age;\n}\nDog dog = new Dog();\n```",
+  options: [
+    "Dinamikus objektum",
+    "Statikus objektum",
+    "Dinamikus osztály",
+    "Statikus osztály"
+  ],
+  correctAnswer: "Dinamikus objektum",
+  topic: "Java"
+},
+// JavaScript closure (81)
+{
+  id: 81,
+  question: "Mit jelent a 'closure' (lezárás) fogalma JavaScript-ben?",
+  options: [
+    "Egy olyan függvény, amely lezárja a programot hiba esetén.",
+    "Egy függvény, amely hozzáfér a külső függvény változóihoz annak végrehajtása után is.",
+    "Egy olyan szintaktikai hiba, amit a for ciklus okoz.",
+    "Egy olyan metódus, amely bezárja az objektumot."
+  ],
+  correctAnswer: "Egy függvény, amely hozzáfér a külső függvény változóihoz annak végrehajtása után is.",
+  topic: "JavaScript, ECMAScript"
+},
+
+// REST API HTTP method (82)
+{
+  id: 82,
+  question: "Melyik HTTP metódust használjuk egy erőforrás létrehozására REST API-ban?",
+  options: [
+    "GET",
+    "POST",
+    "PUT",
+    "DELETE"
+  ],
+  correctAnswer: "POST",
+  topic: "Webfejlesztés, REST API"
+},
+
+// SQL JOIN types (83)
+{
+  id: 83,
+  question: "Melyik SQL JOIN típus ad vissza minden sort mindkét táblából, ha van egyezés, ha nincs?",
+  options: [
+    "INNER JOIN",
+    "LEFT JOIN",
+    "RIGHT JOIN",
+    "FULL OUTER JOIN"
+  ],
+  correctAnswer: "FULL OUTER JOIN",
+  topic: "Adatbázis-kezelés, SQL"
+},
+
+// Git staging area (84)
+{
+  id: 84,
+  question: "Melyik git parancs helyezi a változtatásokat a staging area-ba?",
+  options: [
+    "git push",
+    "git commit",
+    "git stage",
+    "git add"
+  ],
+  correctAnswer: "git add",
+  topic: "Csoportmunkaeszközök, Git"
+},
+
+// OOP polymorphism (85)
+{
+  id: 85,
+  question: "Mit jelent az öröklődésből származó polimorfizmus az OOP-ben?",
+  options: [
+    "Egy változó több értéket tárol egyszerre.",
+    "Egy metódus több viselkedést valósít meg különböző objektumokon keresztül.",
+    "Egy osztály örökli a privát adattagokat más osztályból.",
+    "Több osztály örököl ugyanabból a metódusból egyszerre."
+  ],
+  correctAnswer: "Egy metódus több viselkedést valósít meg különböző objektumokon keresztül.",
+  topic: "Objektum Orientált Programozás (OOP)"
+},
+
+// HTML5 semantic tags (86)
+{
+  id: 86,
+  question: "Melyik HTML5 elem tekinthető szemantikusnak?",
+  options: [
+    "<div>",
+    "<section>",
+    "<span>",
+    "<br>"
+  ],
+  correctAnswer: "<section>",
+  topic: "HTML5, CSS3"
+},
+
+// CSS Flexbox alignment (87)
+{
+  id: 87,
+  question: "Melyik CSS tulajdonsággal lehet Flexbox konténeren belül középre igazítani a tartalmat főtengely mentén?",
+  options: [
+    "align-items: center;",
+    "text-align: center;",
+    "justify-content: center;",
+    "vertical-align: middle;"
+  ],
+  correctAnswer: "justify-content: center;",
+  topic: "HTML5, CSS3"
+},
+
+// Design patterns - Singleton (88)
+{
+  id: 88,
+  question: "Mi jellemzi a Singleton tervezési mintát?",
+  options: [
+    "Egy osztályból egyszerre több példány létezhet.",
+    "A példányosítás minden metódushíváskor megtörténik.",
+    "Egy osztályból csak egy példány létezhet.",
+    "Több különböző osztály közös ősosztályból származik."
+  ],
+  correctAnswer: "Egy osztályból csak egy példány létezhet.",
+  topic: "Szoftvertervezési minták"
+},
+
+// SQL injection (89)
+{
+  id: 89,
+  question: "Mi az SQL injection támadás lényege?",
+  options: [
+    "A szerver túlterhelése érvénytelen SQL lekérdezésekkel.",
+    "A felhasználói adatok titkosítása.",
+    "Érvénytelen HTTP kérések küldése.",
+    "Olyan SQL parancsok beadása, melyek manipulálják az adatbázist jogosulatlanul."
+  ],
+  correctAnswer: "Olyan SQL parancsok beadása, melyek manipulálják az adatbázist jogosulatlanul.",
+  topic: "Adatbiztonság, Webfejlesztés"
+},
+
+// Responsive design (90)
+{
+  id: 90,
+  question: "Melyik technika segít reszponzív weboldalak készítésében?",
+  options: [
+    "HTML táblák használata elrendezéshez",
+    "Inline CSS minden elemre",
+    "Media query-k alkalmazása",
+    "Adatok cache-elése a frontendben"
+  ],
+  correctAnswer: "Media query-k alkalmazása",
+  topic: "HTML5, CSS3, Webfejlesztés"
+}
+
+
 ];
 
 const Questions = () => {
