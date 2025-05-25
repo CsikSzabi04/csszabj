@@ -679,7 +679,16 @@ export const allQuestions   = [
   // Software development life cycle (61)
 {
   id: 61,
-  question: "A szoftverfejlesztés életciklusa alapján melyik fázis illik a kérdőjelek (????) helyére?",
+ question: `A szoftverfejlesztés életciklusa alapján melyik fázis illik a kérdőjelek (????) helyére?
+Új igény
+Igények, követelmények elemzése
+Rendszerjavaslat kidolgozása
+Specifikáció
+Tervezés
+Implementáció
+????
+Átadás, bevezetés
+Üzemeltetés, karbantartás`,
   options: [
     "Felhasználói dokumentáció",
     "Szerződéskötés",
@@ -744,14 +753,14 @@ export const allQuestions   = [
 // JavaScript function returns true (66)
 {
   id: 66,
-  question: "Melyik JavaScript függvényhívás tér vissza igaz értékkel a felsoroltak közül?",
+  question: "Melyik JavaScript függvényhívás tér vissza igaz értékkel a felsoroltak közül?\n  function foo3(str1, str2) return str1.length == str2.length && (str1 + str1).indexOf(str2) != -1",
   options: [
     "foo3('BMI', 'IBM')",
     "foo3('RSB', 'SBS')",
     "foo3('ABC', 'DBA')",
     "foo3('ABC', 'CBA')"
   ],
-  correctAnswer: "foo3('ABC', 'CBA')",
+  correctAnswer: "foo3('BMI', 'IBM')",
   topic: "JavaScript, ECMAScript"
 },
 // Foreign key definition (67)
@@ -887,16 +896,32 @@ export const allQuestions   = [
 // JavaScript loop condition (77)
 {
   id: 77,
-  question: "Mit kell írni a kérdőjelek (???) helyére a JavaScript függvényben, hogy az arab számot római számra váltó függvény helyesen működjön?",
+  question: `Mit kell írni a kérdőjelek (???) helyére a JavaScript függvényben, hogy az arab számot római számra váltó függvény helyesen működjön?
+
+function arabToRoman(number)
+{
+    let dec = [1,4,5,9,10,40,50,90,100,400,500,900,1000]
+    let rom = ['I','IV','V','IX','X','XL','L','XC','C','CD','D','CM','M']
+    let i = rom.length - 1
+    let roman = ''
+    while(number > 0) {
+        let x = Math.floor(number / dec[i])
+        number = number % dec[i]
+        while( ??? ) roman = roman + rom[i]
+        i--
+    }
+    return roman
+}`,
   options: [
     "i > 0",
     "i >= 0",
     "x++",
     "x--"
   ],
-  correctAnswer: "i > 0",
+  correctAnswer: "x--",
   topic: "JavaScript, ECMAScript"
 },
+
 // JavaScript frontend framework (78)
 {
   id: 78,
