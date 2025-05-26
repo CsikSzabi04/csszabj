@@ -188,7 +188,21 @@ System.out.println(set);
 
 set.remove(valami); // törlés a setből
 */`
-}     
+},
+
+{
+  title: "TreeSet + String-join(", ", x)",
+  tags: ["Konzol"],
+  code: `/*
+TreeSet<String> helyek = new TreeSet<>();
+  for (Adat x : adat) {
+     if (!helyek.contains(x.hely)) {
+         helyek.add(x.hely);
+     }
+  }
+  System.out.printf("3) A kígyók származási helye (abc): %s%n", String.join(", ", helyek));
+*/`
+}  
 
 ];
 
