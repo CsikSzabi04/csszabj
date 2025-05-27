@@ -696,7 +696,7 @@ export const hivQuestions = [
             "/eredmeny/?ev=2025&id=1",
             "/getVersenyzoEredmeny?ev=2025&id=1"
         ],
-        "correctAnswer": "/eredmeny/2025/versenyzo/1",
+        "correctAnswer": "/eredmeny/?ev=2025&id=1",
         "topic": "Backend Programming"
     },
     {
@@ -1241,18 +1241,7 @@ export const hivQuestions = [
         "correctAnswer": "elöltesztelős ciklus",
         "topic": "Programming"
     },
-    {
-        "id": 209,
-        "question": "Melyik kifejezés igaz az alábbiak közül?",
-        "options": [
-            "10101101B < 172D",
-            "145D > 90H",
-            "10111111B = BEH",
-            "149D>10010111B"
-        ],
-        "correctAnswer": "145D > 90H",
-        "topic": "Programming / Number Systems"
-    },
+
     {
         "id": 210,
         "question": "Mi lesz a decimális eredmény, ha bitenkénti AND műveletet végzünk 8 biten a következő két számon? 124 AND 31",
@@ -1997,18 +1986,7 @@ export const hivQuestions = [
         "correctAnswer": "Minimum-kiválasztásos rendezés",
         "topic": "Algoritmusok / Rendezés"
     },
-    {
-        "id": 271,
-        "question": "Melyik kifejezés igaz az alábbiak közül?",
-        "options": [
-            "10101101B < 172D",
-            "145D > 90H",
-            "10111111B = BEH",
-            "149D > 10010111B"
-        ],
-        "correctAnswer": ["10101101B < 172D", "10111111B = BEH"],
-        "topic": "Számrendszerek / Logika"
-    },
+
     {
         "id": 272,
         "question": "Mi lesz a decimális eredmény, ha bitenkénti AND műveletet végzünk 8 biten a következő két számon?\n124 AND 31",
