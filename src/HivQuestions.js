@@ -509,7 +509,7 @@ export const hivQuestions = [
     },
     {
         "id": 151,
-        "question": "Milyen kifejezést kell írni a [ pattern ] helyére, hogy az összes olyan szakma megnevezése jelenjen meg a lekérdezésben, ami a „tesztelő” szóra végződik?",
+        "question": "Milyen kifejezést kell írni a [ pattern ] helyére, hogy az összes olyan szakma megnevezése jelenjen meg a lekérdezésben, ami a „tesztelő” szóra végződik? Konzol java",
         "options": [
             ". tesztelő",
             "_ tesztelő",
