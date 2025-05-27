@@ -3,79 +3,74 @@ export const allQuestions   = [
     {
         id: 1,
         question: "Mi a Git legfontosabb előnye a verziókövetés terén?",
-        options: ["Könnyű felhasználói felület", "Elosztott verziókövetés", "Automatikus biztonsági mentések", "Csak lokálisan működik"],
+        options: ["Automatikus biztonsági mentések", "Elosztott verziókövetés", "Csak lokálisan működik", "Könnyű felhasználói felület"],
         correctAnswer: "Elosztott verziókövetés",
         topic: "Git"
     },
     {
         id: 2,
         question: "Mire szolgál a `git clone` parancs?",
-        options: ["Egy új ág létrehozására", "Távoli repository másolására", "Változtatások visszavonására", "Commitok összehasonlítására"],
+        options: ["Commitok összehasonlítására", "Változtatások visszavonására", "Távoli repository másolására", "Egy új ág létrehozására"],
         correctAnswer: "Távoli repository másolására",
         topic: "Git"
     },
     {
         id: 3,
         question: "Hogyan lehet egy fájlt hozzáadni a staging area-hoz Git-ben?",
-        options: ["git commit", "git push", "git add", "git init"],
+        options: ["git init", "git add", "git push", "git commit"],
         correctAnswer: "git add",
         topic: "Git"
     },
-
-    // HTML/CSS questions (3)
     {
         id: 4,
         question: "Melyik HTML elem felelős a legfőbb tartalomért egy oldalon?",
-        options: ["<header>", "<footer>", "<main>", "<nav>"],
+        options: ["<nav>", "<main>", "<footer>", "<header>"],
         correctAnswer: "<main>",
         topic: "HTML5"
     },
     {
         id: 5,
         question: "Mire való a CSS `flexbox`?",
-        options: ["Animációk létrehozására", "Reszponzív elrendezés kialakítására", "Adatbázis-kapcsolatra", "JavaScript kód írására"],
+        options: ["JavaScript kód írására", "Reszponzív elrendezés kialakítására", "Adatbázis-kapcsolatra", "Animációk létrehozására"],
         correctAnswer: "Reszponzív elrendezés kialakítására",
         topic: "CSS3"
     },
     {
         id: 6,
         question: "Mi a `media query` szerepe CSS-ben?",
-        options: ["Képernyőméret alapján stílusok alkalmazása", "Hangfájlok lejátszása", "Űrlapok validálása", "JavaScript események kezelése"],
+        options: ["Űrlapok validálása", "JavaScript események kezelése", "Képernyőméret alapján stílusok alkalmazása", "Hangfájlok lejátszása"],
         correctAnswer: "Képernyőméret alapján stílusok alkalmazása",
         topic: "CSS3"
     },
-
-    // JavaScript questions (3)
     {
         id: 7,
         question: "Melyik kulcsszóval deklarálunk egy változót, ami később módosítható?",
-        options: ["const", "let", "var", "static"],
+        options: ["static", "let", "var", "const"],
         correctAnswer: "let",
         topic: "JavaScript"
     },
     {
         id: 8,
         question: "Mi lesz a kimenet? `console.log(2 + '2')`",
-        options: ["4", "'22'", "NaN", "Hiba"],
+        options: ["Hiba", "'22'", "NaN", "4"],
         correctAnswer: "'22'",
         topic: "JavaScript"
     },
     {
         id: 9,
         question: "Melyik metódus tömb elemeinek összegzésére szolgál?",
-        options: ["array.map()", "array.reduce()", "array.filter()", "array.forEach()"],
+        options: ["array.filter()", "array.reduce()", "array.forEach()", "array.map()"],
         correctAnswer: "array.reduce()",
         topic: "JavaScript"
     },
-
-    // OOP questions (2)
     {
         id: 10,
         question: "Mi az osztály alapvető építőeleme az OOP-ban?",
-        options: ["Függvények", "Objektumok", "Tulajdonságok és metódusok", "Minden fenti válasz helyes"],
+        options: ["Tulajdonságok és metódusok", "Függvények", "Minden fenti válasz helyes", "Objektumok"],
         correctAnswer: "Minden fenti válasz helyes",
         topic: "OOP"
     },
+
     {
         id: 11,
         question: "Mi az öröklődés (inheritance) fő előnye?",
@@ -147,38 +142,34 @@ export const allQuestions   = [
         id: 18,
         question: "Mit jelent a DRY elv a tiszta kódban?",
         options: [
-            "Don't Repeat Yourself",
-            "Do Repeat Yourself",
             "Dynamic Resource Yielding",
-            "Data Retrieval Yield"
+            "Don't Repeat Yourself", 
+            "Data Retrieval Yield",
+            "Do Repeat Yourself"
         ],
         correctAnswer: "Don't Repeat Yourself",
         topic: "Tiszta kód"
     },
-
-    // Testing (1)
     {
         id: 19,
         question: "Melyik NEM szoftvertesztelési típus?",
         options: [
-            "Egységtesztelés",
+            "Végleges tesztelés",
             "Integrációs tesztelés",
-            "Felhasználói tesztelés",
-            "Végleges tesztelés"
+            "Egységtesztelés",
+            "Felhasználói tesztelés"
         ],
         correctAnswer: "Végleges tesztelés",
         topic: "Tesztelés"
     },
-
-    // Mobile (1)
     {
         id: 20,
         question: "Melyik keretrendszer alkalmas mobilalkalmazás fejlesztésre?",
         options: [
-            "React Native",
-            "Flutter",
             "Ionic",
-            "Mindhárom"
+            "Mindhárom",
+            "Flutter",
+            "React Native"
         ],
         correctAnswer: "Mindhárom",
         topic: "Mobil fejlesztés"
@@ -187,10 +178,10 @@ export const allQuestions   = [
         id: 21,
         question: "Mit jelent a 'fork' a GitHub-on?",
         options: [
-            "Repository másolása egy személyes fiókba",
-            "Branch létrehozása",
             "Commit összevonása",
-            "Projekt archiválása"
+            "Projekt archiválása",
+            "Repository másolása egy személyes fiókba",
+            "Branch létrehozása"
         ],
         correctAnswer: "Repository másolása egy személyes fiókba",
         topic: "Git"
@@ -199,24 +190,22 @@ export const allQuestions   = [
         id: 22,
         question: "Mire szolgál a 'git rebase' parancs?",
         options: [
-            "Commit előzmények átrendezésére",
-            "Fájlok törlésére",
             "Távoli repository frissítésére",
-            "Konfliktusok feloldására"
+            "Fájlok törlésére",
+            "Konfliktusok feloldására",
+            "Commit előzmények átrendezésére"
         ],
         correctAnswer: "Commit előzmények átrendezésére",
         topic: "Git"
     },
-
-    // HTML5/CSS3 (2 more)
     {
         id: 23,
         question: "Melyik HTML5 elem felelős a videó tartalom beágyazásáért?",
         options: [
-            "<media>",
+            "<movie>",
             "<video>",
             "<embed>",
-            "<movie>"
+            "<media>"
         ],
         correctAnswer: "<video>",
         topic: "HTML5"
@@ -225,24 +214,22 @@ export const allQuestions   = [
         id: 24,
         question: "Mire szolgál a CSS 'grid-template-areas' tulajdonság?",
         options: [
-            "Animációk időzítésére",
-            "Reszponzív képek létrehozására",
+            "Betűtípusok beállítására",
             "Oldalelrendezés tervezésére",
-            "Betűtípusok beállítására"
+            "Reszponzív képek létrehozására",
+            "Animációk időzítésére"
         ],
         correctAnswer: "Oldalelrendezés tervezésére",
         topic: "CSS3"
     },
-
-    // JavaScript (2 more)
     {
         id: 25,
         question: "Mit csinál a 'use strict' mód JavaScript-ben?",
         options: [
-            "Engedélyezi a laza szintaxis használatát",
-            "Szigorúbb szintaxis-ellenőrzést vezet be",
+            "Gyorsabb kódvégrehajtást biztosít",
             "Letiltja az összes hibakezelést",
-            "Gyorsabb kódvégrehajtást biztosít"
+            "Szigorúbb szintaxis-ellenőrzést vezet be",
+            "Engedélyezi a laza szintaxis használatát"
         ],
         correctAnswer: "Szigorúbb szintaxis-ellenőrzést vezet be",
         topic: "JavaScript"
@@ -251,24 +238,22 @@ export const allQuestions   = [
         id: 26,
         question: "Mi az ES6 modul rendszer fő előnye?",
         options: [
-            "Kód újrafelhasználás",
-            "Globális változók használata",
             "Automatikus minifikáció",
-            "CSS integráció"
+            "CSS integráció",
+            "Kód újrafelhasználás",
+            "Globális változók használata"
         ],
         correctAnswer: "Kód újrafelhasználás",
         topic: "JavaScript"
     },
-
-    // OOP (2 more)
     {
         id: 27,
         question: "Mit jelent az egységbezárás (encapsulation) az OOP-ban?",
         options: [
-            "Adatok és metódusok egy egységbe zárása",
-            "Osztályok elrejtése",
+            "Memóriafoglalás optimalizálása",
             "Függvények láncolása",
-            "Memóriafoglalás optimalizálása"
+            "Adatok és metódusok egy egységbe zárása",
+            "Osztályok elrejtése"
         ],
         correctAnswer: "Adatok és metódusok egy egységbe zárása",
         topic: "OOP"
@@ -277,24 +262,22 @@ export const allQuestions   = [
         id: 28,
         question: "Mi a polimorfizmus fő előnye?",
         options: [
+            "Egyszerűbb debugolás",
             "Ugyanaz a metódus különböző viselkedést mutathat",
             "Gyorsabb kódvégrehajtás",
-            "Kisebb memóriahasználat",
-            "Egyszerűbb debugolás"
+            "Kisebb memóriahasználat"
         ],
         correctAnswer: "Ugyanaz a metódus különböző viselkedést mutathat",
         topic: "OOP"
     },
-
-    // SQL (2 more)
     {
         id: 29,
         question: "Mire szolgál a JOIN művelet SQL-ben?",
         options: [
-            "Táblák összekapcsolására",
+            "Oszlopok átnevezésére",
             "Adatok törlésére",
-            "Rekordok sorrendezésére",
-            "Oszlopok átnevezésére"
+            "Táblák összekapcsolására",
+            "Rekordok sorrendezésére"
         ],
         correctAnswer: "Táblák összekapcsolására",
         topic: "SQL"
@@ -303,24 +286,22 @@ export const allQuestions   = [
         id: 30,
         question: "Mi a különbség a PRIMARY KEY és a FOREIGN KEY között?",
         options: [
-            "PRIMARY KEY egyedi azonosító, FOREIGN KEY kapcsolatot létesít",
-            "Nincs különbség",
             "FOREIGN KEY csak számokat tartalmazhat",
-            "PRIMARY KEY nem lehet NULL"
+            "PRIMARY KEY egyedi azonosító, FOREIGN KEY kapcsolatot létesít",
+            "PRIMARY KEY nem lehet NULL",
+            "Nincs különbség"
         ],
         correctAnswer: "PRIMARY KEY egyedi azonosító, FOREIGN KEY kapcsolatot létesít",
         topic: "SQL"
     },
-
-    // Frontend frameworks (2 more)
     {
         id: 31,
         question: "Melyik állítás igaz a React komponensekre?",
         options: [
-            "Mindig osztály komponensek",
+            "Csak JavaScriptben írhatók",
             "Állapotot (state) tarthatnak",
-            "Nem lehetnek újrahasznosíthatók",
-            "Csak JavaScriptben írhatók"
+            "Mindig osztály komponensek",
+            "Nem lehetnek újrahasznosíthatók"
         ],
         correctAnswer: "Állapotot (state) tarthatnak",
         topic: "Frontend keretrendszerek"
@@ -329,24 +310,22 @@ export const allQuestions   = [
         id: 32,
         question: "Mire szolgál a Vue.js 'v-model' direktívája?",
         options: [
-            "Kétirányú adatkötés létrehozására",
+            "Animációk indítására",
             "CSS stílusok alkalmazására",
-            "HTTP kérések küldésére",
-            "Animációk indítására"
+            "Kétirányú adatkötés létrehozására",
+            "HTTP kérések küldésére"
         ],
         correctAnswer: "Kétirányú adatkötés létrehozására",
         topic: "Frontend keretrendszerek"
     },
-
-    // Backend frameworks (2 more)
     {
         id: 33,
         question: "Melyik NEM Node.js keretrendszer?",
         options: [
+            "Fastify",
             "Express",
             "Django",
-            "Koa",
-            "Fastify"
+            "Koa"
         ],
         correctAnswer: "Django",
         topic: "Backend keretrendszerek"
@@ -355,217 +334,196 @@ export const allQuestions   = [
         id: 34,
         question: "Mire szolgál az ORM (Object-Relational Mapping)?",
         options: [
-            "Adatbázis objektumok és programkód közötti leképezés",
-            "Képfájlok tömörítése",
             "Frontend komponensek renderelése",
-            "Hálózati kommunikáció optimalizálása"
+            "Adatbázis objektumok és programkód közötti leképezés",
+            "Hálózati kommunikáció optimalizálása",
+            "Képfájlok tömörítése"
         ],
         correctAnswer: "Adatbázis objektumok és programkód közötti leképezés",
         topic: "Backend keretrendszerek"
     },
-
-    // Clean code (1 more)
     {
         id: 35,
         question: "Mi a SOLID elv első betűjének (Single Responsibility) jelentése?",
         options: [
-            "Egy osztálynak egy felelőssége legyen",
-            "Mindig használj interfészeket",
+            "Ne használj globális változókat",
             "Metódusok legyenek rövidek",
-            "Ne használj globális változókat"
+            "Egy osztálynak egy felelőssége legyen",
+            "Mindig használj interfészeket"
         ],
         correctAnswer: "Egy osztálynak egy felelőssége legyen",
         topic: "Tiszta kód"
     },
-
-    // Testing (1 more)
     {
         id: 36,
         question: "Melyik eszköz alkalmas egységtesztelésre JavaScript-ben?",
         options: [
-            "Jest",
+            "Babel",
             "Photoshop",
-            "Webpack",
-            "Babel"
+            "Jest",
+            "Webpack"
         ],
         correctAnswer: "Jest",
         topic: "Tesztelés"
     },
-
-    // Mobile (1 more)
     {
         id: 37,
         question: "Melyik technológia NATÍV mobilalkalmazás fejlesztésére alkalmas?",
         options: [
-            "React Native",
-            "Flutter",
             "Swift (iOS) / Kotlin (Android)",
+            "Flutter",
+            "React Native",
             "Mindhárom"
         ],
         correctAnswer: "Swift (iOS) / Kotlin (Android)",
         topic: "Mobil fejlesztés"
     },
-
-    // CMS (1)
     {
         id: 38,
         question: "Melyik WordPress alternatíva a legnépszerűbb?",
         options: [
-            "Joomla",
-            "Drupal",
             "Shopify",
-            "Magento"
+            "Joomla",
+            "Magento",
+            "Drupal"
         ],
         correctAnswer: "Joomla",
         topic: "CMS"
     },
-
-    // Teamwork tools (1)
     {
         id: 39,
         question: "Melyik NEM csapatmunka eszköz?",
         options: [
-            "Slack",
             "Trello",
+            "Photoshop",
             "GitHub",
-            "Photoshop"
+            "Slack"
         ],
         correctAnswer: "Photoshop",
         topic: "Csoportmunkaeszközök"
     },
-
-    // Database design (1)
     {
         id: 40,
         question: "Mi a normalizálás fő célja adatbázis tervezésnél?",
         options: [
+            "Biztonsági mentések egyszerűsítése",
             "Adatredundancia csökkentése",
-            "Lekérdezések gyorsítása",
             "Táblák számának növelése",
-            "Biztonsági mentések egyszerűsítése"
+            "Lekérdezések gyorsítása"
         ],
         correctAnswer: "Adatredundancia csökkentése",
         topic: "Adatbázis-tervezés"
     },
-      {
-    id: 41,
-    question: "Mit jelent a 'git stash' parancs?",
-    options: [
-      "Átmeneti változtatások elmentése",
-      "Új távoli repository létrehozása",
-      "Commit előzmények törlése",
-      "Összes változtatás visszavonása"
-    ],
-    correctAnswer: "Átmeneti változtatások elmentése",
-    topic: "Git"
-  },
-  {
-    id: 42,
-    question: "Mire szolgál a '.gitignore' fájl?",
-    options: [
-      "Repository leírásának tárolására",
-      "Bizonyos fájlok figyelmen kívül hagyására",
-      "Git konfiguráció beállítására",
-      "Commit üzenetek sablonjának tárolására"
-    ],
-    correctAnswer: "Bizonyos fájlok figyelmen kívül hagyására",
-    topic: "Git"
-  },
-
-  // HTML5/CSS3 (2 more)
-  {
-    id: 43,
-    question: "Melyik CSS egység relatív a szülő elem betűméretéhez?",
-    options: ["px", "em", "rem", "vw"],
-    correctAnswer: "em",
-    topic: "CSS3"
-  },
-  {
-    id: 44,
-    question: "Melyik HTML attribútum kötelező a kép elemeknél?",
-    options: ["src", "alt", "title", "width"],
-    correctAnswer: "alt",
-    topic: "HTML5"
-  },
-
-  // JavaScript (2 more)
-  {
-    id: 45,
-    question: "Mit csinál a 'Array.prototype.map()' metódus?",
-    options: [
-      "Visszaad egy új tömböt a megadott függvény alapján",
-      "Kiválogatja a megfelelő elemeket",
-      "Összegzi a tömb elemeit",
-      "Megváltoztatja az eredeti tömböt"
-    ],
-    correctAnswer: "Visszaad egy új tömböt a megadott függvény alapján",
-    topic: "JavaScript"
-  },
-  {
-    id: 46,
-    question: "Mi az 'event bubbling' a JavaScript-ben?",
-    options: [
-      "Események feljebb terjedése a DOM fában",
-      "Aszinkron kód végrehajtása",
-      "Memória felszabadítása",
-      "Animációk létrehozása"
-    ],
-    correctAnswer: "Események feljebb terjedése a DOM fában",
-    topic: "JavaScript"
-  },
-
-  // OOP (2 more)
-  {
-    id: 47,
-    question: "Mi az absztrakció fő előnye az OOP-ban?",
-    options: [
-      "Komplexitás csökkentése",
-      "Kód újrafelhasználás",
-      "Gyorsabb végrehajtás",
-      "Kisebb memóriahasználat"
-    ],
-    correctAnswer: "Komplexitás csökkentése",
-    topic: "OOP"
-  },
-  {
-    id: 48,
-    question: "Melyik NEM OOP alapelv?",
-    options: [
-      "Egységbezárás",
-      "Polimorfizmus",
-      "Öröklődés",
-      "Függvényprogramozás"
-    ],
-    correctAnswer: "Függvényprogramozás",
-    topic: "OOP"
-  },
-
-  // SQL (2 more)
-  {
-    id: 49,
-    question: "Mire szolgál a GROUP BY záradék SQL-ben?",
-    options: [
-      "Adatok csoportosítására",
-      "Táblák összekapcsolására",
-      "Rekordok szűrésére",
-      "Oszlopok kiválasztására"
-    ],
-    correctAnswer: "Adatok csoportosítására",
-    topic: "SQL"
-  },
-  {
-    id: 50,
-    question: "Mi a különbség az INNER JOIN és LEFT JOIN között?",
-    options: [
-      "LEFT JOIN minden sort visszaad a bal oldali táblából",
-      "INNER JOIN csak egyező sorokat ad vissza",
-      "Mindkettő helyes",
-      "Egyik sem helyes"
-    ],
-    correctAnswer: "Mindkettő helyes",
-    topic: "SQL"
-  },
-
+    {
+        id: 41,
+        question: "Mit jelent a 'git stash' parancs?",
+        options: [
+            "Commit előzmények törlése",
+            "Összes változtatás visszavonása",
+            "Átmeneti változtatások elmentése",
+            "Új távoli repository létrehozása"
+        ],
+        correctAnswer: "Átmeneti változtatások elmentése",
+        topic: "Git"
+    },
+    {
+        id: 42,
+        question: "Mire szolgál a '.gitignore' fájl?",
+        options: [
+            "Git konfiguráció beállítására",
+            "Commit üzenetek sablonjának tárolására",
+            "Bizonyos fájlok figyelmen kívül hagyására",
+            "Repository leírásának tárolására"
+        ],
+        correctAnswer: "Bizonyos fájlok figyelmen kívül hagyására",
+        topic: "Git"
+    },
+    {
+        id: 43,
+        question: "Melyik CSS egység relatív a szülő elem betűméretéhez?",
+        options: ["rem", "vw", "em", "px"],
+        correctAnswer: "em",
+        topic: "CSS3"
+    },
+    {
+        id: 44,
+        question: "Melyik HTML attribútum kötelező a kép elemeknél?",
+        options: ["width", "src", "title", "alt"],
+        correctAnswer: "alt",
+        topic: "HTML5"
+    },
+    {
+        id: 45,
+        question: "Mit csinál a 'Array.prototype.map()' metódus?",
+        options: [
+            "Kiválogatja a megfelelő elemeket",
+            "Visszaad egy új tömböt a megadott függvény alapján",
+            "Megváltoztatja az eredeti tömböt",
+            "Összegzi a tömb elemeit"
+        ],
+        correctAnswer: "Visszaad egy új tömböt a megadott függvény alapján",
+        topic: "JavaScript"
+    },
+    {
+        id: 46,
+        question: "Mi az 'event bubbling' a JavaScript-ben?",
+        options: [
+            "Animációk létrehozása",
+            "Események feljebb terjedése a DOM fában",
+            "Memória felszabadítása",
+            "Aszinkron kód végrehajtása"
+        ],
+        correctAnswer: "Események feljebb terjedése a DOM fában",
+        topic: "JavaScript"
+    },
+    {
+        id: 47,
+        question: "Mi az absztrakció fő előnye az OOP-ban?",
+        options: [
+            "Kisebb memóriahasználat",
+            "Komplexitás csökkentése",
+            "Gyorsabb végrehajtás",
+            "Kód újrafelhasználás"
+        ],
+        correctAnswer: "Komplexitás csökkentése",
+        topic: "OOP"
+    },
+    {
+        id: 48,
+        question: "Melyik NEM OOP alapelv?",
+        options: [
+            "Függvényprogramozás",
+            "Öröklődés",
+            "Egységbezárás",
+            "Polimorfizmus"
+        ],
+        correctAnswer: "Függvényprogramozás",
+        topic: "OOP"
+    },
+    {
+        id: 49,
+        question: "Mire szolgál a GROUP BY záradék SQL-ben?",
+        options: [
+            "Oszlopok kiválasztására",
+            "Adatok csoportosítására",
+            "Táblák összekapcsolására",
+            "Rekordok szűrésére"
+        ],
+        correctAnswer: "Adatok csoportosítására",
+        topic: "SQL"
+    },
+    {
+        id: 50,
+        question: "Mi a különbség az INNER JOIN és LEFT JOIN között?",
+        options: [
+            "Egyik sem helyes",
+            "LEFT JOIN minden sort visszaad a bal oldali táblából",
+            "INNER JOIN csak egyező sorokat ad vissza",
+            "Mindkettő helyes"
+        ],
+        correctAnswer: "Mindkettő helyes",
+        topic: "SQL"
+    },
   // Frontend frameworks (2 more)
   {
     id: 51,
@@ -734,7 +692,7 @@ Implementáció
     "git switch issue-68",
     "git open issue-68"
   ],
-  correctAnswer: "git switch issue-68",
+  correctAnswer: "git checkout issue-68",
   topic: "Csoportmunkaeszközök, Git"
 },
 // Test pyramid base (65)
@@ -962,5 +920,366 @@ function arabToRoman(number)
   topic: "Java"
 },
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+{
+  id: 81,
+  question: "Mi a célja a 'git rebase' parancsnak a 'git merge'-vel szemben?",
+  options: [
+    "Lineáris commit történet létrehozása",
+    "Különálló ágak létrehozása",
+    "Távoli repository szinkronizálása",
+    "Commitok összevonása"
+  ],
+  correctAnswer: "Lineáris commit történet létrehozása",
+  topic: "GitHub"
+},
+{
+  id: 82,
+  question: "Hogyan lehet egy lokális ágat követni a távoli ággal?",
+  options: [
+    "git track origin/branch",
+    "git branch --set-upstream-to=origin/branch",
+    "git follow origin/branch",
+    "git sync branch"
+  ],
+  correctAnswer: "git branch --set-upstream-to=origin/branch",
+  topic: "GitHub"
+},
+{
+  id: 83,
+  question: "Mit csinál a 'git cherry-pick' parancs?",
+  options: [
+    "Kiválasztott commitok másolása egy másik ágra",
+    "Törli a nem kötelező commitokat",
+    "Frissíti a HEAD referenciát",
+    "Keresés commit üzenetekben"
+  ],
+  correctAnswer: "Kiválasztott commitok másolása egy másik ágra",
+  topic: "GitHub"
+},
+{
+  id: 84,
+  question: "Mi a GitHub Actions fő célja?",
+  options: [
+    "Kód tárolása",
+    "Automatizált CI/CD folyamatok",
+    "Issue követés",
+    "Pull request kezelés"
+  ],
+  correctAnswer: "Automatizált CI/CD folyamatok",
+  topic: "GitHub"
+},
+{
+  id: 85,
+  question: "Hogyan lehet egy konfliktust feloldani Git-ben?",
+  options: [
+    "A konfliktusos fájlok manuális szerkesztése után commit",
+    "git resolve parancs használata",
+    "git ignore conflict parancs használata",
+    "Mindhárom módszer helyes"
+  ],
+  correctAnswer: "A konfliktusos fájlok manuális szerkesztése után commit",
+  topic: "GitHub"
+},
+{
+  id: 86,
+  question: "Mi a React Router createBrowserRouter függvényének fő célja?",
+  options: [
+    "Állapot kezelése",
+    "Útvonalak definiálása és navigáció kezelése",
+    "Komponensek renderelése",
+    "API hívások kezelése"
+  ],
+  correctAnswer: "Útvonalak definiálása és navigáció kezelése",
+  topic: "Frontend"
+},
+{
+  id: 87,
+  question: "Mi történik, ha egy async függvényben nem kezeljük a fetch hiba esetét?",
+  options: [
+    "A kód automatikusan újrapróbálkozik",
+    "Nem keletkezik hiba",
+    "A Promise rejected állapotba kerül",
+    "A böngésző összeomlik"
+  ],
+  correctAnswer: "A Promise rejected állapotba kerül",
+  topic: "Frontend"
+},
+{
+  id: 88,
+  question: "Melyik a leginkább ajánlott módja egy input mező értékének kezelésére React-ben úgy hogy a value is változzon!",
+  options: [
+    "document.getElementById() használatával",
+    "useRef hookkal",
+    "useState hookkal és onChange eseménykezelővel",
+    "Mindhárom módszer helyes"
+  ],
+  correctAnswer: "useState hookkal és onChange eseménykezelővel",
+  topic: "Frontend"
+},
+{
+  id: 89,
+  question: "Mi a célja a Link komponensnek a React Router-ben?",
+  options: [
+    "Külső hivatkozások létrehozása",
+    "Oldalak közötti navigáció SPA környezetben",
+    "API végpontok csatolása",
+    "CSS stílusok alkalmazása"
+  ],
+  correctAnswer: "Oldalak közötti navigáció SPA környezetben",
+  topic: "Frontend"
+},
+{
+  id: 90,
+  question: "Mi az előnye a React komponens alapú architektúrának?",
+  options: [
+    "Újrahasználható kód egységek",
+    "Jobb teljesítmény minden esetben",
+    "Kisebb bundle méret",
+    "Egyszerűbb backend integráció"
+  ],
+  correctAnswer: "Újrahasználható kód egységek",
+  topic: "Frontend"
+},
+{
+  id: 91,
+  question: "Mi a Scanner osztály fő célja Java-ban?",
+  options: [
+    "Adat kiírása a konzolra",
+    "Adat beolvasása különböző forrásokból",
+    "Fájlok törlése",
+    "Hálózati kapcsolat létesítése"
+  ],
+  correctAnswer: "Adat beolvasása különböző forrásokból",
+  topic: "Konzol Java"
+},
+{
+  id: 92,
+  question: "Hogyan lehet egy ArrayList-ből eltávolítani ismétlődő elemeket?",
+  options: [
+    "HashSet használatával",
+    "Második ArrayList létrehozásával",
+    "Kézi iterációval és összehasonlítással",
+    "Mindhárom módszer helyes"
+  ],
+  correctAnswer: "HashSet használatával",
+  topic: "Konzol Java"
+},
+{
+  id: 93,
+  question: "Mi a PrintWriter osztály előnye a System.out-hoz képest?",
+  options: [
+    "Karakterkódolás támogatása",
+    "Gyorsabb kiírás",
+    "Automatikus formázás",
+    "Több adattípus támogatása"
+  ],
+  correctAnswer: "Karakterkódolás támogatása",
+  topic: "Konzol Java"
+},
+{
+  id: 94,
+  question: "Hogyan lehet egy fájl sorait beolvasni Java-ban?",
+  options: [
+    "Scanner hasNextLine() és nextLine() metódusokkal",
+    "FileInputStream direkt használatával",
+    "System.in.read() metódussal",
+    "Console.readLine() metódussal"
+  ],
+  correctAnswer: "Scanner hasNextLine() és nextLine() metódusokkal",
+  topic: "Konzol Java"
+},
+{
+  id: 95,
+  question: "Mi a try-with-resources szerkezet előnye Java-ban?",
+  options: [
+    "Automatikus erőforrás lezárás",
+    "Gyorsabb kódvégrehajtás",
+    "Kisebb memóriahasználat",
+    "Egyszerűbb szintaxis"
+  ],
+  correctAnswer: "Automatikus erőforrás lezárás",
+  topic: "Konzol Java"
+},
+{
+  id: 96,
+  question: "Mi az FXML fájl szerepe JavaFX-ben?",
+  options: [
+    "Üzleti logika tárolása",
+    "Felhasználói felület definiálása",
+    "Adatbázis kapcsolat kezelése",
+    "Konfigurációs beállítások tárolása"
+  ],
+  correctAnswer: "Felhasználói felület definiálása",
+  topic: "Grafikus Java"
+},
+{
+  id: 97,
+  question: "Mi a FileChooser osztály fő célja?",
+  options: [
+    "Fájlok megnyitása és mentése párbeszédablakban",
+    "Fájlok törlése",
+    "Fájlok átnevezése",
+    "Könyvtárstruktúra létrehozása"
+  ],
+  correctAnswer: "Fájlok megnyitása és mentése párbeszédablakban",
+  topic: "Grafikus Java"
+},
+{
+  id: 98,
+  question: "Hogyan lehet egy eseménykezelőt hozzárendelni egy gombhoz JavaFX-ben?",
+  options: [
+    "setOnAction metódussal",
+    "addEventListener metódussal",
+    "setOnClick metódussal",
+    "bindEvent metódussal"
+  ],
+  correctAnswer: "setOnAction metódussal",
+  topic: "Grafikus Java"
+},
+{
+  id: 99,
+  question: "Mi az Alert osztály célja JavaFX-ben?",
+  options: [
+    "Adatok megjelenítése táblázatban",
+    "Párbeszédablakok megjelenítése felhasználónak",
+    "Háttérfolyamatok kezelése",
+    "Animációk létrehozása"
+  ],
+  correctAnswer: "Párbeszédablakok megjelenítése felhasználónak",
+  topic: "Grafikus Java"
+},
+{
+  id: 100,
+  question: "Hogyan lehet egy ListView tartalmát frissíteni JavaFX-ben?",
+  options: [
+    "getItems().clear() majd getItems().addAll()",
+    "setContent() metódussal",
+    "refresh() metódussal",
+    "updateItems() metódussal"
+  ],
+  correctAnswer: "getItems().clear() majd getItems().addAll()",
+  topic: "Grafikus Java"
+},
+{
+  id: 101,
+  question: "Mi a célja a Tailwind CSS utility osztályainak?",
+  options: [
+    "Előre definiált komponensek",
+    "Gyors, inline-szerű stílusozás",
+    "JavaScript funkcionalitás",
+    "Adatbázis kapcsolat"
+  ],
+  correctAnswer: "Gyors, inline-szerű stílusozás",
+  topic: "Tailwind CSS"
+},
+{
+  id: 102,
+  question: "Hogyan lehet egy elem szélességét 100%-ra állítani Tailwind-ben?",
+  options: [
+    "w-full",
+    "w-100",
+    "width-full",
+    "w-screen"
+  ],
+  correctAnswer: "w-full",
+  topic: "Tailwind CSS"
+},
+{
+  id: 103,
+  question: "Melyik media query szabály felelős a mobil eszközök érzékeléséért?",
+  options: [
+    "@media (max-width: 768px)",
+    "@media (mobile)",
+    "@media (portrait)",
+    "@media (touch)"
+  ],
+  correctAnswer: "@media (max-width: 768px)",
+  topic: "Reszponzív weboldal"
+},
+{
+  id: 104,
+  question: "Mi a flexbox fő előnye a float-hoz képest?",
+  options: [
+    "Egyszerűbb elrendezés-vezérlés",
+    "Jobb böngésző támogatás",
+    "Kisebb CSS fájlméret",
+    "Gyorsabb renderelés"
+  ],
+  correctAnswer: "Egyszerűbb elrendezés-vezérlés",
+  topic: "CSS"
+},
+{
+  id: 105,
+  question: "Hogyan lehet egy elem középre igazítani vízszintesen Tailwind-ben?",
+  options: [
+    "mx-auto",
+    "text-center",
+    "center",
+    "align-center"
+  ],
+  correctAnswer: "mx-auto",
+  topic: "Tailwind CSS"
+},
+{
+  id: 106,
+  question: "Mi a middleware szerepe Express.js-ben?",
+  options: [
+    "Kérések és válaszok feldolgozása",
+    "Adatbázis séma létrehozása",
+    "Frontend komponensek renderelése",
+    "Konfigurációs beállítások tárolása"
+  ],
+  correctAnswer: "Kérések és válaszok feldolgozása",
+  topic: "Backend"
+},
+{
+  id: 107,
+  question: "Hogyan lehet egy POST kérés törzsét elérni Express.js-ben?",
+  options: [
+    "req.query",
+    "req.body",
+    "req.params",
+    "req.headers"
+  ],
+  correctAnswer: "req.body",
+  topic: "Backend"
+},
+{
+  id: 108,
+  question: "Mi a CORS fő célja?",
+  options: [
+    "Adatbázis biztonság",
+    "Kereszt-tartományú kérések engedélyezése",
+    "Felhasználói hitelesítés",
+    "Adattitkosítás"
+  ],
+  correctAnswer: "Kereszt-tartományú kérések engedélyezése",
+  topic: "Backend"
+},
+{
+  id: 109,
+  question: "Hogyan lehet egy adatbázis lekérdezést kezelni aszinkron módon?",
+  options: [
+    "Promise vagy async/await használatával",
+    "Callback függvényekkel",
+    "Mindkét módszer helyes",
+    "Egyik módszer sem helyes"
+  ],
+  correctAnswer: "Mindkét módszer helyes",
+  topic: "Backend"
+},
+{
+  id: 110,
+  question: "Mi a REST API fő jellemzője?",
+  options: [
+    "Állapotmentesség",
+    "Csak JSON válaszok",
+    "Kötelező hitelesítés",
+    "GraphQL kompatibilitás"
+  ],
+  correctAnswer: "Állapotmentesség",
+  topic: "Backend"
+}
 ];

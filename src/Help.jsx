@@ -187,11 +187,9 @@ System.out.println(set);
 // automatikusan nem rakja bele az adatot ha az már benne van
 
 set.remove(valami); // törlés a setből
-
-//Vesszővel 
-System.out.printf("3) A kígyók származási helye (abc): %s%n", String.join(", ", helyek));
 */`
-}
+}     
+
 ];
 
 const Section = ({ label }) => {

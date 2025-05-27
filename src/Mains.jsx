@@ -50,6 +50,12 @@ const Mains = () => {
               >
                 Questions
               </Link>
+                           <Link
+                to="/maybehiv"
+                className="px-4 py-2 border border-gray-700 rounded-full text-sm hover:bg-gray-800 transition"
+              >
+                Elméletben Hivatalos Kerdesek
+              </Link>
             </div>
           </div>
 
