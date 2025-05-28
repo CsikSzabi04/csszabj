@@ -5,7 +5,7 @@ const TOTAL_QUESTIONS = hivQuestions.length;
 const QUESTIONS_PER_ROUND = 20;
 const MAX_ROUNDS = 10;
 
-const Questions = () => {
+const Hiv = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [showResults, setShowResults] = useState(false);
@@ -15,59 +15,75 @@ const Questions = () => {
     const [usedQuestionIds, setUsedQuestionIds] = useState(new Set());
     const [roundsHistory, setRoundsHistory] = useState([]);
     const [scoresPerRound, setScoresPerRound] = useState([]);
+    const [availableQuestions, setAvailableQuestions] = useState([...hivQuestions]);
+
+    // Reset available questions when all are used
+    useEffect(() => {
+        if (availableQuestions.length === 0) {
+            setAvailableQuestions([...hivQuestions]);
+            setUsedQuestionIds(new Set());
+            console.log("Reset available questions pool");
+        }
+    }, [availableQuestions]);
 
     const getQuestionsForRound = () => {
-        if (roundNumber > MAX_ROUNDS) {
+        // If we've used all questions, reset the pool
+        if (usedQuestionIds.size >= hivQuestions.length) {
             setUsedQuestionIds(new Set());
-            setRoundNumber(1);
-            setRoundsHistory([]);
-            setScoresPerRound([]);
-            console.log("Resetting: cleared all saved question IDs and round history");
+            setAvailableQuestions([...hivQuestions]);
+            console.log("Resetting question pool as all questions have been used");
         }
 
-        const availableQuestions = hivQuestions.filter(q => !usedQuestionIds.has(q.id)).map(q => q.id);
-        const countToTake = Math.min(QUESTIONS_PER_ROUND, availableQuestions.length);
-        const selectedQuestions = [];
-
-        while (selectedQuestions.length < countToTake && availableQuestions.length > 0) {
-            const randIndex = Math.floor(Math.random() * availableQuestions.length);
-            selectedQuestions.push(availableQuestions[randIndex]);
-            availableQuestions.splice(randIndex, 1);
+        // Filter out used questions
+        const unusedQuestions = availableQuestions.filter(q => !usedQuestionIds.has(q.id));
+        
+        // If not enough questions left, reset the pool
+        if (unusedQuestions.length < QUESTIONS_PER_ROUND) {
+            setUsedQuestionIds(new Set());
+            setAvailableQuestions([...hivQuestions]);
+            console.log("Resetting question pool as not enough questions left");
+            return getQuestionsForRound(); // Recursively call with fresh pool
         }
 
+        // Shuffle the unused questions
+        const shuffled = [...unusedQuestions].sort(() => 0.5 - Math.random());
+        
+        // Take the first QUESTIONS_PER_ROUND questions
+        const selectedQuestions = shuffled.slice(0, QUESTIONS_PER_ROUND);
+        
+        // Update used question IDs
         const newUsedIds = new Set(usedQuestionIds);
-        selectedQuestions.forEach(id => newUsedIds.add(id));
+        selectedQuestions.forEach(q => newUsedIds.add(q.id));
         setUsedQuestionIds(newUsedIds);
+        
+        // Update available questions
+        setAvailableQuestions(prev => prev.filter(q => !newUsedIds.has(q.id)));
 
-        const newRoundsHistory = [...roundsHistory, selectedQuestions];
+        // Update rounds history for debugging
+        const newRoundsHistory = [...roundsHistory, selectedQuestions.map(q => q.id)];
         setRoundsHistory(newRoundsHistory);
-
+        
+        // Debug check for duplicates
         checkForDuplicates(newRoundsHistory);
 
         return selectedQuestions;
     };
 
     const checkForDuplicates = (rounds) => {
-        for (let i = 0; i < rounds.length; i++) {
-            for (let j = i + 1; j < rounds.length; j++) {
-                const setA = new Set(rounds[i]);
-                const setB = new Set(rounds[j]);
-                for (const item of setB) {
-                    if (setA.has(item)) {
-                        console.log(`Overlap between round ${i + 1} and ${j + 1}: question ID ${item}`);
-                        return true;
-                    }
-                }
-            }
+        const allQuestionIds = rounds.flat();
+        const uniqueIds = new Set(allQuestionIds);
+        
+        if (allQuestionIds.length !== uniqueIds.size) {
+            console.log("Duplicate questions detected in rounds history");
+            return true;
         }
-        console.log("No overlap between rounds.");
+        console.log("No duplicate questions in rounds history");
         return false;
     };
 
     const startQuiz = () => {
-        const questionIds = getQuestionsForRound();
-        const filteredQuestions = hivQuestions.filter(q => questionIds.includes(q.id));
-        setRoundQuestions(filteredQuestions);
+        const questions = getQuestionsForRound();
+        setRoundQuestions(questions);
         setQuizStarted(true);
     };
 
@@ -107,25 +123,25 @@ const Questions = () => {
         }
 
         const score = calculateScore();
-        const updatedScores = [...scoresPerRound, score];
-        setScoresPerRound(updatedScores);
+        setScoresPerRound(prev => [...prev, score]);
 
         setSelectedAnswers({});
         setCurrentQuestionIndex(0);
         setShowResults(false);
         setRoundNumber(prev => prev + 1);
 
-        const questionIds = getQuestionsForRound();
-        const filteredQuestions = hivQuestions.filter(q => questionIds.includes(q.id));
-        setRoundQuestions(filteredQuestions);
-        setQuizStarted(true);
+        const questions = getQuestionsForRound();
+        setRoundQuestions(questions);
     };
-
-
 
     const resetQuizAtom = () => {
         setScoresPerRound([]);
-        window.location.reload();
+        setUsedQuestionIds(new Set());
+        setAvailableQuestions([...hivQuestions]);
+        setRoundNumber(1);
+        setQuizStarted(false);
+        setShowResults(false);
+        setSelectedAnswers({});
     };
 
     if (!quizStarted) {
@@ -283,8 +299,6 @@ const Questions = () => {
                                     Start Next Round
                                 </button>
                             ) : (
-
-
                                 <div className="mt-10 text-center bg-gray-900 p-6 rounded-xl w-full max-w-2xl">
                                     <h3 className="text-xl font-bold text-white mb-4">Round Summary</h3>
 
@@ -314,13 +328,8 @@ const Questions = () => {
                                         Restart Quiz
                                     </button>
                                 </div>
-
-
                             )}
                         </div>
-
-
-
                     </div>
                 )}
             </div>
@@ -328,4 +337,4 @@ const Questions = () => {
     );
 };
 
-export default Questions;
+export default Hiv;
