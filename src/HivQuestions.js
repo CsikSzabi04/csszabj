@@ -1975,7 +1975,7 @@ export const hivQuestions = [
             "float",
             "double"
         ],
-        "correctAnswer": ["long"],
+        "correctAnswer": "long",
         "topic": "Programozás / Adattípusok"
     },
     {
@@ -2292,18 +2292,7 @@ export const hivQuestions = [
         "correctAnswer": "A kép azonosítójú elem szélességét 200 pontosra állítja.",
         "topic": "Webfejlesztés / CSS"
     },
-      {
-    "id": 301,
-    "question": "CSS-ben keretet szeretne készíteni a következő keretvastagságokkal: Felső keret = 10 képpont, alsó keret = 5 képpont, bal oldali keret = 20 képpont, jobb oldali keret = 1 képpont. Melyik a helyes parancs erre a célra?",
-    "options": [
-      "border-width:10px 20px 5px 1px;",
-      "border-width:10px 1px 5px 20px;",
-      "border-width:10px 5px 20px 1px;",
-      "border-width:5px 20px 10px 1px;"
-    ],
-    "correctAnswer": "border-width:10px 1px 5px 20px;",
-    "topic": "Webfejlesztés / CSS"
-  },
+    
   {
     "id": 302,
     "question": "Melyik CSS utasítás szünteti meg a hiperhivatkozások aláhúzását?",
