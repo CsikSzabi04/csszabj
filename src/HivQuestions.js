@@ -1836,7 +1836,7 @@ export const hivQuestions = [
         "options": [
             "A repository helyi másolatát a git copy https://github.com/user/project paranccsal lehet elkészíteni",
             "A kiadas branchre a git remove kiadas paranccsal lehet átváltani.",
-            "A git commit paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
+            "A git push paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
             "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni."
         ],
         "correctAnswer": "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni.",
@@ -1849,7 +1849,7 @@ export const hivQuestions = [
         "options": [
             "A repository helyi másolatát a git copy https://github.com/user/project paranccsal lehet elkészíteni",
             "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
-            "A git commit paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
+            "A git remote remove paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
             "A git push paranccsal lehet a központi repositoryban levő változásokat letölteni."
         ],
         "correctAnswer": "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
