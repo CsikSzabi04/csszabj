@@ -133,7 +133,7 @@ const Questions = () => {
             <div className="scroll-container text-gray-100 font-sans antialiased p-8 flex flex-col items-center">
                 <div className="w-full max-w-2xl bg-black bg-opacity-70 rounded-2xl shadow-lg p-6 fade-in visible text-center">
                     <h2 className="text-2xl font-bold gradient-text mb-6">Programming Quiz</h2>
-                    <p className="mb-6">Round {roundNumber}: You'll get 20 random questions from our database. <br /> <span style={{fontWeight:'bold', color:"green"}}>( You should do all 10 rounds cause there are 207 questions! )</span> <br /><span style={{fontWeight:'bold', color:"red", fontSize:"small"}}>( Az összes kérdést megnéztem hogy a válaszok jók-e)</span> </p>
+                    <p className="mb-6">Round {roundNumber}: You'll get 20 random questions from our database. <br /> <span style={{fontWeight:'bold', color:"green"}}>( You should do all 10 rounds cause there are 200 questions! )</span> <br /><span style={{fontWeight:'bold', color:"red", fontSize:"small"}}>( Az összes kérdést megnéztem hogy a válaszok jók-e)</span> </p>
                     <button
                         onClick={startQuiz}
                         className="px-6 py-3 bg-purple-600 rounded-lg hover:bg-purple-700"
