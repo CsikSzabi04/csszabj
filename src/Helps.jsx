@@ -312,6 +312,7 @@ const Section = ({ label }) => {
 const Help = () => {
   return (
     <div className="scroll-container text-gray-100 font-sans antialiased">
+      <a href="https://github.com/gillichbalint01/help" target="_blank">Gilli</a>
       <div className="flex w-screen min-h-screen">
         <Section label="BackEnd" />
         <Section label="FrontEnd" />
