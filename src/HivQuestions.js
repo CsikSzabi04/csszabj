@@ -1254,18 +1254,6 @@ export const hivQuestions = [
     },
 
     {
-        "id": 214,
-        "question": "Mit csinál az alábbi programkód?\n\nint ertek = 12;\nstring eredmeny = \"\";\nfor (int i = 1; i < ertek+1; i++) {\n if (ertek % i == 0) {\n eredmeny += i + \", \";\n }\n}\nConsole.WriteLine(eredmeny);",
-        "options": [
-            "Kiírja 12 osztóit a képernyőre, kivéve a 24-et, vesszővel elválasztva.",
-            "Kiírja a 12 osztóit a képernyőre vesszővel elválasztva.",
-            "Kiírja a 12 prímosztóit a képernyőre vesszővel elválasztva.",
-            "Kiírja a számokat 1-től 12-ig a képernyőre vesszővel elválasztva."
-        ],
-        "correctAnswer": "Kiírja a 12 osztóit a képernyőre vesszővel elválasztva.",
-        "topic": "Programming / Loops"
-    },
-    {
         "id": 215,
         "question": "Melyik adattípus biztosítja a leggazdaságosabb tárhelyfoglalást, ha egy tornász pontszámait szeretnénk eltárolni (a pontozó bírák által adható maximális pontszám 10, és tizedes értékeket is adhatnak pl.: 8,6)?",
         "options": [
