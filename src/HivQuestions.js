@@ -1256,22 +1256,6 @@ export const hivQuestions = [
     },
 
     {
-        "id": 211,
-        "question": "Az alábbiak közül mely adattípusok szolgálnak egész számok tárolására? (2 jó válasz)",
-        "options": [
-            "char",
-            "short",
-            "long",
-            "float",
-            "double"
-        ],
-        "correctAnswer": [
-            "short",
-            "long"
-        ],
-        "topic": "Programming / Data Types"
-    },
-    {
         "id": 212,
         "question": "Melyik feltételt kell használnunk akkor, ha azt szeretnénk vizsgálni, hogy az adott évszám szökőév-e és egyben századforduló is?",
         "options": [
@@ -1283,21 +1267,7 @@ export const hivQuestions = [
         "correctAnswer": "evszam % 4 == 0 && evszam % 100 == 0",
         "topic": "Programming / Logic"
     },
-    {
-        "id": 213,
-        "question": "Mely kifejezések igazak az alábbiak közül? (2 jó válasz)",
-        "options": [
-            "10111001B < 180D",
-            "145D > 90H",
-            "10111111B = BAH",
-            "148D<10010111B"
-        ],
-        "correctAnswer": [
-            "10111001B < 180D",
-            "145D > 90H"
-        ],
-        "topic": "Programming / Number Systems"
-    },
+
     {
         "id": 214,
         "question": "Mit csinál az alábbi programkód?\n\nint ertek = 12;\nstring eredmeny = \"\";\nfor (int i = 1; i < ertek+1; i++) {\n if (ertek % i == 0) {\n eredmeny += i + \", \";\n }\n}\nConsole.WriteLine(eredmeny);",
@@ -1889,16 +1859,29 @@ export const hivQuestions = [
     },
     {
         "id": 263,
-        "question": "A fejlesztői csapat egy közös projekten dolgozik. Az elkészült kód központi repository-ja a https://github.com/user/project címen érhető el. Három branch van, beton, fejleszt és kiadas néven. Jelölje be az alábbiak közül az igaz állításokat! (2 jó válasz)",
+        "question": "A fejlesztői csapat egy közös projekten dolgozik. Az elkészült kód központi repository-ja a https://github.com/user/project címen érhető el. Három branch van, beton, fejleszt és kiadas néven. Jelölje be az alábbiak közül az igaz állításokat!",
         "options": [
             "A repository helyi másolatát a git copy https://github.com/user/project paranccsal lehet elkészíteni",
-            "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
+            "A kiadas branchre a git remove kiadas paranccsal lehet átváltani.",
             "A git commit paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
             "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni."
         ],
         "correctAnswer": [
-            "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
             "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni."
+        ],
+        "topic": "Version Control / Git"
+    },
+        {
+        "id": 213,
+        "question": "A fejlesztői csapat egy közös projekten dolgozik. Az elkészült kód központi repository-ja a https://github.com/user/project címen érhető el. Három branch van, beton, fejleszt és kiadas néven. Jelölje be az alábbiak közül az igaz állításokat!",
+        "options": [
+            "A repository helyi másolatát a git copy https://github.com/user/project paranccsal lehet elkészíteni",
+            "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
+            "A git commit paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
+            "A git push paranccsal lehet a központi repositoryban levő változásokat letölteni."
+        ],
+        "correctAnswer": [
+            "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
         ],
         "topic": "Version Control / Git"
     },
@@ -2001,15 +1984,15 @@ export const hivQuestions = [
     },
     {
         "id": 273,
-        "question": "Az alábbiak közül mely adattípusok szolgálnak egész számok tárolására? (2 jó válasz)",
+        "question": "Az alábbiak közül mely adattípusok szolgálnak egész számok tárolására? ",
         "options": [
             "char",
-            "short",
+            "string",
             "long",
             "float",
             "double"
         ],
-        "correctAnswer": ["short", "long"],
+        "correctAnswer": ["long"],
         "topic": "Programozás / Adattípusok"
     },
     {
@@ -2024,18 +2007,7 @@ export const hivQuestions = [
         "correctAnswer": "evszam % 4 == 0 && evszam % 100 == 0",
         "topic": "Programozás / Feltételek"
     },
-    {
-        "id": 275,
-        "question": "Mely kifejezések igazak az alábbiak közül? (2 jó válasz)",
-        "options": [
-            "10111001B < 180D",
-            "145D > 8FH",
-            "10111111B = BAH",
-            "150D < 10010111B"
-        ],
-        "correctAnswer": ["10111001B < 180D", "145D > 8FH"],
-        "topic": "Számrendszerek / Logika"
-    },
+
     {
         "id": 276,
         "question": "Melyik adattípus biztosítja a leggazdaságosabb tárhelyfoglalást, ha egy tornász pontszámait szeretnénk eltárolni (a pontozó bírák által adható maximális pontszám 10, és tizedes értékeket is adhatnak pl.: 8,6)?",
@@ -2557,7 +2529,4 @@ export const hivQuestions = [
 
 ]
 
-//111től kezdtem és 318 kérdés lett végén (207 full)
-
-
-//Select ingatlanok.id, ingatlanok.leira, ingatlanok.hirdetesDatuma, ingatlanok.tehermentes, ingatlanok.ar,ingatlanok.kepUrl, kategoriak.nev 
+//111től kezdtem és 318 kérdés lett végén (318 full)
