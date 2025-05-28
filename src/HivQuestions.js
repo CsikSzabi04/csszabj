@@ -1155,21 +1155,6 @@ export const hivQuestions = [
         "topic": "SQL"
     },
     {
-        "id": 202,
-        "question": "Jelölje be az igaz állításokat a Git parancsokkal kapcsolatban!",
-        "options": [
-            "A repository helyi másolatát a git copy https://github.com/user/project paranccsal lehet elkészíteni",
-            "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
-            "A git commit paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
-            "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni."
-        ],
-        "correctAnswer": [
-            "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
-            "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni."
-        ],
-        "topic": "Git"
-    },
-    {
         "id": 203,
         "question": "Mi a hatása a következő SQL utasításnak? DELETE FROM car WHERE evjarat BETWEEN 2020 AND 2022;",
         "options": [
@@ -1866,9 +1851,8 @@ export const hivQuestions = [
             "A git commit paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
             "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni."
         ],
-        "correctAnswer": [
-            "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni."
-        ],
+        "correctAnswer": "A git pull paranccsal lehet a központi repositoryban levő változásokat letölteni.",
+    
         "topic": "Version Control / Git"
     },
         {
@@ -1880,9 +1864,8 @@ export const hivQuestions = [
             "A git commit paranccsal lehet a helyi változásokat a központi repositoryba feltölteni.",
             "A git push paranccsal lehet a központi repositoryban levő változásokat letölteni."
         ],
-        "correctAnswer": [
-            "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
-        ],
+        "correctAnswer": "A kiadas branchre a git checkout kiadas paranccsal lehet átváltani.",
+ 
         "topic": "Version Control / Git"
     },
     {
@@ -2451,7 +2434,7 @@ export const hivQuestions = [
       "a kép fele részben átlátszó lesz",
       "a kép 70% ban átlátszó lesz"
     ],
-    "correctAnswer": "a kép 30% ban átlátszó lesz",
+    "correctAnswer": "a kép 70% ban átlátszó lesz",
     "topic": "Webfejlesztés / CSS vizuális effektek"
   },
   {
@@ -2529,4 +2512,7 @@ export const hivQuestions = [
 
 ]
 
-//111től kezdtem és 318 kérdés lett végén (318 full)
+//111től kezdtem és 318 kérdés lett végén (207 full)
+
+
+//Select ingatlanok.id, ingatlanok.leira, ingatlanok.hirdetesDatuma, ingatlanok.tehermentes, ingatlanok.ar,ingatlanok.kepUrl, kategoriak.nev 
