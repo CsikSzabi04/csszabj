@@ -187,6 +187,10 @@ System.out.println(set);
 // automatikusan nem rakja bele az adatot ha az már benne van
 
 set.remove(valami); // törlés a setből
+
+
+//  TreeSet<String> gyartok = new TreeSet<>();
+//  System.out.printf("%s ", String.join(", ",gyartok));
 */`
 }     
 
