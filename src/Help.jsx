@@ -188,7 +188,6 @@ System.out.println(set);
 
 set.remove(valami); // törlés a setből
 
-
 //  TreeSet<String> gyartok = new TreeSet<>();
 //  System.out.printf("%s ", String.join(", ",gyartok));
 */`

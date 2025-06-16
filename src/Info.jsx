@@ -16,13 +16,13 @@ const Info = () => {
                 Feel free to reach out - I'm always open to new collaborations and ideas.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-                <div className="bg-gradient-to-r from-gray-800 to-zinc-700 p-6 rounded-xl fade-in delay-200">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 ">
+                <div className="bg-gradient-to-r from-gray-800 to-zinc-700 p-6 rounded-xl fade-in delay-200 ">
                   <div className="w-12 h-12 mx-auto bg-gray-600 rounded-full flex items-center justify-center text-xl text-gray-100 mb-4">
                     <i className="fas fa-envelope"></i>
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Email</h3>
-                  <p className="text-gray-400">alexszabi04@gmail.com</p>
+                  <p className="text-gray-400">alexszabi04@gmail.com </p> 
                 </div>
 
                 <div className="bg-gradient-to-r from-gray-800 to-zinc-700 p-6 rounded-xl fade-in delay-300">
