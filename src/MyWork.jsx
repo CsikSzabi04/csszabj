@@ -30,11 +30,11 @@ const MyWork = () => {
                 bg: 'from-purple-500 to-pink-600',
               },
               {
-                title: 'Money Tracker',
-                desc: 'Application for tracking personal finances.',
-                img: './p3.png',
-                tech: ['React', 'Firebase', 'Charts'],
-                link: 'https://pflowtracker.netlify.app/',
+                title: 'Hair Ranch',
+                desc: 'WebPage for my favourite Barber in Kecskemét',
+                img: './HairRanch.png',
+                tech: ['React', 'TailwinCss', 'Backend | Node.js'],
+                link: 'https://hairranch.netlify.app/',
                 bg: 'from-green-500 to-blue-600',
               },
             ].map((project, index) => (
