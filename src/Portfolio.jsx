@@ -37,6 +37,10 @@ const Portfolio = () => {
     window.open('CV.png', '_blank');
   };
 
+    const handleDownloadM = () => {
+    window.open('motivacioslevelPDF.pdf', '_blank');
+  };
+
   const smoothScrollTo = (targetPos) => {
     if (isAnimatingRef.current) return;
     if (!scrollContainerRef.current) return;
@@ -271,7 +275,7 @@ const Portfolio = () => {
       <div className="scroll-container pt-16" ref={scrollContainerRef}>
         <div className="flex flex-col">
           <Mains />
-          <AboutMe handleDownloadCV={handleDownloadCV} />
+          <AboutMe handleDownloadCV={handleDownloadCV} handleDownloadM={handleDownloadM}/>
           <MyWork />
           <Info />
         </div>

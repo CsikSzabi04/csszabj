@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <title>Prezentáció</title>
+    <style>
+        body {
+            background-color: rgb(199, 199, 199);
+            margin: 0px auto;
+        }
+
+        .container {
+            background-image: url(alap.jpg);
+            border: solid 2px black;
+            padding: 5px;
+            margin: 10px auto;
+        }
+
+        #kepem {
+            width: auto;
+            height: 210px;
+            border-radius: 5%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            float: none;
+        }
+
+        h1 {
+            color: brown;
+            border-bottom: solid 1px black;
+        }
+
+        #első {
+            text-align: center;
+            color: darkred;
+            text-decoration: underline;
+            border-bottom: 0px;
+        }
+
+        #második {
+            text-align: center;
+            border-bottom: 0px;
+        }
+
+        .nagybetűs {
+            text-transform: uppercase;
+            margin-left: 92px;
+            margin-top: 30px;
+            border-bottom: solid 1px black;
+            color: darkred;
+        }
+
+        p {
+            margin-left: 92px;
+            margin-top: 0px;
+            color: black;
+            margin-right: 30px;
+        }
+
+        #kép {
+            width: 50px;
+            height: 70px;
+            border-radius: 100%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .er {
+            margin-left: 20px;
+        }
+
+        #err {
+            margin-left: 35px;
+        }
+
+        img {
+            height: 60px;
+            width: 70px;
+            float: right;
+
+        }
+
+        #profil {
+            padding-top: 63px;
+        }
+
+        .haha {
+            margin: 20px;
+
+        }
+
+        @media (min-width: 700px) {
+
+            .nagybetűs,
+            p {
+                margin-left: 70px;
+                margin-right: 20px;
+            }
+        }
+
+        @media (min-width: 1400px) {
+
+            .nagybetűs,
+            p {
+                margin-left: 50px;
+                margin-right: 10px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1 id="első">Önéletrajz <span id="clientWidth"></span></h1>
+        </header>
+        <div class="row">
+            <div class="col-md-6">
+                <img class="img-fluid" id="kepem" src="pic.png" alt="Csík Szabolcs Alex" title="Csík Szabolcs Alex">
+                <h1 id="második">Csík Szabolcs Alex</h1>
+                <p class="nagybetűs">Kapcsolat</p>
+                <div class="er">
+                    <p>Mobil: <br> +36702421586</p>
+                    <p>Email: <br> <a href="mailto:alexszabi04@gmail.com">alexszabi04@gmail.com</a></p>
+                </div>
+                <p class="nagybetűs">Nyelvismeret</p>
+                <div class="er">
+                    <p><strong>Angol-</strong> Emelt szintű érettségi (86%) és B2-es Komplex nyelvvizsga</p>
+                </div>
+
+
+                <p class="nagybetűs">Képességeim</p>
+                <div class="row">
+                    <div class="er" id="err">
+                        <p>MS Office (Word, Excel, PowerPoint, Access) – magabiztos felhasználói szint</p>
+                        <p>Java, JavaScript, HTML, CSS – webes programozási alapismeretek</p>
+                        <p>React.js, Tailwind CSS, Bootstrap – modern frontend technológiák</p>
+                        <p>Node.js, API fejlesztés – backend és adatkapcsolatok kezelése</p>
+                        <p>MySQL, Firebase – relációs és felhőalapú adatbázis-kezelés</p>
+                        <p>VS Code, IntelliJ IDEA – fejlesztői környezetek használata</p>
+                        <p>GitHub – verziókezelés, projektmunka</p>
+                        <p>Unity – alapszintű játék- és 3D-fejlesztési tapasztalat</p>
+                       <p>Online marketing: Advertising, Online Advertising, Strategy</p>
+                        <p>Precíz adminisztráció, riport- és dokumentumkezelés</p>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-6">
+                <h1 id="profil">Profil</h1>
+                <ul>
+                    <li>Születési dátum: 2004. Január 23.</li>
+                    <li>18 életévemet betöltöttem</li>
+                    <li>B-kategóriás jogosítvány</li>
+                    <li>Ápolt, igényes megjelenés</li>
+                    <li>Felettesekkel és tanárokkal való tisztelettudó viselkedés</li>
+                </ul>
+                <h1>Szakmai Tapasztalat</h1>
+                <ol>
+                    <li><strong>Dr.Code - Kecskemét</strong>
+                        <ul>
+                            <li>Oktatóként dolgozok kecskeméten a Dr.Code-nál</li>
+                            <li>Informatikai alapok oktatása általános iskolásoknak/középiskolűsoknak</li>
+                        </ul>
+                    </li>
+                    <li><strong>Hirös Ízek Kft.</strong>
+                        <ul>
+                            <li>Hirös Ízek Kft.-nél dolgoztam nyári szünetben.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Fürge Diák Iskolaszövetkezet - Kecskemét</strong>
+                        <ul>
+                            <li>Som-Plast Kft.-nél dolgoztam mint diákmunkás.</li>
+                        </ul>
+                    </li>
+                </ol>
+                <h1>Tanulmányok</h1>
+                <ul>
+                    <p>
+                        <li>KECSKEMÉTI SZC KANDÓ KÁLMÁN Technikumban végeztem, Szoftverfejlesztő/tesztelő informatikus
+                            szakon.</li>
+                        <li>Kecskeméti Szakképzési Centrum GRÓF KÁROLYI SÁNDOR Technikumba vettek fel és végeztem el az
+                            angol 1 éves felkészítőt.</li>
+                        <li>A Kecskeméti Vásárhelyi Pál Általános Iskola és AMI - Móricz Zsigmond Általános Iskolája,
+                            Hetényegyháza általános iskolában végeztem négyes feletti átlaggal.</li>
+                        <li id="sor">Logischool (Dr.Code) 4 éves képzés elvégzése</li>
+                    </p>
+                </ul>
+                <h1>Tulajdonságaim:</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Szeretek csapatban dolgozni</li>
+                            <li>Céltudatos vagyok</li>
+                            <li>Nagycsaládban nőttem fel, ezért az alkalmazkodás nem okoz gondot</li>
+                            <li>Informatikai területen tapasztalatok</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Jó kommunikációs képességem van</li>
+                            <li>Megoldásban gondolkodom</li>
+                            <li>Amatőr kerékpározás hobbi szinten - cél versenyekre elindulás</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
