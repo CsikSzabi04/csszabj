@@ -1,9 +1,6 @@
 # Alexander Sz. Csík' Portfolio
 
 ![image](https://github.com/user-attachments/assets/98284128-71ea-45ef-b463-c22361c277f6)
-![image](https://github.com/user-attachments/assets/98284128-71ea-45ef-b463-c22361c277f6)
-
-# Szabolcs Alex Csík – Portfolio
 
 ## About Me
 
