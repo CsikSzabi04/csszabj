@@ -27,11 +27,11 @@ export default function LuInterface() {
 
     // Tevékenységenkénti fogyasztás Wattban
     const idlePower = 36;   // CPU+GPU+monitor kb. idle állapotban
-    const seriesPower = 65; // sorozatnézés közben
-    const codingPower = 68; // programozás közben
+    const seriesPower = 50; // sorozatnézés közben
+    const codingPower = 50; // programozás közben
     const gamingPower = 95; // játék közben
-    const monitor = 30;
-    const plusCost = 40;
+    const monitor = 25;
+    const plusCost = 10;
     const phoneCharge = 60;
 
     // Energiafogyasztás Wh-ban tevékenységenként
