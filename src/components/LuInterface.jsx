@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import LuHeader from './Lu/LuHeader';
 import LuMessages from './Lu/LuMessages';
 import LuInput from './Lu/LuInput';
@@ -15,189 +15,262 @@ export default function LuInterface() {
   ]);
   const [isListening, setIsListening] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true);
+  const [interimText, setInterimText] = useState('');
+  const [inputText, setInputText] = useState('');
+  const recognitionRef = useRef(null);
 
-  const calculatePowerConsumption = () => {
-    // Napi használati idők (órában)
-    const idleHours = 2;
-    const seriesHours = 8;
-    const codingHours = 6;
-    const gamingHoursPerDay = 2;
-    const phoneCharging = 5;
-    const all = idleHours + seriesHours + codingHours + gamingHoursPerDay;
+  const playlists = {
+    share: {
+      id: 'PLsjJuGNBBP8s0r1vXcxtIMGxmpf8KaIB1',
+      aliases: ['share playlist', 'share', 'első', 'nosztalgia', 'nostalgia', 'asd']
+    },
+    mammamia: {
+      id: 'PLsjJuGNBBP8tTxpxHmKjFDWA3VMZow88A',
+      aliases: ['mamma mia', 'mamma mia playlist', 'abba', 'mammamia']
+    }
+  };
 
-    // Tevékenységenkénti fogyasztás Wattban
-    const idlePower = 36;   // CPU+GPU+monitor kb. idle állapotban
-    const seriesPower = 50; // sorozatnézés közben
-    const codingPower = 50; // programozás közben
-    const gamingPower = 95; // játék közben
-    const monitor = 25;
-    const plusCost = 10;
-    const phoneCharge = 60;
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      console.warn('Speech Recognition not supported in this browser');
+      return;
+    }
 
-    // Energiafogyasztás Wh-ban tevékenységenként
-    const idleEnergy = idleHours * idlePower;
-    const seriesEnergy = seriesHours * seriesPower;
-    const codingEnergy = codingHours * codingPower;
-    const gamingEnergy = gamingHoursPerDay * gamingPower;
-    const monitorEnergy = all * monitor;
-    const plusCostEnergy = all * plusCost;
-    const phoneChargingEnergy = phoneCharge * phoneCharging;
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = 'hu-HU';
 
-    // Teljes napi energia Wh-ban és kWh-ban
-    const totalDailyEnergyWh = idleEnergy + seriesEnergy + codingEnergy + gamingEnergy + monitorEnergy + plusCostEnergy ;
-    const totalDailyEnergyWhWphone = idleEnergy + seriesEnergy + codingEnergy + gamingEnergy + monitorEnergy + plusCostEnergy + phoneChargingEnergy;
-    const totalDailyEnergyKwh = totalDailyEnergyWh / 1000;
-    const totalDailyEnergyKwhWphone = totalDailyEnergyWhWphone / 1000;
+    recognition.onresult = (event) => {
+      let interimTranscript = '';
+      let finalTranscript = '';
 
-    // Tarifák Ft/kWh
-    const a1Tariff = 36;
-    const a2Tariff = 70;
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
 
-    // Költségek
-    const dailyCostA1 = totalDailyEnergyKwh * a1Tariff;
-    const dailyCostA2 = totalDailyEnergyKwh * a2Tariff;
+      setInterimText(interimTranscript);
+      setInputText(interimTranscript);
 
-    const dailyCostA1WPhone = totalDailyEnergyKwhWphone * a1Tariff;
-    const dailyCostA2Wphone = totalDailyEnergyKwhWphone * a2Tariff;
-
-    // Heti és havi értékek
-    const weeklyEnergyKwh = totalDailyEnergyKwh * 7;
-    const monthlyEnergyKwh = totalDailyEnergyKwh * 30; 
-
-    const weeklyCostA1 = dailyCostA1 * 7;
-    const monthlyCostA1 = dailyCostA1 * 30;
-
-    const weeklyCostA2 = dailyCostA2 * 7;
-    const monthlyCostA2 = dailyCostA2 * 30;
-
-    const monthlyCostA1WP = dailyCostA1WPhone * 30;
-    const monthlyCostA2WP = dailyCostA2Wphone * 30;
-
-    return {
-      dailyEnergyKwh: totalDailyEnergyKwh.toFixed(3),
-      weeklyEnergyKwh: weeklyEnergyKwh.toFixed(3),
-      monthlyEnergyKwh: monthlyEnergyKwh.toFixed(3),
-      dailyCostA1: dailyCostA1.toFixed(2),
-      weeklyCostA1: weeklyCostA1.toFixed(2),
-      monthlyCostA1: monthlyCostA1.toFixed(2),
-      dailyCostA2: dailyCostA2.toFixed(2),
-      weeklyCostA2: weeklyCostA2.toFixed(2),
-      monthlyCostA2: monthlyCostA2.toFixed(2),
-      monthlyCostA2WP: monthlyCostA2WP.toFixed(2),
-      monthlyCostA1WP: monthlyCostA1WP.toFixed(2),
-      usageBreakdown: {
-        idleHours,
-        seriesHours,
-        codingHours,
-        gamingHoursPerDay: gamingHoursPerDay.toFixed(1),
-        totalHours: (idleHours + seriesHours + codingHours + gamingHoursPerDay).toFixed(1)
+      if (finalTranscript) {
+        handleSend(finalTranscript);
+        setIsListening(false);
+        setInterimText('');
+        setInputText('');
       }
     };
-  };
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error);
+
+      // Handle specific error cases
+      switch (event.error) {
+        case 'network':
+          setMessages(prev => [...prev, {
+            text: 'Network error. Please check your connection.',
+            sender: 'lu',
+            timestamp: new Date(),
+            loading: false
+          }]);
+          break;
+        case 'not-allowed':
+        case 'service-not-allowed':
+          setMessages(prev => [...prev, {
+            text: 'Microphone access denied. Please allow microphone permissions.',
+            sender: 'lu',
+            timestamp: new Date(),
+            loading: false
+          }]);
+          break;
+        default:
+          setMessages(prev => [...prev, {
+            text: 'Error with voice recognition. Try again or type your message.',
+            sender: 'lu',
+            timestamp: new Date(),
+            loading: false
+          }]);
+      }
+
+      setIsListening(false);
+      setInterimText('');
+    };
+
+    recognition.onend = () => {
+      // Only restart if we're still supposed to be listening
+      // and there wasn't an error
+      if (isListening && !recognition.error) {
+        try {
+          recognition.start();
+        } catch (e) {
+          console.error('Failed to restart recognition:', e);
+          setIsListening(false);
+        }
+      }
+    };
+
+    recognitionRef.current = recognition;
+
+    return () => {
+      recognition.onend = null; // Remove handler to prevent restart
+      recognition.stop();
+    };
+
+
+
+  }, [isListening]);
+
+  useEffect(() => {
+    if (isListening) {
+      try {
+        recognitionRef.current?.start();
+        setMessages(prev => [...prev, {
+          text: 'Listening... Speak now',
+          sender: 'lu',
+          timestamp: new Date(),
+          loading: false
+        }]);
+      } catch (e) {
+        console.error('Failed to start recognition:', e);
+        setIsListening(false);
+        setMessages(prev => [...prev, {
+          text: 'Failed to start voice recognition. Try again.',
+          sender: 'lu',
+          timestamp: new Date(),
+          loading: false
+        }]);
+      }
+    } else {
+      recognitionRef.current?.stop();
+    }
+  }, [isListening]);
+
+  useEffect(() => {
+    if (isListening) {
+      recognitionRef.current?.start();
+      setMessages(prev => [...prev, {
+        text: 'Listening... Speak now',
+        sender: 'lu',
+        timestamp: new Date(),
+        loading: false
+      }]);
+    } else {
+      recognitionRef.current?.stop();
+    }
+  }, [isListening]);
 
   const handleSend = async (input) => {
     if (!input.trim()) return;
 
-    const userMessage = {
+    const lowerInput = input.toLowerCase();
+
+    // Skip wake words
+    const wakeRegex = /^(lu|hey lu|hello lu|listen up)$/i;
+    if (wakeRegex.test(input.trim())) return;
+
+    const userMsg = {
       text: input,
       sender: 'user',
       timestamp: new Date(),
       loading: false
     };
 
-    setMessages(prev => [...prev, userMessage, {
+    setMessages(prev => [...prev, userMsg, {
       text: '',
       sender: 'lu',
       timestamp: new Date(),
       loading: true
     }]);
 
-    // Check if the input matches our trigger phrase
+    // Stop commands
     if (
-       (
-        input.toLowerCase().includes('számold ki') || 
-        input.toLowerCase().includes('szamold ki') ||  
-        input.toLowerCase().includes('mennyit') || 
-        input.toLowerCase().includes('mennyi lehet a') || 
-        input.toLowerCase().includes('mennyi')
-      ) && (
-        input.toLowerCase().includes('gepem') || 
-        input.toLowerCase().includes('gépem') || 
-        input.toLowerCase().includes('gpen') || 
-        input.toLowerCase().includes('pc-m') || 
-        input.toLowerCase().includes('pcm')
-      ) && (
-        input.toLowerCase().includes('fogyaszt') || 
-        input.toLowerCase().includes('fogyasztása') || 
-        input.toLowerCase().includes('fogyasztasa')
-      ) || (
-      input.toLowerCase().includes('power') || 
-      input.toLowerCase().includes('fogyaszt') ||
-      input.toLowerCase().includes('energia') ||
-      input.toLowerCase().includes('calculate') ||
-      input.toLowerCase().includes('pc') ||
-      input.toLowerCase().includes('computer') ||
-      input.toLowerCase().includes('gép') ||
-      input.toLowerCase().includes('gépet') ||
-      input.toLowerCase().includes('számol') ||
-      input.toLowerCase().includes('számíts')   )) 
-      
-      {
-    setTimeout(() => {
-      const results = calculatePowerConsumption();
+      lowerInput.includes('állítsd le') ||
+      lowerInput.includes('hagyd abba') ||
+      lowerInput.includes('stop') ||
+      lowerInput.includes('stop playing') ||
+      lowerInput.includes('stop the music') ||
+      lowerInput.includes('ne játszd') ||
+      lowerInput.includes('állj le')
+    ) {
+      setTimeout(() => {
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = {
+            text: 'Music stopped. 🛑',
+            sender: 'lu',
+            timestamp: new Date(),
+            loading: false
+          };
+          return newMessages;
+        });
+      }, 1000);
+      return;
+    }
 
+    // Playlist detection
+    let matchedPlaylist = null;
+    Object.entries(playlists).forEach(([key, pl]) => {
+      pl.aliases.forEach(alias => {
+        const a = alias.toLowerCase();
+        if (
+          lowerInput.includes(`play my ${a}`) ||
+          lowerInput.includes(`play ${a}`) ||
+          lowerInput.includes(`start my ${a}`) ||
+          lowerInput.includes(`open my ${a}`) ||
+          lowerInput.includes(`játszd le a ${a}`) ||
+          lowerInput.includes(`indítsd el a ${a}`) ||
+          lowerInput.includes(`nyisd meg a ${a}`) ||
+          (lowerInput.includes('play') && lowerInput.includes(a)) ||
+          (lowerInput.includes('játsz') && lowerInput.includes(a)) ||
+          (lowerInput.includes('start') && lowerInput.includes(a)) ||
+          (lowerInput.includes('indít') && lowerInput.includes(a))
+        ) {
+          matchedPlaylist = pl;
+        }
+      });
+    });
+
+    if (matchedPlaylist) {
+      setTimeout(() => {
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = {
+            text: (
+              <div className="playlist-response">
+                <p>Playing {matchedPlaylist.aliases[0]} now! 🎵</p>
+                <iframe
+                  width="100%"
+                  height="200"
+                  src={`https://www.youtube.com/embed/videoseries?list=${matchedPlaylist.id}&autoplay=1`}
+                  title="YouTube playlist player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="rounded-lg"
+                />
+              </div>
+            ),
+            sender: 'lu',
+            timestamp: new Date(),
+            loading: false
+          };
+          return newMessages;
+        });
+      }, 1000);
+      return;
+    }
+
+    // Default response
+    setTimeout(() => {
       setMessages(prev => {
         const newMessages = [...prev];
         newMessages[newMessages.length - 1] = {
-          text: (
-            <div className="power-consumption-results">
-              <p className="font-bold mb-2">💻 Számítógép energiafogyasztás elemzés:</p>
-
-              <div className="mb-3">
-                <p className="font-semibold">⏳ Napi használati adatok:</p>
-                <ul className="list-disc pl-5 text-sm">
-                  <li>Üresjárat: {results.usageBreakdown.idleHours} óra</li>
-                  <li>Sorozatnézés: {results.usageBreakdown.seriesHours} óra</li>
-                  <li>Programozás: {results.usageBreakdown.codingHours} óra</li>
-                  <li>Játék: {results.usageBreakdown.gamingHoursPerDay} óra</li>
-                  <li>Összesen: ~{results.usageBreakdown.totalHours} óra/nap</li>
-                </ul>
-              </div>
-
-              <div className="mb-3">
-                <p className="font-semibold">⚡ Energiafogyasztás:</p>
-                <ul className="list-disc pl-5 text-sm">
-                  <li>Napi: {results.dailyEnergyKwh} kWh</li>
-                  <li>Heti: {results.weeklyEnergyKwh} kWh</li>
-                  <li>Havi: {results.monthlyEnergyKwh} kWh</li>
-                </ul>
-              </div>
-
-              <div className="mb-3">
-                <p className="font-semibold">💰 Költség (A1 tarifa - 36 Ft/kWh):</p>
-                <ul className="list-disc pl-5 text-sm">
-                  <li>Napi: {results.dailyCostA1} Ft</li>
-                  <li>Heti: {results.weeklyCostA1} Ft</li>
-                  <li>Havi: {results.monthlyCostA1} Ft</li>
-                  <li>(Havi with plus: {results.monthlyCostA1WP} Ft)</li>
-                </ul>
-              </div>
-
-              <div>
-                <p className="font-semibold">💰 Költség (A2 tarifa - 70 Ft/kWh):</p>
-                <ul className="list-disc pl-5 text-sm">
-                  <li>Napi: {results.dailyCostA2} Ft</li>
-                  <li>Heti: {results.weeklyCostA2} Ft</li>
-                  <li>Havi: {results.monthlyCostA2} Ft</li>
-                   <li>(Havi with plus: {results.monthlyCostA2WP} Ft)</li>
-                </ul>
-              </div>
-
-              <p className="text-xs mt-3 text-gray-300">
-                * Számítás alapja: tevékenység-alapú Watt értékek
-              </p>
-            </div>
-          ),
+          text: `I heard: "${input}"`,
           sender: 'lu',
           timestamp: new Date(),
           loading: false
@@ -205,50 +278,34 @@ export default function LuInterface() {
         return newMessages;
       });
     }, 1000);
-  } else {
-    // Default response for other inputs
-    setTimeout(() => {
-      setMessages(prev => {
-        const newMessages = [...prev];
-        newMessages[newMessages.length - 1] = {
-          text: (
-            <>
-              I received: "{input}". <br /><br />
-              This would be the AI response in production if Szabolcs would make me already &gt;(.
-            </>
-          ),
-          sender: 'lu',
-          timestamp: new Date(),
-          loading: false
-        };
-        return newMessages;
-      });
-    }, 1000);
-}
   };
 
-const toggleMinimize = () => {
-  setIsMinimized(!isMinimized);
-};
+  const toggleMinimize = () => {
+    setIsMinimized(!isMinimized);
+  };
 
-return (
-  <div className={`lu-interface bg-gray-800 ${isMinimized ? 'lu-minimized' : ''}`}>
-    <LuHeader
-      isListening={isListening}
-      onVoiceToggle={() => setIsListening(!isListening)}
-      onMinimizeToggle={toggleMinimize}
-      isMinimized={isMinimized}
-    />
-    {!isMinimized && (
-      <>
-        <LuMessages messages={messages} />
-        <LuInput
-          onSend={handleSend}
-          isListening={isListening}
-          onVoiceToggle={() => setIsListening(!isListening)}
-        />
-      </>
-    )}
-  </div>
-);
+  // In LuInterface.jsx
+  return (
+    <div className={`lu-interface bg-gray-800 ${isMinimized ? 'lu-minimized' : ''}`}>
+      <LuHeader
+        isListening={isListening}
+        onVoiceToggle={() => setIsListening(!isListening)}
+        onMinimizeToggle={toggleMinimize}
+        isMinimized={isMinimized}
+      />
+      {!isMinimized && (
+        <>
+          <LuMessages messages={messages} interimText={interimText} />
+          <LuInput
+            onSend={handleSend}
+            isListening={isListening}
+            onVoiceToggle={() => setIsListening(!isListening)}
+            inputText={inputText}
+            setInputText={setInputText}
+            setMessages={setMessages}  // Add this line
+          />
+        </>
+      )}
+    </div>
+  );
 }
