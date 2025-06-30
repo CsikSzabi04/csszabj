@@ -69,14 +69,6 @@ const Info = () => {
 
   return (
     <>
-      {/* Overlay */}
-      {showOverlay && (
-        <div className="overlay active" onClick={closeCard}>
-          <div className="enlarged-card" onClick={e => e.stopPropagation()}>
-            {currentCard}
-          </div>
-        </div>
-      )}
 
       {/* Original Contact Section */}
       <section id="contact" className="section h-screen w-screen flex-shrink-0">
@@ -106,6 +98,8 @@ const Info = () => {
               </div>
             </div>
           </div>
+
+          
         </div>
       </section>
 
