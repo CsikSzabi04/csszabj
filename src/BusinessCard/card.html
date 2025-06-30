@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: #c9c7c7;
+            color: #333333;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            height: 100vh;
+            position: relative;
+        }
+
+        .header-section {
+            background-image: url('back.png');
+            border: 1px solid #D3CEC4;
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-family: 'Playfair Display', serif;
+            color: #333333;
+            position: relative;
+            z-index: 10;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #333333;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            color: #444444;
+            margin: 0.3rem 0;
+        }
+
+        .header-section a {
+            color: #444444;
+            text-decoration: none;
+        }
+
+        .header-section a:hover {
+            text-decoration: underline;
+        }
+
+        .header-section a {
+            pointer-events: none;
+        }
+
+        .enlarged-card a.active-link {
+            pointer-events: auto;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 50;
+        }
+
+        .overlay.active {
+            opacity: 1;
+        }
+
+        .enlarged-card {
+            max-width: 90%;
+            max-height: 90%;
+            background-color: #FFFFFF;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(48, 48, 48, 0.2);
+            transform: perspective(1000px) rotateY(0deg) translateY(-100px);
+            transition: transform 0.4s ease-out;
+            animation: pickCard 0.6s ease forwards;
+        }
+
+        @keyframes pickCard {
+            0% {
+                transform: perspective(1000px) rotateY(90deg) translateY(-100px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: perspective(1000px) rotateY(0deg) translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="flex flex-col items-center pt-12 relative">
+
+
+    <header
+        class="header-section text-center fade-in w-full max-w-2xl bg-white border-2 border-gray-300 p-6 shadow-md h-[340px]">
+        <h1 class="text-5xl font-bold uppercase text-gray-800 pb-5">Szabolcs A. Csík</h1>
+        <p class="text-xl mt-2 font-semibold text-gray-500">Programmer / Software Developer / Tester</p>
+        <p class="text-lg mt-2">
+            <a href="https://kkando.hu/" class="hover:text-stone-400" target="_blank">Kandó Kálmán Technikum</a> & <a
+                class="hover:text-stone-400" href="https://nje.hu/" target="_blank">Neumann University</a>
+        </p>
+        <p class="text-lg pb-5">Kecskemét, Hun</p>
+        <p class="mt-4">Tel: <span class="text-gray-700">(+36) 70 242 2586</span></p>
+        <p>Email: <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=alexszabi04@gmail.com&su=Collaboration%20Opportunity%20%2F%20Egy%C3%BCttm%C5%B1k%C3%B6d%C3%A9si%20Lehet%C5%91s%C3%A9g&body=Dear%20Cs%C3%ADk%20Szabolcs%20Alex,%0A%0AI%20would%20like%20to%20discuss%20a%20collaboration%20opportunity%20with%20you.%0A%0ABest%20regards,%0A%0A%5BYour%20Name%5D%0A%0A---%0A%0AKedves%20Cs%C3%ADk%20Szabolcs%20Alex,%0A%0ASzeretn%C3%A9k%20egy%20egy%C3%BCttm%C5%B1k%C3%B6d%C3%A9si%20lehet%C5%91s%C3%A9gr%C5%91l%20besz%C3%A9lni%20veled.%0A%0A%C3%9Cdv%C3%B6zlettel,%0A%0A%5BNeved%5D"
+                target="_blank" class="text-gray-700">alexszabi04@gmail.com</a></p>
+        <div class="pt-5">
+            <a href="https://www.instagram.com/cs_szabj04/" target="_blank"><i class="fa fa-instagram pr-4"></i></a>
+            <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=alexszabi04@gmail.com&su=Collaboration%20Opportunity%20%2F%20Egy%C3%BCttm%C5%B1k%C3%B6d%C3%A9si%20Lehet%C5%91s%C3%A9g&body=Dear%20Cs%C3%ADk%20Szabolcs%20Alex,%0A%0AI%20would%20like%20to%20discuss%20a%20collaboration%20opportunity%20with%20you.%0A%0ABest%20regards,%0A%0A%5BYour%20Name%5D%0A%0A---%0A%0AKedves%20Cs%C3%ADk%20Szabolcs%20Alex,%0A%0ASzeretn%C3%A9k%20egy%20egy%C3%BCttm%C5%B1k%C3%B6d%C3%A9si%20lehet%C5%91s%C3%A9gr%C5%91l%20besz%C3%A9lni%20veled.%0A%0A%C3%9Cdv%C3%B6zlettel,%0A%0A%5BNeved%5D"><i
+                    class="fa fa-envelope pr-4"></i></a>
+            <a href="https://www.linkedin.com/in/szabolcs-cs%C3%ADk-a4b767315/" target="_blank"><i
+                    class="fa fa-linkedin"></i></a>
+        </div>
+    </header>
+
+
+
+<div
+  class="header-section flex flex-col items-center justify-center text-center fade-in w-full max-w-2xl bg-white border-2 border-gray-300 p-6 shadow-md mt-10 h-[340px]">
+  <img src="insight2.png" alt="Logo" class="mx-auto mb-4 w-[150px] h-[100px]">
+  <h1 class="text-4xl font-bold uppercase text-gray-800">I.N.S.I.G.H.T.</h1> <br>
+  <p class="text-gray-700">Integrated Network for Surveillance, Investigation, Grid Hacking & Thought‑mapping</p>
+</div>
+
+
+    <script>
+
+        // Card 
+        document.addEventListener('DOMContentLoaded', function () {
+            const cardSection = document.querySelector('.header-section');
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+
+            cardSection.addEventListener('click', function () {
+                const enlargedCard = cardSection.cloneNode(true);
+                enlargedCard.classList.add('enlarged-card');
+
+                const links = enlargedCard.querySelectorAll('a');
+                links.forEach(link => link.classList.add('active-link'));
+
+                overlay.innerHTML = '';
+                overlay.appendChild(enlargedCard);
+                document.body.appendChild(overlay);
+
+                setTimeout(function () {
+                    overlay.classList.add('active');
+                }, 50);
+                document.body.style.overflow = 'hidden';
+            });
+
+            overlay.addEventListener('click', function (event) {
+                if (event.target === overlay) {
+                    overlay.classList.remove('active');
+                    setTimeout(() => {
+                        overlay.remove();
+                    }, 300);
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+
+
+    </script>
+</body>
+
+</html>
