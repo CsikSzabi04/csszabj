@@ -26,7 +26,7 @@ const MyWork = () => {
                 desc: 'Integrated Network for Surveillance, Investigation, Grid Hacking & Thought‑mapping',
                 img: './insight.png',
                 tech: ['React', 'Tailwind', 'JavaScript'],
-                link: 'https://insightcore.netlify.app/',
+                link: 'http://insightcore.hu/',
                 bg: 'from-purple-500 to-pink-600',
               },
               {
