@@ -34,7 +34,7 @@ const MyWork = () => {
                 desc: 'WebPage for my favourite Barber in Kecskemét',
                 img: './HairRanch.png',
                 tech: ['React', 'TailwinCss', 'Backend | Node.js'],
-                link: 'https://hairranch.netlify.app/',
+                link: 'https://hairranch.hu',
                 bg: 'from-green-500 to-blue-600',
               },
             ].map((project, index) => (
