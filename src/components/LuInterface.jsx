@@ -27,6 +27,10 @@ export default function LuInterface() {
     mammamia: {
       id: 'PLsjJuGNBBP8tTxpxHmKjFDWA3VMZow88A',
       aliases: ['mamma mia', 'mamma mia playlist', 'abba', 'mammamia']
+    },
+      french: {
+      id: 'PLsjJuGNBBP8vNyYfd7nTh0OsOdy5fSh1e&si=hRkLFuTB_FVaEoDZ',
+      aliases: ['French', 'french playlist', 'Francia', 'francia', 'farnica', 'french']
     }
   };
 
