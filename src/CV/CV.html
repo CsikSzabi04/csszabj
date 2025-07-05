@@ -5,217 +5,483 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <title>Prezentáció</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Csík Szabolcs Alex - Önéletrajz</title>
     <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
         body {
-            background-color: rgb(199, 199, 199);
-            margin: 0px auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2c3e50;
+            line-height: 1.5;
+            background: white !important;
+            font-size: 12px;
         }
 
-        .container {
-            background-image: url(alap.jpg);
-            border: solid 2px black;
-            padding: 5px;
-            margin: 10px auto;
+        .resume-container {
+            width: 210mm;
+            height: 297mm;
+            background-color: white;
+            margin: 0 auto;
+            padding: 10mm;
+            box-shadow: none;
         }
 
-        #kepem {
-            width: auto;
-            height: 210px;
-            border-radius: 5%;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            float: none;
+        :root {
+            --primary-color: #808080;
+            --secondary-color: #8f8f8f;
+            --accent-color: #dadada;
         }
 
-        h1 {
-            color: brown;
-            border-bottom: solid 1px black;
-        }
-
-        #első {
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px;
             text-align: center;
-            color: darkred;
-            text-decoration: underline;
-            border-bottom: 0px;
+            margin-bottom: 10px;
         }
 
-        #második {
-            text-align: center;
-            border-bottom: 0px;
-        }
-
-        .nagybetűs {
+        .header h1 {
+            font-size: 20px;
+            margin-bottom: 2px;
+            font-weight: 700;
             text-transform: uppercase;
-            margin-left: 92px;
-            margin-top: 30px;
-            border-bottom: solid 1px black;
-            color: darkred;
+            letter-spacing: 1px;
+        }
+
+        .header h2 {
+            font-size: 14px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin: 0 auto 10px;
+            object-fit: cover;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .contact-info i {
+            color: var(--primary-color);
+            margin-right: 6px;
+            width: 14px;
+            font-size: 12px;
+        }
+
+        .contact-info p {
+            margin-bottom: 5px;
+        }
+
+        .skill-badge {
+            background-color: #f5f5f5;
+            color: #2c3e50;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin: 3px;
+            display: inline-block;
+            font-size: 10px;
+            border-left: 2px solid var(--primary-color);
+            line-height: 1.3;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 5px;
+        }
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 1px solid white;
+        }
+
+        .timeline-date {
+            font-size: 10px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 2px;
+            font-size: 12px;
+        }
+
+        .timeline-subtitle {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 3px;
+            font-size: 10px;
+        }
+
+        .timeline ul {
+            padding-left: 15px;
+            margin-bottom: 5px;
+        }
+
+        .timeline li {
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .language-level {
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .language-progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+
+        .personal-qualities i {
+            color: var(--primary-color);
+            margin-right: 5px;
+            font-size: 10px;
+        }
+
+        .personal-qualities li {
+            margin-bottom: 5px;
+            font-size: 11px;
+        }
+
+        a {
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .row {
+            margin-right: -5px;
+            margin-left: -5px;
+        }
+
+        .col-md-5,
+        .col-md-7 {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+
+        .mb-5 {
+            margin-bottom: 15px !important;
         }
 
         p {
-            margin-left: 92px;
-            margin-top: 0px;
-            color: black;
-            margin-right: 30px;
+            margin-bottom: 5px;
+            font-size: 11px;
         }
 
-        #kép {
-            width: 50px;
-            height: 70px;
-            border-radius: 100%;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        @media print {
+            body {
+                zoom: 0.9;
+            }
 
-        .er {
-            margin-left: 20px;
-        }
+            .resume-container {
+                padding: 5mm;
+                height: auto;
+            }
 
-        #err {
-            margin-left: 35px;
-        }
-
-        img {
-            height: 60px;
-            width: 70px;
-            float: right;
-
-        }
-
-        #profil {
-            padding-top: 63px;
-        }
-
-        .haha {
-            margin: 20px;
-
-        }
-
-        @media (min-width: 700px) {
-
-            .nagybetűs,
-            p {
-                margin-left: 70px;
-                margin-right: 20px;
+            .header {
+                padding: 10px;
+                margin-bottom: 5px;
             }
         }
 
-        @media (min-width: 1400px) {
-
-            .nagybetűs,
-            p {
-                margin-left: 50px;
-                margin-right: 10px;
-            }
+        /* Hidden elements for export */
+        .export-options {
+            display: none;
         }
+
+        .asd{list-style: none;}
     </style>
-
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1 id="első">Önéletrajz <span id="clientWidth"></span></h1>
-        </header>
-        <div class="row">
-            <div class="col-md-6">
-                <img class="img-fluid" id="kepem" src="pic.png" alt="Csík Szabolcs Alex" title="Csík Szabolcs Alex">
-                <h1 id="második">Csík Szabolcs Alex</h1>
-                <p class="nagybetűs">Kapcsolat</p>
-                <div class="er">
-                    <p>Mobil: <br> +36702421586</p>
-                    <p>Email: <br> <a href="mailto:alexszabi04@gmail.com">alexszabi04@gmail.com</a></p>
-                </div>
-                <p class="nagybetűs">Nyelvismeret</p>
-                <div class="er">
-                    <p><strong>Angol-</strong> Emelt szintű érettségi (86%) és B2-es Komplex nyelvvizsga</p>
-                </div>
-
-
-                <p class="nagybetűs">Képességeim</p>
-                <div class="row">
-                    <div class="er" id="err">
-                        <p>MS Office (Word, Excel, PowerPoint, Access) – magabiztos felhasználói szint</p>
-                        <p>Java, JavaScript, HTML, CSS – webes programozási alapismeretek</p>
-                        <p>React.js, Tailwind CSS, Bootstrap – modern frontend technológiák</p>
-                        <p>Node.js, API fejlesztés – backend és adatkapcsolatok kezelése</p>
-                        <p>MySQL, Firebase – relációs és felhőalapú adatbázis-kezelés</p>
-                        <p>VS Code, IntelliJ IDEA – fejlesztői környezetek használata</p>
-                        <p>GitHub – verziókezelés, projektmunka</p>
-                        <p>Unity – alapszintű játék- és 3D-fejlesztési tapasztalat</p>
-                       <p>Online marketing: Advertising, Online Advertising, Strategy</p>
-                        <p>Precíz adminisztráció, riport- és dokumentumkezelés</p>
-                    </div>
-                </div>
-
-
+    <div id="resume-content">
+        <div class="resume-container">
+            <div class="header">
+                <img src="pic.png" alt="Csík Szabolcs Alex" class="profile-img">
+                <h1>Csík Szabolcs Alex</h1>
+                <h2>Szoftverfejlesztő / -Tesztelő & Webfeljesztő & Oktató</h2>
             </div>
-            <div class="col-md-6">
-                <h1 id="profil">Profil</h1>
-                <ul>
-                    <li>Születési dátum: 2004. Január 23.</li>
-                    <li>18 életévemet betöltöttem</li>
-                    <li>B-kategóriás jogosítvány</li>
-                    <li>Ápolt, igényes megjelenés</li>
-                    <li>Felettesekkel és tanárokkal való tisztelettudó viselkedés</li>
-                </ul>
-                <h1>Szakmai Tapasztalat</h1>
-                <ol>
-                    <li><strong>Dr.Code - Kecskemét</strong>
-                        <ul>
-                            <li>Oktatóként dolgozok kecskeméten a Dr.Code-nál</li>
-                            <li>Informatikai alapok oktatása általános iskolásoknak/középiskolűsoknak</li>
-                        </ul>
-                    </li>
-                    <li><strong>Hirös Ízek Kft.</strong>
-                        <ul>
-                            <li>Hirös Ízek Kft.-nél dolgoztam nyári szünetben.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Fürge Diák Iskolaszövetkezet - Kecskemét</strong>
-                        <ul>
-                            <li>Som-Plast Kft.-nél dolgoztam mint diákmunkás.</li>
-                        </ul>
-                    </li>
-                </ol>
-                <h1>Tanulmányok</h1>
-                <ul>
-                    <p>
-                        <li>KECSKEMÉTI SZC KANDÓ KÁLMÁN Technikumban végeztem, Szoftverfejlesztő/tesztelő informatikus
-                            szakon.</li>
-                        <li>Kecskeméti Szakképzési Centrum GRÓF KÁROLYI SÁNDOR Technikumba vettek fel és végeztem el az
-                            angol 1 éves felkészítőt.</li>
-                        <li>A Kecskeméti Vásárhelyi Pál Általános Iskola és AMI - Móricz Zsigmond Általános Iskolája,
-                            Hetényegyháza általános iskolában végeztem négyes feletti átlaggal.</li>
-                        <li id="sor">Logischool (Dr.Code) 4 éves képzés elvégzése</li>
-                    </p>
-                </ul>
-                <h1>Tulajdonságaim:</h1>
+
+            <div class="container-fluid p-0">
                 <div class="row">
-                    <div class="col-md-6">
-                        <ul>
-                            <li>Szeretek csapatban dolgozni</li>
-                            <li>Céltudatos vagyok</li>
-                            <li>Nagycsaládban nőttem fel, ezért az alkalmazkodás nem okoz gondot</li>
-                            <li>Informatikai területen tapasztalatok</li>
-                        </ul>
+                    <div class="col-md-5">
+                        <div class="mb-5">
+                            <h3 class="section-title">Kapcsolat</h3>
+                            <div class="contact-info">
+                                <p><i class="fas fa-phone"></i> +36 70 242 1586</p>
+                                <p><i class="fas fa-envelope"></i> <a
+                                        href="mailto:alexszabi04@gmail.com">alexszabi04@gmail.com</a></p>
+                                <p><i class="fas fa-birthday-cake"></i> 2004. január 23.</p>
+                                <p><i class="fas fa-car"></i> B-kategóriás jogosítvány</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h3 class="section-title">Nyelvismeret</h3>
+                            <div>
+                                <p><strong>Angol</strong></p>
+                                <div class="language-level">
+                                    <div class="language-progress" style="width: 85%;"></div>
+                                </div>
+                                <p>Emelt szintű érettségi (86%)<br>B2-es Komplex nyelvvizsga</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h3 class="section-title">Képességeim</h3>
+                            <div>
+                                <span class="skill-badge">MS Office</span>
+                                <span class="skill-badge">Java</span>
+                                <span class="skill-badge">JavaScript</span>
+                                <span class="skill-badge">HTML/CSS</span>
+                                <span class="skill-badge">React.js</span>
+                                <span class="skill-badge">Bootstrap</span>
+                                <span class="skill-badge">TailwindCss</span>
+                                <span class="skill-badge">Node.js</span>
+                                <span class="skill-badge">MySQL</span>
+                                <span class="skill-badge">API</span>
+                                <span class="skill-badge">AI</span>
+                                <span class="skill-badge">Firebase</span>
+                                <span class="skill-badge">VS Code</span>
+                                <span class="skill-badge">GitHub</span>
+                                <span class="skill-badge">Unity</span>
+                                <span class="skill-badge">Online marketing</span>
+                                <span class="skill-badge">Adminisztatív feladatok</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h3 class="section-title">Szakmai készségeim</h3>
+                            <div class="personal-qualities">
+                                <li class="asd"><i class="fas fa-code"></i> Webfejlesztés (HTML, CSS, JavaScript, React)</li>
+                                <li class="asd"><i class="fab fa-java"></i> Java alkalmazásfejlesztés</li>
+                                <li class="asd"><i class="fas fa-database"></i> Adatbáziskezelés (MySQL, Access, Firebase)</li>
+                                <li class="asd"><i class="fas fa-file-alt"></i> Dokumentumkezelés (Riportok, PPT, Canva)</li>
+                                <li class="asd"><i class="fas fa-phone-alt"></i> Kommunikáció (magyar/angol)
+                                </li>
+                                <li class="asd"><i class="fas fa-graduation-cap"></i> Folyamatos tanulás (új nyelvek/technológiák elsajátítása)</li>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <ul>
-                            <li>Jó kommunikációs képességem van</li>
-                            <li>Megoldásban gondolkodom</li>
-                            <li>Amatőr kerékpározás hobbi szinten - cél versenyekre elindulás</li>
-                        </ul>
+
+                    <div class="col-md-7">
+                        <div class="mb-5">
+                            <h3 class="section-title">Profil</h3>
+                            <p>Fiatal, ambiciózus szoftverfejlesztő és oktató, aki szeret új kihívások elé nézni és
+                                folyamatosan fejleszteni tudását. Az informatikai területen szerzett tapasztalataim
+                                mellett kiváló kommunikációs készséggel rendelkezem, ami lehetővé teszi számomra, hogy
+                                hatékonyan működjek együtt csapattársakkal és tanítványokkal egyaránt.</p>
+                        </div>
+
+                        <div class="mb-5">
+                            <h3 class="section-title">Szakmai Tapasztalat</h3>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2023 - Jelenleg</div>
+                                    <h4 class="timeline-title">Oktató</h4>
+                                    <p class="timeline-subtitle">Dr.Code - Kecskemét</p>
+                                    <ul>
+                                        <li>Informatikai / Programozási alapok oktatása</li>
+                                    </ul>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2022 nyár</div>
+                                    <h4 class="timeline-title">Diákmunkás</h4>
+                                    <p class="timeline-subtitle">Hirös Ízek Kft.</p>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2021</div>
+                                    <h4 class="timeline-title">Diákmunkás</h4>
+                                    <p class="timeline-subtitle">Fürge Diák Iskolaszövetkezet</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <h3 class="section-title">Tanulmányok</h3>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2025</div>
+                                    <h4 class="timeline-title">Szoftverfejlesztő és -tesztelő</h4>
+                                    <p class="timeline-subtitle">Kecskeméti SZC Kandó Kálmán Technikum</p>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2020</div>
+                                    <h4 class="timeline-title">Angol felkészítő évfolyam</h4>
+                                    <p class="timeline-subtitle">Kecskeméti SzC Gróf Károlyi Sándor Technikum</p>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2019</div>
+                                    <h4 class="timeline-title">Általános iskola</h4>
+                                    <p class="timeline-subtitle">Kecskeméti Vásárhelyi Pál Általános Iskola</p>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2014</div>
+                                    <h4 class="timeline-title">Logischool 4 éves képzés</h4>
+                                    <p class="timeline-subtitle">Dr.Code</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Hidden export options -->
+    <div class="export-options">
+        <a id="download-pdf" href="#" download="Csik_Szabolcs_Alex_CV.pdf"></a>
+        <a id="download-png" href="#" download="Csik_Szabolcs_Alex_CV.png"></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <script>
+        // Initialize jsPDF
+        const { jsPDF } = window.jspdf;
+
+        // Context menu for export options
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+
+            // Create custom context menu
+            const menu = document.createElement('div');
+            menu.style.position = 'absolute';
+            menu.style.left = e.clientX + 'px';
+            menu.style.top = e.clientY + 'px';
+            menu.style.backgroundColor = 'white';
+            menu.style.border = '1px solid #ccc';
+            menu.style.boxShadow = '2px 2px 5px rgba(0,0,0,0.2)';
+            menu.style.zIndex = '1000';
+            menu.style.padding = '5px 0';
+
+            // Add export options
+            const pdfOption = document.createElement('div');
+            pdfOption.textContent = 'Mentés PDF-ként';
+            pdfOption.style.padding = '5px 15px';
+            pdfOption.style.cursor = 'pointer';
+            pdfOption.addEventListener('click', exportAsPDF);
+
+            const pngOption = document.createElement('div');
+            pngOption.textContent = 'Mentés PNG-ként';
+            pngOption.style.padding = '5px 15px';
+            pngOption.style.cursor = 'pointer';
+            pngOption.addEventListener('click', exportAsPNG);
+
+            const printOption = document.createElement('div');
+            printOption.textContent = 'Nyomtatás';
+            printOption.style.padding = '5px 15px';
+            printOption.style.cursor = 'pointer';
+            printOption.addEventListener('click', () => window.print());
+
+            menu.appendChild(pdfOption);
+            menu.appendChild(pngOption);
+            menu.appendChild(printOption);
+
+            document.body.appendChild(menu);
+
+            // Remove menu when clicking elsewhere
+            document.addEventListener('click', function removeMenu() {
+                document.body.removeChild(menu);
+                document.removeEventListener('click', removeMenu);
+            });
+        });
+
+        // Export as PDF function
+        async function exportAsPDF() {
+            const element = document.getElementById('resume-content');
+            const canvas = await html2canvas(element, {
+                scale: 2,
+                logging: false,
+                useCORS: true,
+                allowTaint: true
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save('Csik_Szabolcs_Alex_CV.pdf');
+        }
+
+        // Export as PNG function
+        async function exportAsPNG() {
+            const element = document.getElementById('resume-content');
+            const canvas = await html2canvas(element, {
+                scale: 2,
+                logging: false,
+                useCORS: true,
+                allowTaint: true
+            });
+
+            canvas.toBlob(function (blob) {
+                saveAs(blob, 'Csik_Szabolcs_Alex_CV.png');
+            });
+        }
+
+        // Auto-print if ?print is in URL
+        window.onload = function () {
+            if (window.location.href.indexOf('?print') > -1) {
+                window.print();
+            }
+        };
+    </script>
 </body>
 
 </html>
