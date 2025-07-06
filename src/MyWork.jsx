@@ -2,7 +2,7 @@ import React from 'react';
 
 const MyWork = () => {
   return (
-    <section id="portfolio" className="section w-full min-h-screen flex-shrink-0 py-12 sm:py-16 lg:py-20">
+    <section id="portfolio"  style={{marginBottom:"5%"}} className="section w-full min-h-screen flex-shrink-0 py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="w-full">
           <h2 className="text-3xl sm:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-center mb-10 sm:mb-14 fade-in">
@@ -26,7 +26,7 @@ const MyWork = () => {
                 desc: 'Integrated Network for Surveillance, Investigation, Grid Hacking & Thought‑mapping',
                 img: './insight.png',
                 tech: ['React', 'Tailwind', 'JavaScript'],
-                link: 'http://insightcore.hu/',
+                link: 'https://insightcore.hu/',
                 bg: 'from-purple-500 to-pink-600',
               },
               {

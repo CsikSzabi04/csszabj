@@ -9,9 +9,13 @@ export default function LuHeader({ isListening, onVoiceToggle, onMinimizeToggle,
             <span className="text-xl">👑</span>
           </div>
           <div>
-            <h2 className="text-sm font-bold text-white">Lu </h2>
+            <h2 className="text-sm font-bold text-white">Lu 
+             
+            </h2>
             <p className="text-xs text-purple-300">
-              {isMinimized ? "Szabolcs' assistant" : (isListening ? 'Listening...' : 'Online')}
+              {isMinimized ? (
+                <span className="hidden md:inline">Szabolcs' assistant</span>
+              ) : (isListening ? 'Listening...' : 'Online')}
             </p>
           </div>
         </div>

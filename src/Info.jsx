@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './Info.css';
-import backImage from './BusinessCard/back.png';
-import insightImage from './BusinessCard/insight2.png';
 
 const Info = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -18,78 +16,104 @@ const Info = () => {
     document.body.style.overflow = 'auto';
   };
 
+  // Enhanced responsive values
+  const responsiveCardStyle = {
+    card: {
+      base: "w-[90vw] max-w-[95vw] xs:w-[85vw] sm:w-[75vw] md:w-[65vw] lg:w-[55vw] xl:w-[700px]",
+      padding: "p-2 xs:p-3 sm:p-4 md:p-5 lg:p-6",
+      minHeight: "min-h-[300px] xs:min-h-[320px] sm:min-h-[360px] md:min-h-[400px]"
+    },
+    text: {
+      name: "text-[3.2vw] xs:text-[4vw] sm:text-[3.5vw] md:text-[2.8vw] lg:text-[2.2vw] xl:text-[45px] bold",
+      title: "text-[3.2vw] xs:text-[3vw] sm:text-[2.5vw] md:text-[2vw] lg:text-[1.6vw] xl:text-[28px] font-semibold",
+      info: "text-[2.8vw] xs:text-[2.6vw] sm:text-[2.2vw] md:text-[1.8vw] lg:text-[1.4vw] xl:text-[22px] ",
+      contact: "text-[2.6vw] xs:text-[2.4vw] sm:text-[2vw] md:text-[1.6vw] lg:text-[1.3vw] xl:text-[20px] "
+    }
+  };
+
   const cards = [
     {
       id: 1,
       content: (
-        <div className="header-section text-center w-full max-w-2xl bg-white border-2 border-gray-300 p-6 shadow-md h-[400px] min-w-[700px]">
-          <h1 className="text-6xl font-bold uppercase text-gray-800 pb-5">Szabolcs A. Csík</h1>
-          <p className="text-xl mt-2 font-semibold text-gray-500">Programmer / Software Developer / Tester</p>
-          <p className="text-lg mt-2">
-            <a href="https://kkando.hu/" className="hover:text-stone-400" target="_blank" rel="noopener noreferrer">Kandó Kálmán Technikum</a> &
-            <a className="hover:text-stone-400" href="https://nje.hu/" target="_blank" rel="noopener noreferrer"> Neumann University</a>
+        <div className={`header-section text-center bg-white border-2 border-gray-300 shadow-md ${responsiveCardStyle.card.base} ${responsiveCardStyle.card.padding} ${responsiveCardStyle.card.minHeight}`}>
+          <span className={`font-bold uppercase text-gray-800 pb-0 xs:pb-1 sm:pb-2 md:pb-3 ${responsiveCardStyle.text.name}`}>
+            Szabolcs A. Csík
+          </span>
+          <p className={`mt-0.5 xs:mt-1 sm:mt-1.5 md:mt-2 font-semibold text-gray-500 ${responsiveCardStyle.text.title}`}>
+            Programmer / Software Developer / Tester
           </p>
-          <p className="text-lg pb-5">Kecskemét, Hun</p>
-          <p className="mt-4">Tel: <span className="text-gray-700">(+36) 70 242 2586</span></p>
-          <p>Email: <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=alexszabi04@gmail.com&su=Collaboration%20Opportunity%20%2F%20Egy%C3%BCttm%C5%B1k%C3%B6d%C3%A9si%20Lehet%C5%91s%C3%A9g&body=Dear%20Cs%C3%ADk%20Szabolcs%20Alex,%0A%0AI%20would%20like%20to%20discuss%20a%20collaboration%20opportunity%20with%20you.%0A%0ABest%20regards,%0A%0A%5BYour%20Name%5D%0A%0A---%0A%0AKedves%20Cs%C3%ADk%20Szabolcs%20Alex,%0A%0ASzeretn%C3%A9k%20egy%20egy%C3%BCttm%C5%B1k%C3%B6d%C3%A9si%20lehet%C5%91s%C3%A9gr%C5%91l%20besz%C3%A9lni%20veled.%0A%0A%C3%9Cdv%C3%B6zlettel,%0A%0A%5BNeved%5D"
-            target="_blank" rel="noopener noreferrer" className="text-gray-700">alexszabi04@gmail.com</a></p>
-          <div className="flex justify-center space-x-6 fade-in delay-500 mt-5">
-            <a href="https://www.linkedin.com/in/szabolcs-cs%C3%ADk-a4b767315/" target="_blank" rel="noopener noreferrer"
-              className="text-gray-400 hover:text-blue-400 transition text-2xl">
+          <p className={`mt-0.5 xs:mt-1 sm:mt-1.5 md:mt-2 ${responsiveCardStyle.text.info}`}>
+            <a href="https://kkando.hu/" className="hover:text-stone-400" target="_blank" rel="noopener noreferrer">
+              Kandó Kálmán Technikum
+            </a> & 
+            <a className="hover:text-stone-400 ml-0.5 xs:ml-1" href="https://nje.hu/" target="_blank" rel="noopener noreferrer">
+              Neumann University
+            </a>
+          </p>
+          <p className={`pb-1 xs:pb-2 sm:pb-3 ${responsiveCardStyle.text.info}`}>
+            Kecskemét, Hun
+          </p>
+          <p className={`mt-1 xs:mt-2 sm:mt-3 ${responsiveCardStyle.text.contact}`}>
+            Tel: <span className="text-gray-700">(+36) 70 242 2586</span>
+          </p>
+          <p className={`${responsiveCardStyle.text.contact}`}>
+            Email: <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=alexszabi04@gmail.com"
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-700 break-all xs:break-normal"
+            >
+              alexszabi04@gmail.com
+            </a>
+          </p>
+          <div className="flex justify-center space-x-2 xs:space-x-3 sm:space-x-4 md:space-x-5 fade-in delay-500 mt-2 xs:mt-3 sm:mt-4 md:mt-5">
+            <a href="https://www.linkedin.com/in/szabolcs-cs%C3%ADk-a4b767315/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-blue-400 transition text-[3.8vw] xs:text-[3.5vw] sm:text-[3vw] md:text-[2.5vw] lg:text-[2vw] xl:text-[24px]">
               <i className="fab fa-linkedin"></i>
             </a>
-            <a href="https://github.com/" target="_blank" rel="noopener noreferrer"
-              className="text-gray-400 hover:text-gray-200 transition text-2xl">
+            <a href="https://github.com/CsikSzabi04" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-gray-200 transition text-[3.8vw] xs:text-[3.5vw] sm:text-[3vw] md:text-[2.5vw] lg:text-[2vw] xl:text-[24px]">
               <i className="fab fa-github"></i>
             </a>
             <a href="mailto:alexszabi04@gmail.com"
-              className="text-gray-400 hover:text-red-400 transition text-2xl">
+              className="text-gray-400 hover:text-red-400 transition text-[3.8vw] xs:text-[3.5vw] sm:text-[3vw] md:text-[2.5vw] lg:text-[2vw] xl:text-[24px]">
               <i className="fas fa-envelope"></i>
             </a>
-            <a href="https://www.instagram.com/cs_szabj04/" target="_blank" rel="noopener noreferrer"
-              className="text-gray-400 hover:text-pink-500 transition text-2xl">
+            <a href="https://www.instagram.com/cs_szabj04/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-pink-500 transition text-[3.8vw] xs:text-[3.5vw] sm:text-[3vw] md:text-[2.5vw] lg:text-[2vw] xl:text-[24px]">
               <i className="fab fa-instagram"></i>
             </a>
           </div>
         </div>
       )
-    },  {/* Overlay 
-    {
-      id: 2,
-      content: (
-        <div className="header-section flex flex-col items-center justify-center text-center w-full max-w-2xl bg-white border-2 border-gray-300 p-6 shadow-md h-[340px]">
-          <img src={insightImage} alt="Logo" className="mx-auto mb-4 w-[150px] h-[100px]" />
-          <h1 className="text-4xl font-bold uppercase text-gray-800">I.N.S.I.G.H.T.</h1> <br />
-          <p className="text-gray-700">Integrated Network for Surveillance, Investigation, Grid Hacking & Thought‑mapping</p>
-        </div>
-      )
-    }*/}
+    }
   ];
 
   return (
     <>
-
-      {/* Original Contact Section */}
       <section id="contact" className="section h-screen w-screen flex-shrink-0">
-        <div className="container mx-auto px-6 text-center h-full flex items-center justify-center">
-          <div>
-            <h2 className="text-4xl font-bold mb-16 fade-in">
-              <span className="gradient-text">Get In Touch</span>
-            </h2>
-
-            <div className="max-w-2xl mx-auto fade-in delay-100">
-              <p className="text-gray-400 text-lg mb-12">
+        <div className="container mx-auto px-3 xs:px-4 sm:px-5 md:px-6 text-center h-full flex items-center justify-center">
+          <div className="w-full">
+           
+            <div className="max-w-4xl mx-auto fade-in delay-100 px-2 sm:px-0">
+              <p className="text-gray-400 text-[3.2vw] xs:text-[3vw] sm:text-[2.5vw] md:text-[2vw] lg:text-[1.6vw] xl:text-[18px] mb-[3vw] xs:mb-[2.5vw] sm:mb-[2vw] md:mb-[1.5vw] lg:mb-[1vw] xl:mb-6">
+               {/**
                 Have a project in mind or want to discuss potential opportunities?
                 Feel free to reach out - I'm always open to new collaborations and ideas.
+                */} 
               </p>
 
-              <div className="flex flex-col items-center space-y-10">
-                {/* Cards */}
+              <div className="flex flex-col items-center space-y-[2.5vw] xs:space-y-[2vw] sm:space-y-[1.5vw] md:space-y-[1vw] lg:space-y-[0.8vw] xl:space-y-4">
                 {cards.map((card) => (
                   <div 
                     key={card.id}
-                    className="fade-in cursor-pointer"
+                    className="fade-in cursor-pointer w-full flex justify-center"
                     onClick={() => openCard(card.content)}
                   >
                     {card.content}
@@ -98,14 +122,12 @@ const Info = () => {
               </div>
             </div>
           </div>
-
-          
         </div>
       </section>
 
-      <footer className="h-screen w-screen flex-shrink-0 py-8 bg-gray-900 flex items-center justify-center">
+      <footer className="h-screen w-screen flex-shrink-0 py-3 xs:py-4 sm:py-5 md:py-6 bg-gray-900 flex items-center justify-center">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 text-[2.4vw] xs:text-[2.2vw] sm:text-[1.8vw] md:text-[1.4vw] lg:text-[1.1vw] xl:text-[14px]">
             Alexander Szabolcs Csík.
           </p>
         </div>
