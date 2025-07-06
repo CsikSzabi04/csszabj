@@ -98,10 +98,10 @@ const Info = () => {
   return (
     <>
       <section id="contact" className="section h-screen w-screen flex-shrink-0">
-        <div className="container mx-auto px-3 xs:px-4 sm:px-5 md:px-6 text-center h-full flex items-center justify-center">
+        <div className="asd container mx-auto px-3 xs:px-4 sm:px-5 md:px-6 text-center h-full flex items-center justify-center">
           <div className="w-full">
            
-            <div className="max-w-4xl mx-auto fade-in delay-100 px-2 sm:px-0">
+            <div className="max-w-4xl mx-auto fade-in delay-100 px-2 sm:px-0 mt-[5%] lg:mt-0">
               <p className="text-gray-400 text-[3.2vw] xs:text-[3vw] sm:text-[2.5vw] md:text-[2vw] lg:text-[1.6vw] xl:text-[18px] mb-[3vw] xs:mb-[2.5vw] sm:mb-[2vw] md:mb-[1.5vw] lg:mb-[1vw] xl:mb-6">
                {/**
                 Have a project in mind or want to discuss potential opportunities?
