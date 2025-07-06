@@ -102,3 +102,16 @@ body {
         opacity: 1;
     }
 }
+
+@media (max-width: 770px) {
+    .asd{
+        margin-top: 20%;
+    }
+}
+
+
+@media (max-width: 630px) {
+    .asd{
+        margin-top: 50%;
+    }
+}
