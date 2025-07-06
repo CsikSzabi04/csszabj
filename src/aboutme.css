@@ -1,0 +1,7 @@
+@media (max-width: 800px) {
+.asd{margin-top: 5%; margin-bottom: 5%;}
+}
+
+@media (max-width: 600px) {
+.asd{margin-top: 10%; margin-bottom: 5%;}
+}
