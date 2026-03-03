@@ -41,3 +41,4 @@ My goal is to contribute to a stable and innovative company while continuously l
 
 > This portfolio showcases my technical knowledge and practical experience acquired through my studies and personal projects.
 
+
