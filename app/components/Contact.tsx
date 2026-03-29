@@ -58,10 +58,10 @@ export default function Contact() {
               <span className="w-2 h-2 bg-[#9b59b6] rounded-full animate-pulse shadow-[0_0_10px_#9b59b6]"></span>
               Kapcsolat
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
               Lépj Velem <span className="text-[#ff2d2d]">Kapcsolatba</span>!
             </h2>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-mono">
+            <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-mono px-4">
               // Ha bármilyen kérdésed van, vagy együtt szeretnél dolgozni, ne habozz megkeresni!
             </p>
           </motion.div>
@@ -75,7 +75,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="bg-black/80 rounded-2xl p-8 border border-[#ff2d2d]/20 backdrop-blur-sm"
+              className="bg-black/80 rounded-2xl p-6 sm:p-8 border border-[#ff2d2d]/20 backdrop-blur-sm"
             >
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <span className="w-2 h-8 bg-[#ff2d2d] rounded-full shadow-[0_0_15px_#ff2d2d]"></span>
@@ -175,7 +175,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="bg-black/80 rounded-2xl p-8 border border-[#9b59b6]/20 backdrop-blur-sm"
+            className="bg-black/80 rounded-2xl p-6 sm:p-8 border border-[#9b59b6]/20 backdrop-blur-sm"
           >
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
               <span className="w-2 h-8 bg-[#9b59b6] rounded-full shadow-[0_0_15px_#9b59b6]"></span>

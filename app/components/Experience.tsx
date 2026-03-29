@@ -11,10 +11,10 @@ export default function Experience() {
           <span className="inline-block px-5 py-2.5 bg-blue-900/30 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
             Tapasztalat & Tanulmányok
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Eddigi Utam
           </h2>
-          <p className="text-lg text-zinc-500 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-zinc-500 max-w-2xl mx-auto leading-relaxed px-4">
             A szakmai tapasztalataim és tanulmányaim, amelyek hozzájárultak a fejlődésemhez.
           </p>
         </div>
@@ -38,7 +38,7 @@ export default function Experience() {
               {/* Timeline Items */}
               <div className="space-y-8">
                 {experience.map((exp, index) => (
-                  <div key={exp.id} className="relative pl-12">
+                  <div key={exp.id} className="relative pl-10 sm:pl-12">
                     {/* Timeline Dot */}
                     <div className={`absolute left-0 top-2 w-10 h-10 rounded-full flex items-center justify-center ${
                       exp.current 
@@ -55,7 +55,7 @@ export default function Experience() {
                     </div>
 
                     {/* Content Card */}
-                    <div className="bg-[#171717] rounded-2xl p-8 border border-white/5 hover:border-blue-500/30 transition-all duration-300">
+                    <div className="bg-[#171717] rounded-2xl p-5 sm:p-8 border border-white/5 hover:border-blue-500/30 transition-all duration-300">
                       <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           exp.current 
@@ -116,7 +116,7 @@ export default function Experience() {
               {/* Timeline Items */}
               <div className="space-y-8">
                 {education.map((edu, index) => (
-                  <div key={edu.id} className="relative pl-12">
+                  <div key={edu.id} className="relative pl-10 sm:pl-12">
                     {/* Timeline Dot */}
                     <div className="absolute left-0 top-2 w-10 h-10 rounded-full flex items-center justify-center bg-[#171717] border-4 border-emerald-900/30">
                       <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,7 +125,7 @@ export default function Experience() {
                     </div>
 
                     {/* Content Card */}
-                    <div className="bg-[#171717] rounded-2xl p-8 border border-white/5 hover:border-emerald-500/30 transition-all duration-300">
+                    <div className="bg-[#171717] rounded-2xl p-5 sm:p-8 border border-white/5 hover:border-emerald-500/30 transition-all duration-300">
                       <span className="px-3 py-1 bg-emerald-900/30 text-emerald-400 rounded-full text-xs font-medium mb-3 inline-block">
                         {edu.date}
                       </span>

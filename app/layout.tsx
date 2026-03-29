@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="hu">
-      <body className={`${playfair.variable} ${inter.variable} font-sans bg-black text-white antialiased`}>
+      <body className={`${playfair.variable} ${inter.variable} font-sans bg-black text-white antialiased overflow-x-hidden w-full`}>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

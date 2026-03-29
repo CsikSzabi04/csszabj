@@ -49,10 +49,10 @@ export default function About() {
           <span className="inline-block px-5 py-2.5 bg-blue-900/20 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
             Rólam
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Ismerj Meg!
           </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
             Szenvedélyes full stack fejlesztő, aki élvezi a komplex problémák megoldását.
           </p>
         </motion.div>
@@ -93,7 +93,7 @@ export default function About() {
             </div>
 
             {/* Quick Info Cards */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { icon: "📧", label: "Email", value: "alexszabi04@gmail.com" },
                 { icon: "📍", label: "Helyszín", value: personalInfo.location },
@@ -129,7 +129,7 @@ export default function About() {
             className="space-y-8"
           >
             {/* About Text */}
-            <div className="bg-[#0d0d0d] rounded-2xl p-8 border border-white/5">
+            <div className="bg-[#0d0d0d] rounded-2xl p-6 sm:p-8 border border-white/5">
               <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                 <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
                 Profil Összefoglaló
@@ -150,7 +150,7 @@ export default function About() {
                 <span className="w-1 h-6 bg-purple-500 rounded-full"></span>
                 Személyes Készségek
               </h3>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {softSkills.map((skill, index) => (
                   <motion.div
                     key={skill.name}

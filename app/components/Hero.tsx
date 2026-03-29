@@ -2,16 +2,12 @@
 
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import Link from "next/link";
 import { personalInfo, stats } from "../data/portfolio";
 import TypeWriter from "./TypeWriter";
 import TypeWriterSkills from "./TypeWriterSkills";
 
-interface HeroProps {
-  onSkillsClick?: () => void;
-  onAboutClick?: () => void;
-}
-
-export default function Hero({ onSkillsClick, onAboutClick }: HeroProps) {
+export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -109,7 +105,7 @@ export default function Hero({ onSkillsClick, onAboutClick }: HeroProps) {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-5xl md:text-7xl lg:text-8xl font-bold relative inline-block"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold relative inline-block"
               >
                 <TypeWriter 
                   texts={typewriterTexts} 
@@ -124,7 +120,7 @@ export default function Hero({ onSkillsClick, onAboutClick }: HeroProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl md:text-2xl text-gray-300 mb-8 font-mono"
+              className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 font-mono break-words"
             >
               <div className="bg-black/50 p-5 rounded-xl border border-[#9b59b6]/20 backdrop-blur-sm">
                 <div className="flex gap-2 mb-4">
@@ -148,7 +144,7 @@ export default function Hero({ onSkillsClick, onAboutClick }: HeroProps) {
                   <TypeWriterSkills 
                     words={skills} 
                     speed={80}
-                    className="text-[#00ffff]"
+                    className="text-[#00ffff] inline-block"
                   />
                   <span className="text-gray-500">]</span>;
                 </p>
@@ -162,7 +158,7 @@ export default function Hero({ onSkillsClick, onAboutClick }: HeroProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-lg text-gray-500 mb-8 font-mono"
+              className="text-base sm:text-lg text-gray-500 mb-8 font-mono break-words"
             >
               <span className="text-gray-400">📍</span>{" "}
               <span className="text-[#9b59b6]">location</span>
@@ -171,46 +167,34 @@ export default function Hero({ onSkillsClick, onAboutClick }: HeroProps) {
               <span className="text-gray-500">"</span>
             </motion.p>
 
-            {/* Navigation Buttons - Star Wars themed */}
+            {/* Navigation Buttons */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-wrap gap-4 mb-12"
             >
-              {/* Skills Button */}
-              <motion.button
-                onClick={onSkillsClick}
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative px-8 py-4 bg-black/50 rounded-xl border border-[#9b59b6]/30 overflow-hidden backdrop-blur-sm"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#9b59b6]/20 to-[#00a8ff]/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative flex items-center gap-3">
-                  <span className="text-white font-semibold">Skilljeim</span>
-                  <svg className="w-5 h-5 text-[#9b59b6] group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </div>
-                <div className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#9b59b6] to-[#00a8ff] w-0 group-hover:w-full transition-all duration-300 shadow-[0_0_10px_#9b59b6]" />
-              </motion.button>
+              {/* Projects Button */}
+              <Link href="/projects">
+                <motion.div
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group relative px-6 py-3 sm:px-8 sm:py-3.5 bg-gradient-to-r from-[#9b59b6] via-[#8e44ad] to-[#6c5ce7] rounded-xl overflow-hidden shadow-[0_0_15px_rgba(155,89,182,0.4)] hover:shadow-[0_0_25px_rgba(155,89,182,0.6)] cursor-pointer flex items-center justify-center transition-all duration-300 w-full sm:w-auto"
+                >
+                  <span className="relative text-white font-semibold tracking-wide text-sm sm:text-base">Munkáim megtekintése</span>
+                </motion.div>
+              </Link>
 
-              {/* About Button */}
-              <motion.button
-                onClick={onAboutClick}
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative px-8 py-4 bg-black/50 rounded-xl border border-[#ff2d2d]/30 overflow-hidden backdrop-blur-sm"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#ff2d2d]/20 to-[#9b59b6]/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative flex items-center gap-3">
-                  <span className="text-white font-semibold">Magamról</span>
-                  <svg className="w-5 h-5 text-[#ff2d2d] group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </div>
-                <div className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#ff2d2d] to-[#9b59b6] w-0 group-hover:w-full transition-all duration-300 shadow-[0_0_10px_#ff2d2d]" />
-              </motion.button>
+              {/* Contact Button */}
+              <Link href="/contact">
+                <motion.div
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group relative px-6 py-3 sm:px-8 sm:py-3.5 bg-black/40 rounded-xl border border-white/10 hover:border-white/20 overflow-hidden backdrop-blur-sm cursor-pointer hover:bg-white/5 transition-all duration-300 flex items-center justify-center w-full sm:w-auto"
+                >
+                  <span className="relative text-gray-200 group-hover:text-white font-semibold tracking-wide transition-colors text-sm sm:text-base">Projekt megbeszélése</span>
+                </motion.div>
+              </Link>
             </motion.div>
 
             {/* Stats */}

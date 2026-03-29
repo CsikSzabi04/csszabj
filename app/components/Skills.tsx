@@ -102,7 +102,27 @@ export default function Skills() {
 
   const proficiencyLevels = [92, 85, 78, 88, 95, 72];
   const totalSkills = allSkills.length;
-  const orbitRadius = 200;
+  
+  const [orbitRadius, setOrbitRadius] = useState(200);
+  const [containerScale, setContainerScale] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setOrbitRadius(120);
+        setContainerScale(0.65);
+      } else if (window.innerWidth < 1024) {
+        setOrbitRadius(160);
+        setContainerScale(0.85);
+      } else {
+        setOrbitRadius(200);
+        setContainerScale(1);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section className="section relative py-32 overflow-hidden" ref={containerRef}>
@@ -148,15 +168,15 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-12 md:mb-20"
         >
           <span className="inline-block px-5 py-2.5 bg-blue-900/20 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
             Készségeim
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Tech Stack
           </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
             Modern és hatékony eszközökkel dolgozom.
           </p>
         </motion.div>
@@ -166,9 +186,9 @@ export default function Skills() {
 
           {/* Animated Circular Display - Clock style */}
           <motion.div
-            className="relative w-[550px] h-[550px] flex items-center justify-center"
+            className="relative w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] lg:w-[550px] lg:h-[550px] flex items-center justify-center translate-y-[-20px] lg:translate-y-0"
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, scale: containerScale }}
             transition={{ duration: 0.8 }}
           >
             {/* Outer decorative ring */}
@@ -288,7 +308,7 @@ export default function Skills() {
           </motion.div>
 
           {/* Skill Progress Circles */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
             {skillCategories.map((category, index) => (
               <motion.div
                 key={category.title}

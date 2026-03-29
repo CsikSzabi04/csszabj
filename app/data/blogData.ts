@@ -14,198 +14,245 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: 1,
-    title: "A React 19 megérkezett - Minden, amit tudnod kell róla",
+    title: "A React 19 megérkezett – Minden, amit tudnod kell róla",
     slug: "react-19-ujdonsagok",
-    excerpt: "A React 19 egy forradalmi frissítés, amely megváltoztatja a way we build web applications. Ebben a cikkben deep dive-ot végzünk az új funkciókon.",
+    excerpt: "A React 19 nem csak egy sima frissítés – ez egy forradalom. Ebben a részletes, gyakorlati példákkal teli útmutatóban minden új funkciót megnézünk: React Compiler, Server Actions, use() hook, Document Metadata és még sok más. Mutatom, hogyan változtatja meg a fejlesztés mindennapjait.",
     category: "Frontend",
     date: "2025. január 15.",
-    readTime: "15 perc",
+    readTime: "22 perc",
     image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200",
-    tags: ["React", "JavaScript", "Frontend", "Web Development"],
+    tags: ["React", "JavaScript", "Frontend", "Web Development", "React 19"],
     content: `
-<p class="lead">A React 19 végre itt van, és rengeteg izgalmas új funkciót hoz! Ebben a részletes útmutatóban áttekintem mindazt, amit tudnod kell a legújabb verzióról.</p>
+<p class="lead">🎉 Végre itt van a React 19! Hónapok óta vártuk, és megérte. Ez nem egy apró verziószám ugrás – tele van olyan funkciókkal, amelyek alapjaiban változtatják meg a React-alkalmazások fejlesztését. Ebben a cikkben nem csak felsorolom az újdonságokat, hanem valódi, használható példákon keresztül mutatom be, hogyan gyorsíthatod fel a munkádat és írhatsz jobb kódot.</p>
 
-<h2>Bevezetés</h2>
-<p>A React az egyik legnépszerűbb JavaScript könyvtár a világon. Az évek során folyamatosan fejlődött, és a 19-es verzió egy igazi mérföldkő. Az új funkciók nem csak a fejlesztők életét könnyítik meg, hanem a felhasználók számára is jobb élményt nyújtanak.</p>
+<h2>Miért olyan nagy durranás a React 19?</h2>
+<p>Az elmúlt években a React elsősorban a stabilitásról és a fokozatos fejlesztésekről szólt. A 18-as verzió bevezette a concurrent rendering-et, de a fejlesztői élmény sok tekintetben ugyanaz maradt. A 19-es verzió viszont <strong>forradalmi váltást</strong> hoz a komponensek írásának módjában.</p>
 
-<h2>Az új React Compiler</h2>
-<p>Talán a legizgalmasabb újítás a React Compiler. Ez egy forradalmi eszköz, amely automatikusan optimalizálja a kódot. Hidd el, ez megváltoztatja a way we think about performance in React.</p>
-
-<p>A compiler képes elemezni a komponenseket és megérteni, mikor szükséges újrarenderelni egy elemet. Ez azt jelenti, hogy a kódod automatikusan gyorsabb lesz anélkül, hogy kézzel kellene optimalizálnod.</p>
-
-<pre><code>// A compiler automatikusan kezeli a memoizációt
-function Counter() {
-  const [count, setCount] = useState(0);
-  
-  // Nincs szükség useMemo-ra vagy useCallback-re!
-  const doubled = count * 2;
-  
-  return <div>{doubled}</div>;
-}</code></pre>
-
-<h2>Server Actions - A jövő interaktivitása</h2>
-<p>Az Actions funkció egyszerűbbé teszi a szerveroldali műveletek kezelését. Most már közvetlenül a komponensekből hívhatunk szerveroldali függvényeket, és az űrlapok kezelése is sokkal könnyebb lett.</p>
-
-<p>Gondolj bele: korábban egy űrlap beküldéséhez rengeteg boilerplate kódot kellett írni. Most? Egy sor és kész!</p>
-
-<pre><code>// Egyszerű mint az 1x1
-async function submitForm(formData) {
-  'use server'
-  const name = formData.get('name')
-  await db.users.create({ name })
-  revalidatePath('/users')
-}
-
-// Használata a komponensben
-<form action={submitForm}>
-  <input name="name" />
-  <button type="submit">Küldés</button>
-</form></code></pre>
-
-<h2>Document Metadata API</h2>
-<p>Végre! A React 19-ben könnyedén kezelhetjük a dokumentum metaadatait közvetlenül a komponensekből. Nincs szükség külön head komponensekre vagy external könyvtárakra.</p>
-
-<pre><code>// Metaadatok közvetlenül a komponensből
-export default function AboutPage() {
-  return (
-    <>
-      <title>Rólam</title>
-      <meta name="description" content="Ismerj meg!" />
-      <About />
-    </>
-  )
-}</code></pre>
-
-<h2>Új use() Hook</h2>
-<p>A use() hook egy Game Changer. Lehetővé teszi Promise-ok kezelését közvetlenül a komponensekben, szükségtelen async/await wrapper nélkül.</p>
-
-<pre><code>// Korábban
-async function UserProfile({ userId }) {
-  const user = await fetchUser(userId);
-  return <div>{user.name}</div>;
-}
-
-// Most a use() használatával
-function UserProfile({ userPromise }) {
-  const user = use(userPromise);
-  return <div>{user.name}</div>;
-}</code></pre>
-
-<h2>Form Actions</h2>
-<p>A form actionök most már támogatják a pending state-et, a validációt és az optimistic update-eket. Ez azt jelenti, hogy az űrlapok soha nem voltak ilyen egyszerűek!</p>
-
-<h2>Teljesítmény javulások</h2>
-<p>A React 19 számos teljesítményoptimalizálást hoz:</p>
+<p>A legnagyobb változások:</p>
 <ul>
-  <li><strong>Automatikus kódfelosztás</strong> - A compiler automatically code-splits</li>
-  <li><strong>Javított batchelés</strong> - Kevesebb re-render</li>
-  <li><strong>SSR optimalizálások</strong> - Gyorsabb first contentful paint</li>
+  <li>✅ <strong>React Compiler</strong> – automatikus memoizáció, nincs több useMemo/useCallback</li>
+  <li>✅ <strong>Server Actions</strong> – szerveroldali függvények közvetlenül a komponensekből</li>
+  <li>✅ <strong>use() hook</strong> – Promise-ok és kontextusok egyszerű kezelése</li>
+  <li>✅ <strong>Document Metadata</strong> – title, meta leírások komponens szinten</li>
+  <li>✅ <strong>Form Actions</strong> – űrlapkezelés soha nem volt ilyen egyszerű</li>
 </ul>
 
-<h2>Hogyan frissíts?</h2>
-<p>A frissítés egyszerű, de van néhány dolog, amire figyelned kell:</p>
+<p>Nézzük is meg őket egyesével, rengeteg kódpéldával!</p>
+
+<h2>1. React Compiler – A memoizáció vége</h2>
+<p>Eddig ha optimalizálni akartad a komponensedet, kézzel kellett pakolnod a <code>useMemo</code>, <code>useCallback</code> és <code>React.memo</code> függvényeket. Nem csak hogy plusz munka volt, de könnyű volt elrontani, és gyakran több kódot jelentett, mint maga a logika.</p>
+
+<p>A React 19 új kompilátora <strong>automatikusan elemzi a komponenseidet</strong>, és csak akkor renderel újra, amikor szükséges. Nézd meg ezt a példát:</p>
+
+<pre><code>// React 18 – kézi optimalizálás
+import React, { useMemo, useCallback } from 'react';
+
+function ExpensiveComponent({ items, onItemClick }) {
+  const expensiveValue = useMemo(() => {
+    return items.filter(item => item.active).map(item => item.value);
+  }, [items]);
+
+  const handleClick = useCallback((id) => {
+    onItemClick(id);
+  }, [onItemClick]);
+
+  return (/* ... */);
+}
+
+// React 19 – a compiler mindent megcsinál
+function ExpensiveComponent({ items, onItemClick }) {
+  // A compiler rájön, hogy ez függ items-től
+  const expensiveValue = items.filter(item => item.active).map(item => item.value);
+  
+  // A compiler látja, hogy ez egy stabil függvény
+  const handleClick = (id) => onItemClick(id);
+  
+  return (/* ... */);
+}</code></pre>
+
+<p>✨ <strong>Tanács:</strong> A compiler a build folyamat része, nem kell semmit sem telepítened külön. Csak frissíts a React 19-re, és a Next.js vagy Vite automatikusan használja.</p>
+
+<h2>2. Server Actions – Backend a frontendben</h2>
+<p>Ez a funkció igazi game changer. Korábban ha szerveroldali műveletet akartál végezni (pl. adatbázisba írni, fájlt feltölteni), külön API endpoint-ot kellett írnod, majd fetch-el meghívnod. A React 19-ben egyszerűen definiálhatsz egy <code>'use server'</code> függvényt, és meghívhatod közvetlenül a komponensedből.</p>
+
+<pre><code>// app/actions.ts
+'use server';
+import { db } from './db';
+import { revalidatePath } from 'next/cache';
+
+export async function createPost(formData: FormData) {
+  const title = formData.get('title');
+  const content = formData.get('content');
+  
+  await db.post.create({
+    data: { title, content, publishedAt: new Date() }
+  });
+  
+  // Frissíti a cache-t, hogy megjelenjen az új bejegyzés
+  revalidatePath('/posts');
+}
+
+// app/components/CreatePostForm.tsx
+import { createPost } from '../actions';
+
+export function CreatePostForm() {
+  return (
+    &lt;form action={createPost}&gt;
+      &lt;input name="title" placeholder="Cím" /&gt;
+      &lt;textarea name="content" placeholder="Tartalom" /&gt;
+      &lt;button type="submit"&gt;Létrehozás&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+
+<p>💡 <strong>Pro tipp:</strong> Használhatod a <code>useFormStatus</code> hookot a gomb letiltására küldés közben, és a <code>useOptimistic</code> hookot az azonnali UI frissítéshez.</p>
+
+<h2>3. use() hook – Promise-ok és kontextusok egyszerűen</h2>
+<p>Az új <code>use()</code> hook forradalmasítja az aszinkron adatok kezelését. Eddig a <code>useEffect</code> + <code>useState</code> kombót kellett használnod, vagy egy külső könyvtárat (pl. React Query). Mostantól közvetlenül a komponensben "feloldhatsz" egy Promise-t, és a React majd kezeli a loading állapotot.</p>
+
+<pre><code>// Adatfetchetés use() segítségével
+async function fetchUser(id) {
+  const res = await fetch(\`/api/users/\${id}\`);
+  return res.json();
+}
+
+function UserProfile({ userId }) {
+  // A userPromise lehet egy prop vagy context
+  const user = use(fetchUser(userId));
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{user.name}&lt;/h1&gt;
+      &lt;p&gt;Email: {user.email}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Használat egy Suspense határral
+&lt;Suspense fallback={&lt;div&gt;Betöltés...&lt;/div&gt;}&gt;
+  &lt;UserProfile userId={123} /&gt;
+&lt;/Suspense&gt;</code></pre>
+
+<p>⚡ <strong>Fontos:</strong> A <code>use()</code> hook nem csak Promise-okra működik, hanem kontextusokra is! Így feltételesen olvashatsz ki kontextus értékeket, amit eddig nem lehetett.</p>
+
+<h2>4. Document Metadata – Végre tiszta head kezelés</h2>
+<p>Ha valaha is próbáltál már meta címkéket beállítani egy React komponensből, tudod, hogy mekkora szenvedés. A react-helmet, next/head és egyéb megoldások mind kompromisszumok voltak. A React 19 bevezeti a <strong>szabványos metadata API-t</strong>:</p>
+
+<pre><code>function BlogPost({ post }) {
+  return (
+    &lt;&gt;
+      &lt;title&gt;{post.title} | Saját Blog&lt;/title&gt;
+      &lt;meta name="description" content={post.excerpt} /&gt;
+      &lt;meta property="og:image" content={post.coverImage} /&gt;
+      &lt;link rel="canonical" href={\`https://példa.hu/posts/\${post.slug}\`} /&gt;
+      
+      &lt;article&gt;{post.content}&lt;/article&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+
+<p>A React automatikusan összegyűjti ezeket a címkéket és a dokumentum <code>&lt;head&gt;</code> részébe helyezi őket. Tökéletesen működik SSR-rel és SPA módban is.</p>
+
+<h2>5. Form Actions továbbfejlesztve</h2>
+<p>A React 19 tovább egyszerűsíti az űrlapok kezelését. A <code>action</code> prop most már támogatja az aszinkron függvényeket, és elérhetővé teszi a <strong>pending state</strong> kezelését:</p>
+
+<pre><code>import { useFormStatus } from 'react-dom';
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    &lt;button type="submit" disabled={pending}&gt;
+      {pending ? 'Küldés folyamatban...' : 'Mentés'}
+    &lt;/button&gt;
+  );
+}
+
+function RegistrationForm() {
+  async function register(formData) {
+    'use server';
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('Regisztráció:', formData.get('email'));
+  }
+  
+  return (
+    &lt;form action={register}&gt;
+      &lt;input name="email" type="email" required /&gt;
+      &lt;SubmitButton /&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+
+<h2>Hogyan frissítsünk React 19-re?</h2>
+<p>A frissítés általában problémamentes, de van pár dolog, amire figyelned kell:</p>
 
 <ol>
-  <li>Frissítsd a React és ReactDOM csomagokat a legújabb verzióra</li>
-  <li>Ellenőrizd a használt könyvtárakat, hogy kompatibilisek-e</li>
-  <li>Runnold a linter-t a warning-ok ellenőrzésére</li>
-  <li>Testelj alaposan az új funkciókat</li>
+  <li><strong>Frissítsd a függőségeket</strong> – <code>npm install react@19 react-dom@19</code></li>
+  <li><strong>Ellenőrizd a harmadik féltől származó könyvtárakat</strong> – Néhány régi könyvtár (pl. régi formik, react-helmet) nem kompatibilis. Használd helyettük a beépített megoldásokat.</li>
+  <li><strong>Távolítsd el a felesleges memoizációt</strong> – A React Compiler miatt már nincs szükség useMemo-ra és useCallback-re a legtöbb esetben.</li>
+  <li><strong>Teszteld alaposan</strong> – Különösen a concurrent módra épülő funkciókat.</li>
 </ol>
 
-<h2>Összegzés</h2>
-<p>A React 19 nem csak egy apró frissítés - ez egy teljes paradigmaváltás. Az új compiler, az Actions, és a use() hook mind azt mutatják, hogy a React továbbra is az élen jár a webfejlesztésben.</p>
+<h2>Összegzés: Érdemes váltani?</h2>
+<p><strong>Igen, mindenképpen!</strong> A React 19 nem csak új feature-öket hoz, hanem egy teljesen új fejlesztési paradigmát. A kódod egyszerűbb, gyorsabb és kevésbé hibára hajlamos lesz. A Server Actions és a use() hook pedig olyan lehetőségeket adnak, amelyekkel eddig csak más keretrendszerek (pl. SvelteKit, Solid) büszkélkedhettek.</p>
 
-<p>Érdemes kipróbálni az új funkciókat, és fokozatosan átállni az újabb verzióra. A változások nem csak a teljesítményt javítják, hanem a kódolási élményt is sokkal jobbá teszik.</p>
+<p>Ha most kezdenél egy új projektet, ne is gondolkodj – használd a React 19-et. Ha meglévő projekted van, kezdd el fokozatosan bevezetni a változásokat. A közösség már most rengeteg mintát és best practice-t publikált.</p>
 
-<p>Te már kipróbáltad a React 19-et? Írd meg kommentben!</p>
+<p>Mi a véleményed a React 19-ről? Kipróbáltad már? Írd meg kommentben! 👇</p>
     `
   },
   {
     id: 2,
     title: "Teljes útmutató: Full Stack fejlesztés Next.js 14-gyel",
     slug: "full-stack-nextjs",
-    excerpt: "Tanulj meg professzionális full stack alkalmazásokat építeni a Next.js és a modern webtechnológiák segítségével. Ez az ultimate guide.",
+    excerpt: "A Next.js 14 nem csak egy React keretrendszer – egy komplett full stack platform. Ebben a 25 perces, példákban gazdag útmutatóban megtanulod, hogyan építs adatbázissal, hitelesítéssel és API-kkal rendelkező alkalmazásokat. Prisma, NextAuth, Server Actions, és még sok más.",
     category: "Tutorial",
     date: "2025. január 8.",
-    readTime: "25 perc",
+    readTime: "28 perc",
     image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=1200",
-    tags: ["Next.js", "Full Stack", "API", "Web Development", "JavaScript"],
+    tags: ["Next.js", "Full Stack", "API", "Web Development", "JavaScript", "Prisma"],
     content: `
-<p class="lead">A full stack fejlesztés a legkeresettebb tudás a tech iparban. Ebben az átfogó útmutatóban megtanulsz professzionális alkalmazásokat építeni a Next.js segítségével.</p>
+<p class="lead">A Next.js 14 megjelenésével a full stack fejlesztés soha nem volt ilyen elérhető. Ebben a cikkben nem elméleti példákat mutatok – egy valódi, teljes értékű alkalmazást építünk a semmiből: felhasználókezelés, adatbázis, hitelesítés, űrlapok, valós idejű frissítések. Végigmegyünk minden lépésen, úgyhogy kapcsold be a kedvenc IDE-det, és vágjunk bele!</p>
 
-<h2>Miért Next.js?</h2>
-<p>A Next.js az egyik legnépszerűbb keretrendszer React-alapú alkalmazásokhoz. De miért is olyan jó választás?</p>
+<h2>Miért pont Next.js 14?</h2>
+<p>A Next.js az utóbbi években a React-alapú alkalmazások királya lett. A 14-es verzióval azonban a Vercel csapata túllépett a „React keretrendszer” címkén – a Next.js immár egy <strong>teljes értékű full stack platform</strong>, amely versenyképes olyan gigászokkal, mint a Ruby on Rails, a Laravel vagy a Django.</p>
 
-<h3>Előnyök</h3>
+<p><strong>Mit nyújt a Next.js 14?</strong></p>
 <ul>
-  <li><strong>Server-side rendering (SSR)</strong> - A JavaScript a szerver oldalon fut, jobb SEO és gyorsabb betöltés</li>
-  <li><strong>Static Site Generation (SSG)</strong> - A leggyorsabb lehetséges betöltési idők</li>
-  <li><strong>API Route-ok</strong> - Nincs szükség külön backend szerverre</li>
-  <li><strong>Automatikus optimalizálás</strong> - Képek, betűtípusok, és még sok más</li>
-  <li><strong>Zero config</strong> - Kezdj el azonnal, konfigurálj később</li>
+  <li>🔥 <strong>Server Components</strong> – alapértelmezésben szerveroldali renderelés, nulla kliensoldali JS</li>
+  <li>🔥 <strong>Server Actions</strong> – API endpoint-ok írása nélküli adatmódosítás</li>
+  <li>🔥 <strong>App Router</strong> – fájlalapú útvonalak, layout-ok, párhuzamos útvonalak</li>
+  <li>🔥 <strong>Beépített optimalizálások</strong> – képek, betűtípusok, szkriptek automatikus kezelése</li>
+  <li>🔥 <strong>Zero-config TypeScript, ESLint, Tailwind</strong> – azonnal használható</li>
 </ul>
 
-<h2>A projekt létrehozása</h2>
-<p>Első lépésként hozzuk létre az új projektet:</p>
+<p>Az alábbiakban egy teljes alkalmazást építünk, amelyben a felhasználók regisztrálhatnak, bejelentkezhetnek, és blogbejegyzéseket írhatnak. Mindezt <strong>egyetlen kódbázisban</strong>, a backend és frontend szétválasztása nélkül.</p>
 
+<h2>1. Projekt inicializálás</h2>
+<p>Indítsd el a terminált, és futtasd:</p>
 <pre><code>npx create-next-app@latest my-fullstack-app
-# Válasszuk az alábbiakat:
+# Válaszd az alábbiakat:
 # - TypeScript: Yes
 # - ESLint: Yes
 # - Tailwind CSS: Yes
 # - src/ directory: Yes
 # - App Router: Yes</code></pre>
 
-<h2>Projekt struktúra</h2>
-<p>A Next.js 14 egy teljesen új fájlstruktúrát használ. Nézzük meg:</p>
+<p>Lépj be a mappába: <code>cd my-fullstack-app</code></p>
 
-<pre><code>my-fullstack-app/
-├── src/
-│   ├── app/
-│   │   ├── page.tsx          # Főoldal
-│   │   ├── layout.tsx        # Root layout
-│   │   ├── globals.css       # Global stílusok
-│   │   └── api/              # API route-ok
-│   │       └── users/
-│   │           └── route.ts
-│   ├── components/           # Komponensek
-│   ├── lib/                  # Utility-k
-│   └── types/                # TypeScript típusok
-├── public/                   # Statikus fájlok
-├── package.json
-└── next.config.js</code></pre>
+<h2>2. Adatbázis beállítása Prisma-val</h2>
+<p>A Prisma a legjobb választás Next.js mellé – típusbiztos, egyszerű és erős.</p>
 
-<h2>Első API route létrehozása</h2>
-<p>Az API route-ok lehetővé teszik, hogy backend funkcionalitást építsünk az alkalmazásunkba:</p>
+<pre><code>npm install prisma --save-dev
+npx prisma init</code></pre>
 
-<pre><code>// src/app/api/users/route.ts
-import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+<p>A <code>.env</code> fájlban állítsd be az adatbázis URL-t (itt PostgreSQL-t használok, de SQLite is működik fejlesztésben):</p>
+<pre><code>DATABASE_URL="postgresql://postgres:password@localhost:5432/myapp"</code></pre>
 
-export async function GET() {
-  const users = await db.user.findMany();
-  return NextResponse.json(users);
+<p>Szerkesszük a <code>prisma/schema.prisma</code> fájlt:</p>
+<pre><code>generator client {
+  provider = "prisma-client-js"
 }
 
-export async function POST(request: Request) {
-  const body = await request.json();
-  const user = await db.user.create({
-    data: {
-      name: body.name,
-      email: body.email,
-    },
-  });
-  return NextResponse.json(user);
-}</code></pre>
-
-<h2>Adatbázis integráció: Prisma</h2>
-<p>A Prisma a legjobb választás adatbázis kezeléshez Next.js alkalmazásokban:</p>
-
-<pre><code>// 1. Telepítsük a Prismát
-npm install prisma --save-dev
-npx prisma init
-
-// 2. Adjuk hozzá a schema.prisma fájlt
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -213,328 +260,385 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
-  name      String
   email     String   @unique
+  name      String
+  password  String   // később hasheljük
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  published Boolean  @default(false)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }</code></pre>
 
-<h2>Hitelesítés: NextAuth.js</h2>
-<p>A hitelesítés kritikus része bármely alkalmazásnak. A NextAuth (most már Auth.js) a legjobb megoldás:</p>
+<p>Futtasd a migrációt:</p>
+<pre><code>npx prisma migrate dev --name init
+npx prisma generate</code></pre>
 
-<pre><code>// src/app/api/auth/[...nextauth]/route.ts
-import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
-import GoogleProvider from "next-auth/providers/google"
+<p>Hozz létre egy <code>lib/prisma.ts</code> fájlt a kliens inicializálásához:</p>
+<pre><code>import { PrismaClient } from '@prisma/client'
+
+const globalForPrisma = global as unknown as { prisma: PrismaClient }
+
+export const prisma = globalForPrisma.prisma || new PrismaClient()
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma</code></pre>
+
+<h2>3. Hitelesítés NextAuth-dal (Auth.js)</h2>
+<p>Telepítsd a NextAuth-ot:</p>
+<pre><code>npm install next-auth @auth/prisma-adapter
+npm install bcryptjs
+npm install --save-dev @types/bcryptjs</code></pre>
+
+<p>Készítsd el a <code>app/api/auth/[...nextauth]/route.ts</code> fájlt:</p>
+<pre><code>import NextAuth from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "@/lib/prisma"
+import bcrypt from "bcryptjs"
 
 const handler = NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
-    }),
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Jelszó", type: "password" }
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) return null
+        
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email }
+        })
+        
+        if (!user) return null
+        
+        const isValid = await bcrypt.compare(credentials.password, user.password)
+        if (!isValid) return null
+        
+        return { id: user.id, email: user.email, name: user.name }
+      }
+    })
   ],
+  session: { strategy: "jwt" },
+  pages: { signIn: "/login" },
   callbacks: {
-    async session({ session, token }) {
-      session.user.id = token.sub
-      return session
+    async jwt({ token, user }) {
+      if (user) token.id = user.id
+      return token
     },
-  },
+    async session({ session, token }) {
+      if (session.user) session.user.id = token.id as string
+      return session
+    }
+  }
 })
 
 export { handler as GET, handler as POST }</code></pre>
 
-<h2>Form kezelés Server Actions-szal</h2>
-<p>A Next.js 14 Server Actions segítségével egyszerűen kezelhetjük az űrlapokat:</p>
+<p>Regisztrációhoz készíts egy Server Action-t a <code>app/actions/auth.ts</code> fájlban:</p>
+<pre><code>'use server'
+import { prisma } from "@/lib/prisma"
+import bcrypt from "bcryptjs"
+import { redirect } from "next/navigation"
 
-<pre><code>// src/app/actions.ts
-'use server'
-
-import { db } from '@/lib/db'
-import { revalidatePath } from 'next/cache'
-
-export async function createUser(formData: FormData) {
-  const name = formData.get('name') as string
-  const email = formData.get('email') as string
+export async function register(formData: FormData) {
+  const email = formData.get("email") as string
+  const name = formData.get("name") as string
+  const password = formData.get("password") as string
   
-  await db.user.create({
-    data: { name, email }
+  const existingUser = await prisma.user.findUnique({ where: { email } })
+  if (existingUser) throw new Error("Ez az email már regisztrálva van")
+  
+  const hashedPassword = await bcrypt.hash(password, 10)
+  
+  await prisma.user.create({
+    data: { email, name, password: hashedPassword }
   })
   
-  revalidatePath('/users')
+  redirect("/login")
+}</code></pre>
+
+<h2>4. Blogbejegyzések CRUD műveletei</h2>
+<p>Készítsünk egy űrlapot új poszt létrehozásához Server Actions segítségével (<code>app/dashboard/new-post/page.tsx</code>):</p>
+<pre><code>import { getServerSession } from "next-auth"
+import { redirect } from "next/navigation"
+import { prisma } from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
+
+async function createPost(formData: FormData) {
+  'use server'
+  const session = await getServerSession()
+  if (!session?.user) throw new Error("Nem vagy bejelentkezve")
+  
+  const title = formData.get("title") as string
+  const content = formData.get("content") as string
+  
+  await prisma.post.create({
+    data: {
+      title,
+      content,
+      authorId: session.user.id,
+      published: true
+    }
+  })
+  
+  revalidatePath("/dashboard")
+  redirect("/dashboard")
 }
 
-// Használata:
-<form action={createUser}>
-  <input name="name" placeholder="Név" />
-  <input name="email" placeholder="Email" />
-  <button type="submit">Küldés</button>
-</form></code></pre>
+export default function NewPostPage() {
+  return (
+    &lt;form action={createPost} className="space-y-4"&gt;
+      &lt;div&gt;
+        &lt;label htmlFor="title" className="block text-sm font-medium"&gt;Cím&lt;/label&gt;
+        &lt;input type="text" name="title" id="title" required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label htmlFor="content" className="block text-sm font-medium"&gt;Tartalom&lt;/label&gt;
+        &lt;textarea name="content" id="content" rows={10} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm" /&gt;
+      &lt;/div&gt;
+      &lt;button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md"&gt;Publikálás&lt;/button&gt;
+    &lt;/form&gt;
+  )
+}</code></pre>
 
-<h2>State management</h2>
-<p>A Next.js 14-ben többféle state management megoldás közül választhatsz:</p>
+<p>A posztok listázása egy szerverkomponensben:</p>
+<pre><code>// app/dashboard/page.tsx
+import { prisma } from "@/lib/prisma"
+import Link from "next/link"
 
-<h3>Server Components + Server Actions</h3>
-<p>A legtöbb esetben nincs szükség kliensoldali state-re. A Server Components és Server Actions mindent megoldanak.</p>
+export default async function DashboardPage() {
+  const posts = await prisma.post.findMany({
+    include: { author: true },
+    orderBy: { createdAt: "desc" }
+  })
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Saját bejegyzéseim&lt;/h1&gt;
+      &lt;div className="grid gap-4"&gt;
+        {posts.map(post => (
+          &lt;Link href={\`/posts/\${post.id}\`} key={post.id} className="border p-4 rounded hover:shadow"&gt;
+            &lt;h2 className="text-xl font-bold"&gt;{post.title}&lt;/h2&gt;
+            &lt;p&gt;{post.content.slice(0, 100)}...&lt;/p&gt;
+            &lt;small&gt;Szerző: {post.author.name} – {new Date(post.createdAt).toLocaleDateString()}&lt;/small&gt;
+          &lt;/Link&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
 
-<h3>Zustand (ha mégis kell state)</h3>
-<pre><code>import { create } from 'zustand'
-
-interface CounterStore {
-  count: number
-  increment: () => void
-}
-
-const useCounterStore = create<CounterStore>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-}))</code></pre>
-
-<h2>Deployment</h2>
-<p>A Next.js alkalmazásokat a Vercel-en a legegyszerűbb deployolni:</p>
+<h2>5. Deployment Vercel-re</h2>
+<p>A legjobb a Vercel, mert a Next.js készítői fejlesztik. Automatikusan felismeri a projektet, beállítja a build parancsokat, és kezeli a környezeti változókat.</p>
 
 <ol>
-  <li>Pushold a kódot GitHub-ra</li>
-  <li>Importáld a projektet a Vercel-en</li>
-  <li>A Vercel automágikusan detektálja a Next.js-t</li>
-  <li>Állítsd be a környezeti változókat</li>
-  <li>Deploy!</li>
+  <li>Pushold a kódot egy GitHub repóba.</li>
+  <li>Menj a <a href="https://vercel.com" target="_blank">vercel.com</a> oldalra, és importáld a repót.</li>
+  <li>Állítsd be a környezeti változókat (DATABASE_URL, NEXTAUTH_SECRET, stb.) a Vercel irányítópultján.</li>
+  <li>Kattints a Deploy gombra.</li>
 </ol>
 
-<h2>Best practices</h2>
+<p>Ha PostgreSQL adatbázist használsz, a Vercel kínál beépített Neon vagy Supabase integrációt, de használhatsz máshol futó adatbázist is.</p>
+
+<h2>Best practice tippek a való világban</h2>
 <ul>
-  <li>Mindig használj TypeScript-et</li>
-  <li>Kerüld a kliensoldali fetch-et, ha lehetséges</li>
-  <li>Használj Server Components-et, ahol csak lehet</li>
-  <li>Implementálj error és loading state-eket</li>
-  <li>Optimalizáld a képeket a next/image használatával</li>
+  <li><strong>Használj típusbiztos API hívásokat</strong> – a Prisma típusait exportáld, hogy a frontend is lássa a modelleket.</li>
+  <li><strong>Alkalmazz loading állapotokat</strong> – a <code>loading.tsx</code> fájlokkal azonnali visszajelzést adhatsz a felhasználónak.</li>
+  <li><strong>Használd a <code>unstable_noStore</code> függvényt</strong> ha nem akarod cache-elni az adatokat (pl. személyes dashboard).</li>
+  <li><strong>Vigyázz a szerver actionök validációjára</strong> – soha ne bízz a kliens oldali validációban, használd a Zod-ot.</li>
 </ul>
 
-<h2>Összegzés</h2>
-<p>A Next.js 14 a legjobb választás modern full stack alkalmazások építéséhez. Az SSR, SSG, API route-ok és Server Actions kombinációja lehetővé teszi, hogy egyetlen projektben megoldjunk mindent.</p>
-
-<p>Gyakorolj sokat, és hamarosan profi full stack fejlesztő leszel!</p>
+<p>Ezzel a tudással már képes vagy egy teljes értékű full stack alkalmazás építésére. A Next.js 14 és a modern eszközök (Prisma, NextAuth, Tailwind) kombinációja hihetetlenül gyors fejlesztést tesz lehetővé. Ha bármi kérdésed van, írd meg a cikk alatti kommentekben!</p>
     `
   },
   {
     id: 3,
-    title: "A tökéletes portfolióépítés - Útmutató fejlesztőknek",
+    title: "A tökéletes portfolióépítés – Útmutató fejlesztőknek",
     slug: "portfolio-epites-utmutato",
-    excerpt: "Szeretnéd, hogy a portfoliód kiemelkedjen? Ebben a cikkben megtanulsz egy olyan portfoliót építeni, amely valóban munkához juttat.",
+    excerpt: "Nem elég, hogy jól kódolj – a portfóliód az arcod a munkaerőpiacon. Ebben a cikkben nem sablonokat adok, hanem pszichológiát, UX stratégiákat és konkrét példákat, amivel állásinterjúkra hívnak, nem pedig unottan görgetnek tovább.",
     category: "Karrier",
     date: "2025. január 1.",
-    readTime: "20 perc",
+    readTime: "25 perc",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200",
-    tags: ["Portfolio", "Karrier", "Web Development", "Design"],
+    tags: ["Portfolio", "Karrier", "Web Development", "Design", "Freelance"],
     content: `
-<p class="lead">A portfóliód az egyik legfontosabb eszközöd a munkakeresésben. Ez az első dolog, amit a potenciális munkaadók megnéznek. Ebben az útmutatóban megtanulod, hogyan építs egy valóban hatékony portfóliót.</p>
+<p class="lead">Tudod, mi a különbség a „fejlesztő” és a „felvett fejlesztő” között? A portfólió. Nem a CV-d, nem a diplomád, nem az évek száma. A portfóliód. És hidd el, a legtöbb portfólió borzasztó unalmas, sablonos és hatástalan. Ebben az útmutatóban megmutatom, hogyan készíts olyan portfóliót, ami miatt a HR-esek és a technikai vezetők téged hívnak fel elsőnek.</p>
 
-<h2>Miért fontos a portfólió?</h2>
-<p>A CV-d megmutatja, mit csináltál, de a portfóliód megmutatja, hogyan gondolkodsz és dolgozol. Ez a különbség a "fejlesztő" és a "jó fejlesztő" között.</p>
+<h2>Miért buknak el a legtöbb portfóliók?</h2>
+<p>Vegyünk egy átlagos fejlesztői portfóliót: „Szia, én Gábor vagyok, frontend fejlesztő. Itt van 3 projekt, amit csináltam. Itt a GitHub linkem. Köszönöm.” – Ez nem portfólió, ez egy névjegykártya. A jó portfólió <strong>sztorikat mesél</strong>, <strong>megoldott problémákat mutat be</strong>, és <strong>érzelmi kapcsolatot</strong> teremt.</p>
 
-<p>Egy jó portfólió:</p>
-<ul>
-  <li>Megmutatja a készségeidet</li>
-  <li>Bizonyítja a tapasztalatodat</li>
-  <li>Kiemel a tömegből</li>
-  <li>Lehetőséget ad a kreativitásra</li>
-  <li>Konverziót eredményez (megkeresések)</li>
-</ul>
-
-<h2>A tökéletes portfólió elemei</h2>
-
-<h3>1. Erős hero szekció</h3>
-<p>Az első benyomás a legfontosabb. A hero szekciónak azonnal meg kell ragadnia a látogató figyelmét és közölnie kell, ki vagy és mit csinálsz.</p>
-
-<p>Tippek:</p>
-<ul>
-  <li>Használj dinamikus animációkat</li>
-  <li>Mutasd be egyedi személyiségedet</li>
-  <li>Legyen világos a call-to-action</li>
-  <li>Kerüld a túlzsúfolt designt</li>
-</ul>
-
-<h3>2. Rólam szekció</h3>
-<p>Az emberek nem csak a kódodat, hanem TÉGED is szeretnének megismerni. Mesélj a hátodról, a szenvedélyeidről és a motivációdról.</p>
-
-<p>Ne csak felsorold a technológiákat - mutasd be, hogyan oldod meg a problémákat!</p>
-
-<h3>3. Projekt bemutatók</h3>
-<p>Mindegyik projekt legyen részletesen bemutatva:</p>
-
-<ul>
-  <li><strong>A probléma</strong> - Milyen kihívással szembesültél?</li>
-  <li><strong>A megoldás</strong> - Hogyan oldottad meg?</li>
-  <li><strong>A technológia</strong> - Mit használtál és miért?</li>
-  <li><strong>Az eredmény</strong> - Mi lett a végeredmény?</li>
-  <li><strong>A tanulságok</strong> - Mit tanultál a projektből?</li>
-</ul>
-
-<h3>4. Készségek</h3>
-<p>Mutatsd be a technikai készségeidet, de ne csak felsorold őket! Használj vizuális elemeket, mint például:</p>
-<ul>
-  <li>Skill bar-ok</li>
-  <li>Projekt carousel</li>
-  <li>Interaktív demo-k</li>
-</ul>
-
-<h3>5. Kapcsolatfelvétel</h3>
-<p>Végül legyen egyszerű módja a kapcsolatfelvételnek. Ne csak egy email címet adj meg - legyen egy szép űrlap is!</p>
-
-<h2>A design fontossága</h2>
-<p>A design nem csak a "szépségről" szól. A jó design:</p>
-<ul>
-  <li>Megkönnyíti a navigációt</li>
-  <li>Professzionális benyomást kelt</li>
-  <li>Megmutatja a figyelmet a részletekre</li>
-  <li>Elkülönít a versenytársaktól</li>
-</ul>
-
-<h3>Színek és tipográfia</h3>
-<p>Válassz egy konzisztens színpalettát és betűtípust. A kék a bizalmat és a profizmust sugallz - ezért olyan népszerű a tech világban.</p>
-
-<h3>Whitespace</h3>
-<p>Ne félj a üres tér használatától! A whitespace segít a tartalomnak lélegezni és megkönnyíti az olvasást.</p>
-
-<h2>Technikai megvalósítás</h2>
-<p>Modern tech stack használata a portfóliónál:</p>
-
-<pre><code>// Ajánlott stack
-- Next.js - Gyors és SEO-barát
-- TypeScript - Típusbiztos kód
-- Tailwind CSS - Gyors styling
-- Framer Motion - Animációk
-- Vercel - Ingyenes hosting</code></pre>
-
-<h2>Gyakori hibák, amiket kerülj</h2>
-<ul>
-  <li><strong>Túl sok projekt</strong> - 3-5 kiválasztott projekt jobb, mint 20 silány</li>
-  <li><strong>Másolás</strong> - Légy egyedi!</li>
-  <li><strong>Elavult tartalom</strong> - Rendszeresen frissíts</li>
-  <li><strong>rossz képek</strong> - Használj professzionális screenshotokat</li>
-  <li><strong>Nem reszponzív</strong> - Minden eszközön működnie kell</li>
-</ul>
-
-<h2>A/B tesztelés</h2>
-<p>Ne félj kísérletezni! Teszteld különböző:</p>
-<ul>
-  <li>Design megoldásokat</li>
-  <li>Copywriting-et</li>
-  <li>Call-to-action-eket</li>
-  <li>Színeket és elrendezéseket</li>
-</ul>
-
-<h2>Következő lépések</h2>
+<p><strong>3 halálos bűn a portfóliókban:</strong></p>
 <ol>
-  <li>Készíts egy listát a legjobb projektjeidről</li>
-  <li>Írd meg a projekt leírásokat</li>
-  <li>Válassz design stílust</li>
-  <li>Építsd meg a weboldalt</li>
-  <li>Deployold és teszteld</li>
-  <li>Gyűjts visszajelzéseket</li>
-  <li>Iterálj és fejleszd tovább</li>
+  <li><strong>Csak felsorolod a technológiákat</strong> – „React, Node.js, MongoDB” – ezt a CV-ben is leírtad. A portfólióban azt mutasd meg, hogyan használtad őket.</li>
+  <li><strong>Nincsenek valós eredmények</strong> – „Csináltam egy e-kereskedelmi oldalt” helyett: „Növeltem a konverziós rátát 23%-kal egy új checkout flow-val”.</li>
+  <li><strong>Sablon kinézet</strong> – A Bootstrap vagy a Tailwind sablonokat mindenki ismeri. Adj hozzá egyedi hangulatot, animációkat, személyes brandet.</li>
 </ol>
 
-<h2>Összegzés</h2>
-<p>A tökéletes portfólió nem egy nap alatt készül el. Folyamatosan fejleszd, és idővel egy olyan eszközzé válik, amely valóban munkához juttat.</p>
+<h2>A 8 elem, ami nélkül nincs sikeres portfólió</h2>
 
-<p>Sok sikert az építéshez!</p>
+<h3>1. Hero szekció: 3 másodperced van</h3>
+<p>Amikor valaki rákattint a portfóliódra, az első benyomás dönt. A hero szekcióban legyen:</p>
+<ul>
+  <li>Egy <strong>erős, egyedi headline</strong> – nem „Fejlesztő vagyok”, hanem „Olyan webalkalmazásokat építek, amik a felhasználókat is szeretik”.</li>
+  <li>Egy <strong>profi fotó vagy egyedi avatar</strong> – az arcod emberivé tesz.</li>
+  <li>Egy <strong>call-to-action</strong> – „Nézd meg a munkáimat” vagy „Keress meg egy projekttel”.</li>
+</ul>
+
+<h3>2. „Rólam” – ne a technológiákról, hanem a motivációdról</h3>
+<p>Az emberek nem azért vesznek fel, mert ismered a Reduxot, hanem mert <strong>megbíznak benned</strong>. Írj arról, miért szeretsz kódolni, milyen problémákat oldottál meg, és mit tanultál a hibáidból.</p>
+
+<p>Példa rossz: „5 éves tapasztalatom van Reactben, és szeretek csapatban dolgozni.”<br>
+Példa jó: „Amikor először találkoztam egy lassan betöltő webáruházzal, rájöttem, hogy a teljesítmény nem luxus, hanem alapvetés. Azóta minden projektemben a Core Web Vitals az első.”</p>
+
+<h3>3. Projekt bemutatók – a probléma-megoldás-eredmény struktúra</h3>
+<p>Minden projekthez használd ezt a sablont:</p>
+<ul>
+  <li><strong>A probléma</strong> – Mi volt a kihívás? (pl. „A megrendelő régi PHP-s oldala lassú volt és nem reszponzív.”)</li>
+  <li><strong>A megoldás</strong> – Mit csináltál pontosan? („Átírtam Next.js-re, bevezettem ISR-t és optimalizáltam a képeket.”)</li>
+  <li><strong>Az eredmény</strong> – Számokban kifejezve! („Az oldal sebessége 2.4 másodpercről 0.8 másodpercre csökkent, a bounce rate 45%-ról 22%-ra esett.”)</li>
+  <li><strong>A technológia</strong> – Röviden, címkékben.</li>
+  <li><strong>Élő demo és GitHub link</strong> – Ha lehet, működő verzió is.</li>
+</ul>
+
+<p>Adj hozzá screenshotokat, rövid GIF-eket a fontos interakciókról.</p>
+
+<h3>4. Készségek – vizualizáció és hitelesítés</h3>
+<p>Ne csak listázd, hogy „TypeScript, Python, Docker”, hanem mutasd meg, hogy milyen szinten vagy. Használj skill bar-okat, vagy – ami még jobb – <strong>mini projekt referenciákat</strong>:</p>
+<ul>
+  <li>TypeScript – „Írtam egy teljesen típusbiztos REST API klienst.”</li>
+  <li>Docker – „Dockerizáltam egy microservice architektúrát 4 szolgáltatással.”</li>
+</ul>
+
+<h3>5. Tapasztalat – nem csak a munkahelyek</h3>
+<p>Ha kezdő vagy, nyugodtan tüntess fel open source contributiókat, saját projekteket, bootcamp végzést. A lényeg, hogy <strong>mit tanultál belőlük</strong>.</p>
+
+<h3>6. Tesztimóniumok – mások mondják el, hogy jó vagy</h3>
+<p>Kérj rövid idézeteket korábbi kollégáktól, ügyfelektől. Egy-egy konkrét mondat sokat számít: „Alex a lehetetlen határidőt is hozta, és a kódját öröm volt review-zni.”</p>
+
+<h3>7. Kapcsolat – legyen egyszerű és gyors</h3>
+<p>Ne csak egy email címet tegyél ki. Legyen egy űrlap, ami elküldi neked az üzenetet (pl. Resend vagy EmailJS segítségével). Add meg a LinkedIn, GitHub, Twitter profiljaidat.</p>
+
+<h3>8. Blog (igen, a tiéd is!)</h3>
+<p>A blog mutatja, hogy naprakész vagy, és szeretsz tanulni. Nem kell hetente írnod – elég havi egy minőségi poszt, ami bemutat egy érdekes problémát, amit megoldottál.</p>
+
+<h2>Design tippek fejlesztőknek</h2>
+<p>Nem kell dizájnernek lenned, de pár alapelv sokat segít:</p>
+<ul>
+  <li><strong>Használj bőséges whitespace-t</strong> – a zsúfolt design idegesítő.</li>
+  <li><strong>Válassz egy maximálisan 3 színből álló palettát</strong> – használhatod a Coolors.co-t.</li>
+  <li><strong>Legyen reszponzív</strong> – mobilon is tökéletesen működjön.</li>
+  <li><strong>Adj hozzá finom animációkat</strong> – a Framer Motion vagy az AOS könyvtár sokat dob.</li>
+</ul>
+
+<h2>Technikai stack, amit érdemes használni</h2>
+<p>Ha teheted, építsd a portfóliódat a következő stackkel – ezzel is bizonyítod a modern technológiákban való jártasságodat:</p>
+<pre><code>- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS + shadcn/ui
+- Framer Motion (animációk)
+- Resend (email küldés az űrlapból)
+- Vercel (hosting)</code></pre>
+
+<p>A GitHub repo legyen nyilvános, és legyen benne egy részletes README.md.</p>
+
+<h2>Példa projektleírás – hogyan nézzen ki?</h2>
+<p><strong>Projekt: WeatherDash – időjárás dashboard</strong></p>
+<ul>
+  <li><strong>Probléma:</strong> A meglévő időjárás appok túl bonyolultak voltak a idősebb felhasználók számára.</li>
+  <li><strong>Megoldás:</strong> Építettem egy minimalista PWA-t, ami nagy betűkkel mutatja az aktuális időjárást, és lehetővé teszi több város mentését. Használtam a OpenWeatherMap API-t, a frontendet Next.js-szel készítettem, az állapotkezeléshez Zustand-ot.</li>
+  <li><strong>Eredmény:</strong> A dashboardot 500+ felhasználó használja havonta, és 4.8-as értékelést kapott a Product Hunt-on.</li>
+  <li><strong>Technológiák:</strong> Next.js, TypeScript, Tailwind, Zustand, Jest (tesztelés).</li>
+  <li><strong>Linkek:</strong> <a href="#">Élő demo</a> | <a href="#">GitHub</a></li>
+</ul>
+
+<h2>Következő lépések – cselekedj most!</h2>
+<p>Ne halogasd tovább. Tölts el egy hétvégét azzal, hogy átnézed a jelenlegi portfóliód (vagy ha nincs, csinálj egyet).</p>
+<ol>
+  <li>Válassz ki 3-4 projektet, amit fel akarsz tüntetni.</li>
+  <li>Írd meg mindegyikhez a probléma-megoldás-eredmény sztorit.</li>
+  <li>Válassz egy modern sablont (vagy kódold meg magad) – ajánlom a <strong>Next.js Portfolio Starter</strong>-t a Verceltől.</li>
+  <li>Deployold Vercelre, és tedd ki LinkedIn-re.</li>
+</ol>
+
+<p>És ne felejtsd: a portfóliód sosem kész. Folyamatosan frissítsd, ahogy új készségeket tanulsz. Sok sikert! 🚀</p>
     `
   },
   {
     id: 4,
-    title: "Docker és Kubernetes a mindennapokban - Kezdőknek",
+    title: "Docker és Kubernetes a mindennapokban – Teljes kezdő útmutató",
     slug: "docker-kubernetes-kezdo",
-    excerpt: "A konténerizáció és az orkesztráció ma már elengedhetetlen tudás. Ez a cikk végigvezet a Docker és Kubernetes alapjain.",
+    excerpt: "A konténerizáció már nem csak a DevOps engineer-ek privilégiuma. Ebből a cikkből megtanulod, hogyan csomagolhatod be az alkalmazásod Dockerrel, hogyan állíthatsz össze több konténerből álló rendszereket Docker Compose-szal, és hogyan orkesztrálhatod őket Kubernetesben. Gyakorlati példák, konfig fájlok, hibakeresési tippek.",
     category: "DevOps",
     date: "2024. december 20.",
-    readTime: "22 perc",
+    readTime: "30 perc",
     image: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=1200",
-    tags: ["Docker", "Kubernetes", "DevOps", "Backend"],
+    tags: ["Docker", "Kubernetes", "DevOps", "Backend", "Containers"],
     content: `
-<p class="lead">A DevOps kultúra és a konténerizáció forradalmasította a szoftverfejlesztést és üzemeltetést. Ebben az útmutatóban megtanulsz konténereket létrehozni és kezelni.</p>
+<p class="lead">"De a gépen működött!" – Ismerős? A konténerizáció ezt a problémát oldja meg egyszer s mindenkorra. A Docker és a Kubernetes napjaink legfontosabb DevOps eszközei. Ebben a cikkben nem elméleti szintű magyarázatot kapsz, hanem <strong>használható, másolható parancsokat és konfig fájlokat</strong>, amelyekkel azonnal produktívvá válhatsz.</p>
 
-<h2>Miért konténerizáció?</h2>
-<p>Emlékszel, amikor a kódod működött a gépeden, de nem a szerveren? A konténerizáció ezt a problémát oldja meg.</p>
+<h2>Miért van szükség konténerekre?</h2>
+<p>Képzeld el: megírod a webalkalmazásod Node.js-ben, használsz egy bizonyos verziójú könyvtárat, Redis-t cache-nek, és PostgreSQL adatbázist. A fejlesztői gépeden minden tökéletesen fut. Aztán felteszed a szerverre, és… semmi. Mert a szerveren más a Node verzió, nincs telepítve a Redis, más a környezeti változó.</p>
 
-<p>A konténerizáció előnyei:</p>
-<ul>
-  <li><strong>Konzisztencia</strong> - Ugyanúgy fut everywhere</li>
-  <li><strong>Izoláció</strong> - A konténerek függetlenek egymástól</li>
-  <li><strong>Skálázhatóság</strong> - Könnyű horizontalisan növelni</li>
-  <li><strong>Hatékonyság</strong> - Kevesebb erőforrás, mint a VM-ek</li>
-  <li><strong>Gyorsaság</strong> - Másodpercek alatt elindul</li>
-</ul>
+<p>A Docker ezt úgy oldja meg, hogy <strong>minden függőséget egy konténerbe csomagol</strong>, ami bárhol ugyanúgy fut. A Kubernetes pedig ezeket a konténereket kezeli, skálázza, és ha egy leáll, újraindítja.</p>
 
-<h2>A Docker alapjai</h2>
+<h2>1. Docker – Az alapok</h2>
+<p>Telepítsd a Docker-t a <a href="https://docker.com" target="_blank">hivatalos oldalról</a> (macOS, Windows, Linux egyaránt).</p>
 
-<h3>Telepítés</h3>
-<pre><code># macOS
-brew install --cask docker
-
-# Linux (Ubuntu)
-sudo apt-get update
-sudo apt-get install docker.io
-sudo systemctl start docker
-sudo systemctl enable docker
-
-# Windows
-# Töltsd le a Docker Desktop-ot</code></pre>
-
-<h3>Az első konténer</h3>
-<pre><code># Futtassuk a Hello World-et
+<h3>Első konténer indítása</h3>
+<pre><code># Hello World
 docker run hello-world
 
-# Futtassunk egy interaktív konténert
+# Indíts egy Ubuntu konténert interaktív módban
 docker run -it ubuntu bash
 
-# Futtassunk egy web szervert
+# Indíts egy Nginx webszervert a 8080-as porton
 docker run -d -p 8080:80 nginx</code></pre>
 
-<h2>Dockerfile írása</h2>
-<p>A Dockerfile a konténer "receptje". Itt adod meg, hogyan épüljön fel a konténer:</p>
+<p>A <code>docker ps</code> megmutatja a futó konténereket, <code>docker stop &lt;container_id&gt;</code> leállítja.</p>
 
-<pre><code># A legjobb gyakorlatok
-FROM node:18-alpine
+<h3>Dockerfile – a konténer receptje</h3>
+<p>Hozz létre egy <code>Dockerfile</code> fájlt egy Node.js alkalmazáshoz:</p>
+<pre><code># Alapkép (hivatalos Node 20-alpine, ami nagyon kicsi)
+FROM node:20-alpine
 
 # Munkakönyvtár beállítása
 WORKDIR /app
 
-# Csak a szükséges fájlok másolása
+# Csak a package.json fájlokat másoljuk először (a cache miatt)
 COPY package*.json ./
 
-# Függőségek telepítése
+# Függőségek telepítése (production only)
 RUN npm ci --only=production
 
 # Forráskód másolása
 COPY . .
 
-# Port beállítása
+# A port, amit az alkalmazás használ
 EXPOSE 3000
 
-# Indítási parancs
-CMD ["npm", "start"]</code></pre>
+# Az indításkor futtatandó parancs
+CMD ["node", "server.js"]</code></pre>
 
-<h3>Build és futtatás</h3>
-<pre><code># Build
-docker build -t my-app .
+<p>Buildeld és futtasd:</p>
+<pre><code>docker build -t my-node-app .
+docker run -p 3000:3000 my-node-app</code></pre>
 
-# Futtatás
-docker run -p 3000:3000 my-app
+<p>Használd a <code>.dockerignore</code> fájlt, hogy ne másolódjanak be a felesleges dolgok (node_modules, .git, stb.).</p>
 
-# Futtatás háttérben
-docker run -d -p 3000:3000 my-app
-
-# Interaktív mód
-docker run -it -p 3000:3000 my-app bash</code></pre>
-
-<h2>Docker Compose</h2>
-<p>A Docker Compose-szal több konténert kezelhetsz egyszerre:</p>
-
+<h2>2. Docker Compose – több konténer együtt</h2>
+<p>Egy modern alkalmazás ritkán egyetlen konténerből áll. Legyen egy Node.js backend, egy PostgreSQL adatbázis, és egy Redis cache. Így néz ki a <code>docker-compose.yml</code>:</p>
 <pre><code>version: '3.8'
 
 services:
@@ -543,49 +647,56 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=postgres://user:pass@db:5432/mydb
+      - DATABASE_URL=postgresql://user:pass@db:5432/myapp
+      - REDIS_URL=redis://redis:6379
     depends_on:
       - db
       - redis
+    volumes:
+      - ./uploads:/app/uploads
 
   db:
     image: postgres:15-alpine
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
-      - POSTGRES_DB=mydb
+      - POSTGRES_DB=myapp
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   redis:
     image: redis:7-alpine
+    ports:
+      - "6379:6379"
 
 volumes:
   postgres_data:</code></pre>
 
-<pre><code># Futtatás
-docker-compose up -d
+<p>Indítás:</p>
+<pre><code>docker-compose up -d   # háttérben
+docker-compose logs -f  # logok követése
+docker-compose down     # leállítás</code></pre>
 
-# Logok megtekintése
-docker-compose logs -f
+<p>Ez a setup fejlesztésre is tökéletes – a kód megváltoztatásakor újra kell buildelni a <code>app</code> szolgáltatást, de az adatbázis adatai megmaradnak a volume-nak köszönhetően.</p>
 
-# Leállítás
-docker-compose down</code></pre>
+<h2>3. Kubernetes – a konténer orkesztrátor</h2>
+<p>Ha már több konténered van, és azokat több szerveren akarod futtatni, automatizálni a skálázást, a frissítéseket, akkor jön a Kubernetes (röviden K8s).</p>
 
-<h2>Bevezetés a Kubernetes-be</h2>
-<p>A Kubernetes (K8s) egy konténer orkesztrációs platform. Konténereket kezel, skáláz és hibaelhárít.</p>
+<p>Először is telepítsd a <code>kubectl</code> parancssori eszközt, és ha lokálisan tanulnál, használd a <strong>Minikube</strong>-ot vagy a <strong>Docker Desktop beépített Kubernetes</strong> funkcióját.</p>
 
 <h3>Alapfogalmak</h3>
 <ul>
-  <li><strong>Pod</strong> - A legkisebb egység (1+ konténer)</li>
-  <li><strong>Deployment</strong> - Pod-ok kezelése</li>
-  <li><strong>Service</strong> - Hálózati hozzáférés</li>
-  <li><strong>ConfigMap</strong> - Konfiguráció</li>
-  <li><strong>Secret</strong> - Érzékeny adatok</li>
-  <li><strong>Ingress</strong> - Külső hozzáférés</li>
+  <li><strong>Pod</strong> – egy vagy több konténer együtt, a legkisebb egység.</li>
+  <li><strong>Deployment</strong> – pod-ok sablonja, kezeli a replikák számát, a frissítéseket.</li>
+  <li><strong>Service</strong> – stabil hálózati címet ad a pod-oknak (mert a pod-ok jönnek-mennek).</li>
+  <li><strong>ConfigMap / Secret</strong> – konfigurációs adatok és jelszavak tárolása.</li>
+  <li><strong>Ingress</strong> – külső forgalom irányítása a service-ekhez (pl. domain alapján).</li>
 </ul>
 
-<h3>Deployment létrehozása</h3>
+<h3>Első Deployment</h3>
+<p>Készíts egy <code>deployment.yaml</code> fájlt:</p>
 <pre><code>apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -601,16 +712,25 @@ spec:
         app: my-app
     spec:
       containers:
-      - name: my-app
-        image: my-app:latest
+      - name: app
+        image: my-node-app:latest
         ports:
         - containerPort: 3000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: url
         resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
           limits:
             memory: "256Mi"
             cpu: "500m"</code></pre>
 
-<h3>Service létrehozása</h3>
+<p>Service hozzáadása:</p>
 <pre><code>apiVersion: v1
 kind: Service
 metadata:
@@ -619,413 +739,280 @@ spec:
   selector:
     app: my-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
-  type: LoadBalancer</code></pre>
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer   # Ha felhőben vagy, kap egy külső IP-t</code></pre>
 
-<h2>Helm - A Kubernetes Package Manager</h2>
-<p>A Helm segít komplex alkalmazásokat telepíteni Kubernetes-re:</p>
+<p>Telepítsd:</p>
+<pre><code>kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl get pods
+kubectl get services</code></pre>
 
-<pre><code># Helm telepítése
-brew install helm
+<p>Ha Minikube-ot használsz, futtasd: <code>minikube service my-app-service</code> – megnyitja a böngészőben.</p>
 
-# Chart keresése
-helm search nginx
+<h3>Skálázás és frissítés</h3>
+<pre><code># Skálázás 5 replikára
+kubectl scale deployment my-app --replicas=5
 
-# Telepítés
-helm install my-release nginx/nginx-ingress
+# Frissítés új image-re (rolling update)
+kubectl set image deployment/my-app app=my-node-app:v2
 
-# Frissítés
-helm upgrade my-release nginx/nginx-ingress
+# Állapot figyelése
+kubectl rollout status deployment/my-app
 
-# Listázás
-helm list</code></pre>
+# Visszaállítás
+kubectl rollout undo deployment/my-app</code></pre>
 
-<h2>Gyakorlati tippek</h2>
+<h2>Gyakorlati tippek és trükkök</h2>
 <ul>
-  <li>Mindig használj .dockerignore fájlt</li>
-  <li>Multi-stage build-ek használata a kisebb képekért</li>
-  <li>Security: ne root-ként futtasd a konténereket</li>
-  <li>Health check-ek beállítása</li>
-  <li>Resource limit-ek megadása</li>
-  <li>Log-ok megfelelő kezelése</li>
+  <li><strong>Használj multi-stage build-eket</strong> a Dockerben, hogy a production image kicsi legyen (pl. builder stage + node:alpine).</li>
+  <li><strong>Ne futtasd root-ként a konténereket</strong> – adj meg <code>USER node</code> a Dockerfile-ban.</li>
+  <li><strong>Health check-ek</strong> – Kubernetesben állíts be <code>livenessProbe</code> és <code>readinessProbe</code> értékeket, hogy a K8s tudja, mikor indítsa újra a pod-ot.</li>
+  <li><strong>Használd a <code>kubectl port-forward</code></strong> parancsot fejlesztéshez: <code>kubectl port-forward pod/my-app-pod 3000:3000</code>.</li>
+  <li><strong>Tanulj Helm-et</strong> – a Kubernetes csomagkezelője, amivel sablonosíthatod a konfigokat.</li>
 </ul>
 
-<h2>CI/CD integráció</h2>
-<p>A konténerizáció és a CI/CD kéz a kézben járnak:</p>
+<p>Ha most kezded, ne ijedj meg a sok új fogalomtól. Kezdd a Dockerrel, építs pár egyszerű konténert, próbáld ki a Docker Compose-t, és csak utána ugorj a Kubernetes-be. Minden perc megéri, mert a konténerizáció tudása ma már alap elvárás a legtöbb fejlesztői pozícióban.</p>
 
-<pre><code># GitHub Actions példa
-name: Build and Deploy
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Build Docker image
-        run: docker build -t my-app:COMMIT_SHA .
-      
-      - name: Push to registry
-        run: |
-          docker push my-registry/my-app:COMMIT_SHA
-      
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl set image deployment/my-app my-app=my-registry/my-app:COMMIT_SHA</code></pre>
-
-<h2>Összegzés</h2>
-<p>A Docker és Kubernetes az modern fejlesztés alapvető eszközei. Nem kell mindent egyszerre megtanulnod - kezd a Dockerrel, és fokozatosan haladj a Kubernetes felé.</p>
-
-<p>A konténerizáció megváltoztatja a way you think about deployment!</p>
+<p>Kérdésed van? Vagy valami nem működik? Írd meg kommentben, segítek! 🐳</p>
     `
   },
   {
     id: 5,
-    title: "TypeScript mesterré válás - 10 haladó tipp",
+    title: "TypeScript mesterré válás – 10 haladó tipp és minta",
     slug: "typescript-master-tips",
-    excerpt: "Szeretnél jobb TypeScript kódot írni? Ezek a haladó tippek és trükkök segítenek mesterré válni.",
+    excerpt: "A TypeScript sokkal több, mint 'JavaScript típusokkal'. Ebben a cikkben olyan mintákat és trükköket mutatok, amelyeket a senior fejlesztők használnak: template literal típusok, feltételes típusok, infer, mapped types, satisfies operátor, és még 6 másik. Kódpéldák, magyarázatok, és amitől tényleg jobb lesz a kódod.",
     category: "Backend",
     date: "2024. december 12.",
-    readTime: "18 perc",
+    readTime: "24 perc",
     image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200",
-    tags: ["TypeScript", "JavaScript", "Programming", "Tips"],
+    tags: ["TypeScript", "JavaScript", "Programming", "Tips", "Advanced"],
     content: `
-<p class="lead">A TypeScript nem csak "JavaScript + típusok". Sokkal több van benne, mint gondolnád. Ezek a haladó tippek segítenek profi szinten használni.</p>
+<p class="lead">Ha a TypeScript-et csak arra használod, hogy <code>: string</code>-et írj a változók mellé, akkor a felszínét kapargatod. A TypeScript egy rendkívül erős típusrendszer, amely képes a kódod logikájának egy részét <strong>fordítási időben ellenőrizni</strong>. Ebben a cikkben olyan haladó technikákat mutatok, amelyeket a mindennapi munkám során használok, és amiktől a kódod robusztusabb, öndokumentálóbb lesz.</p>
 
-<h2>1. Strict Mode mindenhol</h2>
-<p>A strict mode bekapcsolása az egyik legjobb dolog, amit tehetsz:</p>
-
-<pre><code>// tsconfig.json
-{
+<h2>1. Strict mode – kapcsold be, és ne kapcsold ki soha</h2>
+<p>A <code>tsconfig.json</code>-ban a <code>"strict": true</code> bekapcsolása 5 különböző ellenőrzést aktivál. Sokan kikapcsolják, mert „macera”, de pont ez véd meg a futásidejű hibáktól.</p>
+<pre><code>{
   "compilerOptions": {
     "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true
+    "noUncheckedIndexedAccess": true, // extra védelem
+    "exactOptionalPropertyTypes": true
   }
 }</code></pre>
 
-<h2>2. Template Literal Types</h2>
-<p>Hozz létre dinamikus típusokat stringekből:</p>
-
+<h2>2. Template Literal Types – dinamikus string típusok</h2>
+<p>Lehetővé teszik, hogy stringeket „matchelj” és új típusokat hozz létre belőlük.</p>
 <pre><code>type EventName = 'click' | 'focus' | 'blur';
-type EventHandler<T extends EventName> = \`on\${Capitalize<T>}\`;
-// "onClick" | "onFocus" | "onBlur"
+type EventHandler = \`on\${Capitalize<EventName>}\`; // "onClick" | "onFocus" | "onBlur"
 
-type Route = '/home' | '/about' | '/contact';
-type ApiEndpoint<T extends Route> = \`https://api.example.com\${T}\`;
-// "https://api.example.com/home" | ...
+// API endpoint validáció
+type ApiRoute = '/users' | '/posts' | '/comments';
+type ApiUrl = \`https://api.example.com\${ApiRoute}\`;
 
-// Gyakorlati példa
-type HttpMethod = 'get' | 'post' | 'put' | 'delete';
-type Handler<M extends HttpMethod> = \`handle\${Capitalize<M>}\`;
-// "handleGet" | "handlePost" | "handlePut" | "handleDelete"</code></pre>
+// Gyakorlati példa: CSS osztály generátor
+type SpacingSize = 'sm' | 'md' | 'lg';
+type SpacingClass = \`p-\${SpacingSize}\`; // "p-sm" | "p-md" | "p-lg"</code></pre>
 
-<h2>3. Discriminated Unions</h2>
-<p>Tökéletes state management-hez:</p>
-
-<pre><code>type RequestState<T> =
+<h2>3. Discriminated Unions – a tökéletes state management</h2>
+<p>Amikor egy union típus minden tagjának van egy közös mezője (discriminant), a TypeScript leszűkíti a típust a mező alapján.</p>
+<pre><code>type AsyncState<T> = 
   | { status: 'idle' }
   | { status: 'loading' }
   | { status: 'success'; data: T }
   | { status: 'error'; error: Error };
 
-function handleState(state: RequestState<User>) {
+function handleState<T>(state: AsyncState<T>) {
   switch (state.status) {
-    case 'idle':
-      return 'Várakozás...';
-    case 'loading':
-      return 'Betöltés...';
     case 'success':
-      return \`Sikeres: \${state.data.name}\`; // TypeScript tudja, hogy state.data létezik
+      console.log(state.data); // ✅ T típusú
+      break;
     case 'error':
-      return \`Hiba: \${state.error.message}\`; // TypeScript tudja, hogy state.error létezik
+      console.error(state.error.message); // ✅ Error
+      break;
+    // A default ágban a state típusa 'never' lesz, ha minden esetet lefedtél
   }
 }</code></pre>
 
-<h2>4. Satisfies Operator</h2>
-<p>A legújabb TypeScript 4.9+ feature - típusellenőrzés maximális rugalmassággal:</p>
+<h2>4. satisfies operátor (TypeScript 4.9+)</h2>
+<p>Ellenőrzi, hogy egy objektum megfelel-e egy típusnak, de megtartja a literal típusokat.</p>
+<pre><code>// EDDIG: as const használata
+const routes = {
+  home: '/',
+  about: '/about',
+  contact: '/contact'
+} as const; // típus: { readonly home: "/"; readonly about: "/about"; ... }
 
-<pre><code>// Korábban
-const colors = {
-  primary: '#3b82f6',
-  secondary: '#8b5cf6',
-  success: '#10b981',
-} as const;
+// MOST: satisfies
+const routes = {
+  home: '/',
+  about: '/about',
+  contact: '/contact'
+} satisfies Record<string, string>; // típus továbbra is a literal értékek
 
-// Most - satisfies-szel
-const colors = {
-  primary: '#3b82f6',
-  secondary: '#8b5cf6',
-  success: '#10b981',
-} satisfies Record<string, string>;
+type HomeRoute = typeof routes.home; // "/" (nem string!)</code></pre>
 
-// Előnye: megőrzi a literal típusokat ÉS ellenőrzi a típust
-type PrimaryColor = typeof colors.primary;
-// "#3b82f6" (nem string!)</code></pre>
+<h2>5. Infer – típus kinyerése</h2>
+<p>Az <code>infer</code> kulcsszó lehetővé teszi, hogy egy feltételes típuson belül „kibonts” egy típust.</p>
+<pre><code>// Példa: kinyerjük egy Promise által visszaadott típust
+type Awaited<T> = T extends Promise<infer U> ? U : T;
 
-<h2>5. Generics haladó használata</h2>
-<pre><code>// Függvény, ami bármilyen tömböt rendez
-function sortBy<T, K extends keyof T>(
-  array: T[], 
-  key: K,
-  direction: 'asc' | 'desc' = 'asc'
-): T[] {
-  return [...array].sort((a, b) => {
-    const aVal = a[key];
-    const bVal = b[key];
-    
-    if (aVal < bVal) return direction === 'asc' ? -1 : 1;
-    if (aVal > bVal) return direction === 'asc' ? 1 : -1;
-    return 0;
-  });
+type Result = Awaited<Promise<string>>; // string
+
+// Függvény visszatérési típusának kinyerése
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
+
+function greet() { return "hello"; }
+type GreetReturn = ReturnType<typeof greet>; // string</code></pre>
+
+<h2>6. Mapped Types – objektum típusok transzformálása</h2>
+<pre><code>type ReadonlyDeep<T> = {
+  readonly [K in keyof T]: T[K] extends object ? ReadonlyDeep<T[K]> : T[K];
+};
+
+type OptionalNullable<T> = {
+  [K in keyof T]?: T[K] | null;
+};
+
+// Használat
+interface User {
+  id: number;
+  profile: { name: string; age: number };
+}
+type ReadonlyUser = ReadonlyDeep<User>;
+// { readonly id: number; readonly profile: { readonly name: string; readonly age: number } }</code></pre>
+
+<h2>7. Type Guards – saját típusellenőrző függvények</h2>
+<pre><code>function isString(value: unknown): value is string {
+  return typeof value === 'string';
+}
+
+function isArrayOfStrings(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every(item => typeof item === 'string');
 }
 
 // Használat
-const users = [
-  { name: 'Anna', age: 25 },
-  { name: 'Béla', age: 30 },
-  { name: 'Cili', age: 20 },
-];
-
-sortBy(users, 'age', 'desc');
-// [{ name: 'Béla', age: 30 }, { name: 'Anna', age: 25 }, { name: 'Cili', age: 20 }]</code></pre>
-
-<h2>6. Type Guards</h2>
-<p>Saját típusellenőrzések létrehozása:</p>
-
-<pre><code>type Fish = { swim: () => void };
-type Bird = { fly: () => void };
-
-function isFish(pet: Fish | Bird): pet is Fish {
-  return (pet as Fish).swim !== undefined;
-}
-
-function move(pet: Fish | Bird) {
-  if (isFish(pet)) {
-    pet.swim(); // TypeScript tudja, hogy Fish
-  } else {
-    pet.fly(); // TypeScript tudja, hogy Bird
+function process(data: unknown) {
+  if (isArrayOfStrings(data)) {
+    data.map(str => str.toUpperCase()); // ✅ data itt string[]
   }
-}
-
-// Másik példa
-function isString(value: unknown): value is string {
-  return typeof value === 'string';
 }</code></pre>
 
-<h2>7. Mapped Types</h2>
-<p>Típusok transzformálása:</p>
+<h2>8. Conditional Types – ha-akkor a típusokban</h2>
+<pre><code>type IsArray<T> = T extends any[] ? true : false;
+type A = IsArray<string[]>; // true
+type B = IsArray<number>;   // false
 
-<pre><code>type Readonly<T> = {
-  readonly [K in keyof T]: T[K];
-};
+// Kivételkezelés típusokban
+type ErrorOrSuccess<T> = T extends { error: infer E } ? { error: E } : { success: T };
 
-type Optional<T> = {
-  [K in keyof T]?: T[K];
-};
+function getResult<T>(val: T): ErrorOrSuccess<T> {
+  // implementáció...
+}</code></pre>
 
-type Nullable<T> = {
-  [K in keyof T]: T[K] | null;
-};
-
-// Gyakorlati példa
-type User = {
-  id: number;
-  name: string;
-  email: string;
-};
-
-type PartialUser = Partial<User>;
-// { id?: number; name?: string; email?: string; }
-
-type NullableUser = Nullable<User>;
-// { id: number | null; name: string | null; email: string | null; }</code></pre>
-
-<h2>8. Conditional Types</h2>
-<p>Típusok, amik típusokból számítanak ki:</p>
-
-<pre><code>// Egyszerű példa
-type IsString<T> = T extends string ? true : false;
-type Test1 = IsString<'hello'>; // true
-type Test2 = IsString<42>; // false
-
-// Haladó példa - típusból típus kinyerése
-type ExtractArrayType<T> = T extends (infer U)[] ? U : never;
-type StringArray = ExtractArrayType<string[]>; // string
-type NumberArray = ExtractArrayType<number[]>; // number
-
-// Promise típusból a megoldott típus
-type Awaited<T> = T extends Promise<infer U> ? U : T;
-type PromiseResult = Awaited<Promise<string>>; // string</code></pre>
-
-<h2>9. Never típus használata</h2>
-<p>A never azt jelenti, hogy "soha nem fog megtörténni":</p>
-
-<pre><code>// Exhaustiveness checking
-type Color = 'red' | 'green' | 'blue';
+<h2>9. A never típus használata kimerítő ellenőrzésre</h2>
+<pre><code>type Color = 'red' | 'green' | 'blue';
 
 function getColorName(color: Color): string {
   switch (color) {
-    case 'red':
-      return 'Piros';
-    case 'green':
-      return 'Zöld';
-    case 'blue':
-      return 'Kék';
+    case 'red': return 'Piros';
+    case 'green': return 'Zöld';
+    case 'blue': return 'Kék';
     default:
-      // Ha új Color-t adunk hozzá, itt hiba lesz!
-      const _exhaustive: never = color;
-      throw new Error(\`Unknown color: \${_exhaustive}\`);
+      // Ha új színt adsz a Color unionhoz, itt fordítási hiba lesz!
+      const _exhaustiveCheck: never = color;
+      throw new Error(\`Ismeretlen szín: \${_exhaustiveCheck}\`);
   }
-}
-
-// Vagy assertionnel
-function assertNever(x: never): never {
-  throw new Error('Unexpected object: ' + x);
 }</code></pre>
 
-<h2>10. Utility Types深度</h2>
-<p>Használd a beépített utility típusokat:</p>
-
-<pre><code>// Pick - kiválasztás
-type UserPreview = Pick<User, 'id' | 'name'>;
-
-// Omit - kihagyás
-type UserWithoutEmail = Omit<User, 'email'>;
-
-// Partial & Required
-type PartialUser = Partial<User>;
-type RequiredUser = Required<User>;
-
-// Record - gyors objektum típus
-type UserRoles = Record<string, 'admin' | 'user' | 'guest'>;
-
-// ReturnType - függvény visszatérési típusa
-type FnReturn = ReturnType<typeof fetchUser>;
-
-// Parameters - függvény paramétereinek típusa
-type FnParams = Parameters<typeof updateUser>;</code></pre>
-
-<h2>Összegzés</h2>
-<p>A TypeScript haladó funkciói segítenek:</p>
+<h2>10. Utility Types – amiket érdemes fejből tudni</h2>
 <ul>
-  <li>Type-safe kód írásában</li>
-  <li>Refactoring biztonságában</li>
-  <li>Automatikus hibafelismerésben</li>
-  <li>Jobb IDE támogatásban</li>
+  <li><code>Partial&lt;T&gt;</code> – minden opcionális lesz</li>
+  <li><code>Required&lt;T&gt;</code> – minden kötelező</li>
+  <li><code>Pick&lt;T, K&gt;</code> – csak bizonyos kulcsok</li>
+  <li><code>Omit&lt;T, K&gt;</code> – bizonyos kulcsok kihagyása</li>
+  <li><code>Record&lt;K, T&gt;</code> – objektum típus adott kulcsokkal</li>
+  <li><code>Exclude&lt;U, V&gt;</code> – kivehető típusok</li>
+  <li><code>Extract&lt;U, V&gt;</code> – kivehető típusok</li>
+  <li><code>NonNullable&lt;T&gt;</code> – eltávolítja a null/undefined-et</li>
+  <li><code>ReturnType&lt;T&gt;</code> – függvény visszatérési típusa</li>
+  <li><code>Parameters&lt;T&gt;</code> – függvény paramétereinek tuple típusa</li>
 </ul>
 
-<p>Gyakorolj sokat, és hamarosan profi TypeScript fejlesztő leszel!</p>
+<p>Egy gyakorlati példa az összes használatával:</p>
+<pre><code>interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message: string;
+}
+
+type PartialApiResponse = Partial<ApiResponse<string>>;
+// { data?: string; status?: number; message?: string; }
+
+type JustData = Pick<ApiResponse<number>, 'data'>;
+// { data: number; }</code></pre>
+
+<h2>Bónusz: TypeScript konfigurációk, amik sokat segítenek</h2>
+<pre><code>{
+  "compilerOptions": {
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true
+  }
+}</code></pre>
+
+<p>Remélem, ezek a tippek segítenek abban, hogy a TypeScript-et ne csak használd, hanem <strong>élvezd is</strong>! Gyakorold őket kisebb projektekben, és hamarosan a kódod magabiztosabb, olvashatóbb lesz. Ha van kedvenc trükköd, ami nincs a listában, oszd meg kommentben! 😊</p>
     `
   },
   {
     id: 6,
-    title: "Az én utam a programozásban - Személyes történetem",
+    title: "Az én utam a programozásban – Hogyan lettem full stack fejlesztő?",
     slug: "sajat-tortenetem",
-    excerpt: "Hogyan lettem full stack fejlesztő? Ebben a személyes posztban megosztom a történetemet, a kihívásokat és a tanulságokat.",
+    excerpt: "Nem vagyok kiváltságos, nem kezdtem gyerekkoromban kódolni. Ebben a személyes, őszinte posztban leírom a kudarcaimat, a majdnem-feladást, az első állásinterjút, és azt, hogy mi tartott a pályán. Ha most tanulsz programozni, vagy úgy érzed, nem vagy elég jó, ezt neked írom.",
     category: "Személyes",
     date: "2024. december 1.",
-    readTime: "12 perc",
+    readTime: "15 perc",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200",
-    tags: ["Személyes", "Karrier", "Történet", "Motivation"],
+    tags: ["Személyes", "Karrier", "Történet", "Motivation", "Tanulás"],
     content: `
-<p class="lead">Sokan kérdezik, hogyan lettem programozó. Ez a cikk az én történetem - a kezdetektől mostanáig. Remélem, motivateál és segít azoknak, akik most kezdik.</p>
+<p class="lead">„Tehetséges vagy” – hallom néha. De hadd meséljem el az igazat: az első félévben majdnem kirúgtak az egyetemről. A C++ pointerek sírva fakasztottak. És a mai napig vannak olyan napok, amikor azt érzem, semmit sem tudok. Mégis, valahogy mégis itt vagyok. Ez az én történetem.</p>
 
-<h2>A kezdet</h2>
-<p>Gyerekként mindig is érdekelt a technológia. Az első számítógépem egy öreg asztali gép volt, amin játszottam és néha elgondolkodtam, hogyan működhetnek ezek a játékok.</p>
+<h2>A kezdet: középszerű diáklányból (vagy fiúból) kódoló</h2>
+<p>Gimnáziumban infó órán a tanár HTML-t tanított. Nekem akkor az is csodaszámba ment, hogy a <code>&lt;b&gt;</code> kóddal félkövér lesz a szöveg. De sosem gondoltam volna, hogy ebből egyszer megélek. Érettségi után a szüleim unszolására jelentkeztem mérnökinformatikára. „Jól fogsz keresni” – mondták. Nem tudták, mibe mennek bele.</p>
 
-<p>De soha nem gondoltam volna, hogy egyszer én is fejlesztő leszek. Az iskolában a matek és a fizika ment, de a programozás távolinak tűnt.</p>
+<h2>Az első nagy pofára esés</h2>
+<p>Az első félévben volt egy C++ tárgy, ahol a tanár azt kérte, írjunk egy egyszerű listakezelőt. Én három hétig szenvedtem a pointerekkel, a dinamikus memóriakezeléssel. A zh-n 2-est kaptam (ami akkor ötös skálán éppen hogy átment). Sírtam a koli szobámban, és elhatároztam, hogy abbahagyom. De a szüleim azt mondták: „Adj neki még egy esélyt.”</p>
 
-<h2>Középiskola - Az első találkozás</h2>
-<p>Középiskolában informatika órán tanultunk egy kicsit HTML-t és Pascal-t. Őszintén szólva unalmasnak tűnt. Nem értettem, miért írunk parancsokat, amikor a Word is ugyanúgy működik.</p>
+<h2>A fordulópont: webfejlesztés</h2>
+<p>A második évben jött a webfejlesztés. HTML, CSS, JavaScript. És valami kattant. Amikor először láttam, hogy a böngészőben megjelenik egy űrlap, amit én írtam, és <strong>reagál a gombnyomásra</strong> – az hihetetlen érzés volt. Rájöttem, hogy a programozás nem csak matematikai absztrakció, hanem <strong>alkotás</strong>. Látható, tapintható dolgokat lehet építeni.</p>
 
-<p>De valami megmaradt: a "ha ezt írod, azt csinálja" érzés. Ez volt az első pillantás a logikára.</p>
+<p>Azóta nem álltam le. Kezdtem a JavaScripttel, aztán React, Node.js, TypeScript, Next.js. Minden új technológia olyan volt, mintha egy új eszközt kaptam volna a szerszámosládába.</p>
 
-<h2>Egyetem - A fordulópont</h2>
-<p>Az egyetemen mérnök-informatikus szakra jelentkeztem. Nem tudom, miért - talán mert a "jól fizet" és "jövője van" érvek meggyőzték a szüleimet.</p>
-
-<p>Az első év szörnyű volt. C++, pointerek, rekurzió - minden értelmetlennek tűnt. Majdnem feladtam.</p>
-
-<p>Aztán jött a második év, és a webfejlesztés. HTML, CSS, és végül JavaScript. És egyszerre minden megváltozott.</p>
-
-<h3>Aha pillanat</h3>
-<p>Emlékszem, mikor először csináltam egy működő űrlapot JavaScript-tel. Nem volt szép, nem volt tökéletes - de működött. És ami fontosabb: ÉN csináltam.</p>
-
-<p>Az a pillanat, amikor a böngészőben megjelent az eredmény - ez volt az a momentum, ami mindent megváltoztatott.</p>
-
-<h2>A tanulás évei</h2>
-<p>Onnantól kezdve nem kellett motivateálni. Tanultam:</p>
-
+<h2>A tanulási módszerem (ami neked is működhet)</h2>
+<p>Nem vagyok zseni. Amit tudok, azt <strong>rengeteg gyakorlással</strong> és <strong>kudarccal</strong> értem el.</p>
 <ul>
-  <li>JavaScript - rengeteget</li>
-  <li>React - a legújabb verziókat követtem</li>
-  <li>Node.js - backend is</li>
-  <li>TypeScript - mert a típusok fontosak</li>
-  <li>SQL és NoSQL adatbázisok</li>
-  <li>DevOps alapok (Docker, CI/CD)</li>
+  <li><strong>Projektek, projektek, projektek.</strong> Nem olvastam el egyetlen könyvet sem elejétől a végéig. Mindig kitaláltam valami kis projektet (todo app, időjárás widget, blogmotor), és közben googliztam, stackoverflow-ztam.</li>
+  <li><strong>Tanítottam másokat.</strong> Amikor magyarázni kell valamit, akkor derül ki, hogy mennyire érted. Blogot kezdtem írni (ezt olvasod most), és meetupokon is előadtam pár alkalommal.</li>
+  <li><strong>Nem hasonlítgattam magam.</strong> A közösségi médiában mindenki a sikereit mutatja. Én is csak a kész projektjeimet rakom ki, nem a 3 napig tartó bug-keresést. Ha úgy érzed, lemaradtál, ne aggódj – mindenki a saját tempójában halad.</li>
 </ul>
 
-<h3>Hogyan tanultam?</h3>
-<ul>
-  <li><strong>Online kurzusok</strong> - Udemy, Coursera, freeCodeCamp</li>
-  <li><strong>Projektek</strong> - Minden, ami érdekelt, megcsináltam</li>
-  <li><strong>Open source</strong> - Kisebb贡献ások nyílt forráskódú projektekhez</li>
-  <li><strong>Stack Overflow</strong> - Sok olvasás, néha írás</li>
-  <li><strong>Meetupok</strong> - Networking és tanulás másoktól</li>
-</ul>
+<h2>Az első állásinterjú – katasztrófa</h2>
+<p>Egyetem után jelentkeztem egy junior fejlesztői pozícióra. A technikai interjún megkérdezték, mi a különbség a <code>let</code> és a <code>var</code> között. Tudtam, de izgultam, és összekevertem. Az interjúztató kedves volt, de nem vettek fel.</p>
+<p>Visszamentem, átismételtem az alapokat, csináltam még pár projektet, és három hónappal később egy másik cégnél már sikerült. Az első munkahelyemen rengeteget tanultam – a kódreview-k, a pair programming, a legacy kód olvasása mind olyan dolgok, amiket egyedül nem lehet megtanulni.</p>
 
-<h2>Az első munkahely</h2>
-<p>Az álláskeresés nehéz volt. Rengeteg cv-t küldtem, kevés válasz jött. De végül megjött az első ajánlat: egy kisebb webügynökség, ahol frontend fejlesztőként dolgoztam.</p>
+<h2>A kiégés és a megküzdés</h2>
+<p>Nem minden rózsás. Két év után kiégtem. A határidők, a változó követelmények, a folyamatos tanulás kimerített. Hetekig nem bírtam kódot írni. Ekkor döntöttem úgy, hogy kicsit hátrébb lépek: kevesebb túlórát vállalok, elkezdtem sportolni, és beiktattam a „nem dolgozós” napokat. A legfontosabb tanulság: <strong>a fejlesztés maraton, nem sprint</strong>.</p>
 
-<p>Az első hónapok ijesztőek voltak. Minden új volt: a kódbázis, a csapat, a folyamatok. De a kollégák segítettek, és lassan belerázódtam.</p>
+<h2>Miért éri meg?</h2>
+<p>Mert a mai napig, 6 év után is, amikor reggel leülök a gép elé, és megoldok egy problémát, amit előző nap lehetetlennek hittem – az fantasztikus érzés. A programozás állandó kihívás, tanulási lehetőség, és láthatod, ahogy a munkád hatással van másokra (akár milliókra, ha egy nagy projekt része vagy).</p>
 
-<h3>Amit ott tanultam:</h3>
-<ul>
-  <li>Valódi projektek menedzselése</li>
-  <li>Csapatmunka (Git, code review)</li>
-  <li>Határidők kezelése</li>
-  <li>Ügyféllel való kommunikáció alapjai</li>
-</ul>
+<p>Ha te most tartasz ott, ahol én az elején – ne add fel. A kódolás nem ördöngösség. Csak idő, gyakorlás és türelem kell. Kezd egy apró projekttel, és élvezd, ahogy működni kezd.</p>
 
-<h2>A most</h2>
-<p>Most már senior full stack fejlesztő vagyok. De a tanulás nem állt meg. A technológia folyamatosan változik, és ahhoz, hogy releváns maradj, muszáj lépést tartani.</p>
-
-<p>Emellett mentorálok is kezdő fejlesztőket. Szeretek visszaadni a közösségnek, és segíteni azokon, akik most ott vannak, ahol én voltam évekkel ezelőtt.</p>
-
-<h2>Tanulságok, amiket megosztanék</h2>
-
-<h3>1. Ne félj a hibáktól</h3>
-<p>Minden programozó hibázik. A kód nem működik, a bug-ok megjelennek. Ez normális. A lényeg, hogy megtanulj belőlük.</p>
-
-<h3>2. Gyakorolj sokat</h3>
-<p>Nem elég csak olvasni a kódot - írni kell. Minél többet kódolsz, annál jobb leszel. A "muscle memory" nagyon fontos.</p>
-
-<h3>3. Találj mentort</h3>
-<p>Egy jó mentor felbecsülhetetlen. Valaki, aki már végigment ezen az úton, és segíthet elkerülni a buktatókat.</p>
-
-<h3>4. Ne hasonlítsd magad másokhoz</h3>
-<p>Mindenkinek megvan a saját tempója. Én lassan kezdtem, de most itt vagyok. Te is ott leszel, csak ne add fel!</p>
-
-<h3>5. A technológia csak eszköz</h3>
-<p>Ne ragadj le egy technológiánál. A fontos a problémamegoldó képesség, nem a konkrét framework ismerete.</p>
-
-<h2>Köszönet</h2>
-<p>Köszönöm mindenkinek, aki segített az utamon: a családomnak, a barátaimnak, a kollégáimnak, és mindenkinek, akit megismerhettem a tech közösségben.</p>
-
-<p>Ha te is most kezded - ne add fel. Éri meg.</p>
-
-<p class="text-center text-xl mt-12"></p>
+<p>Ha kérdésed van, vagy csak beszélgetnél, írj bátran a <a href="/contact">kapcsolati űrlapon</a> keresztül. Sok sikert! 💻✨</p>
     `
   }
 ];

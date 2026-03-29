@@ -40,10 +40,10 @@ export default function Testimonials() {
           <span className="inline-block px-5 py-2.5 bg-blue-900/30 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
             Vélemények
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Amit Az Ügyfelek Mondanak
           </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
             Néhány visszajelzés azoktól, akikkel dolgoztam együtt.
           </p>
         </motion.div>

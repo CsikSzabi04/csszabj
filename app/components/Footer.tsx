@@ -1,20 +1,22 @@
-
 "use client";
 
 import { personalInfo } from "../data/portfolio";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   return (
-    <footer className="bg-[#050505] border-t border-white/5 mt-32 pt-20">
+    <footer className={`bg-[#050505] pt-20 ${isHome ? "mt-0 border-t-0" : "mt-32 border-t border-white/5"}`}>
       <div className="container-custom">
        
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12">
          
           <div className="lg:col-span-1">
-            <h3 className="text-2xl font-bold mb-5">
-              <span className="text-blue-500">CS</span><span className="text-white">A</span>
+            <h3 className="text-2xl font-bold mb-5 flex items-center gap-2">
+              <span className="text-[#9b59b6]">Cs</span><span className="text-white">Sz</span>
             </h3>
             <p className="text-zinc-500 leading-relaxed mb-6">
               Szenvedélyes full stack fejlesztő, aki élvezi a komplex problémák megoldását és a modern webtechnológiák alkalmazását. Célom, hogy értékes és innovatív szoftvereket hozzak létre.

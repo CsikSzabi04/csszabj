@@ -99,10 +99,10 @@ export default function Services() {
           <span className="inline-block px-5 py-2.5 bg-blue-900/30 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
             Szolgáltatások
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             Amit Csinálok
           </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
             Professzionális webfejlesztési szolgáltatások, amelyek segítenek az online jelenléted megerősítésében.
           </p>
         </motion.div>
@@ -174,7 +174,7 @@ export default function Services() {
             A Munkafolyamat
           </h3>
           
-          <div className="grid md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-6">
             {processSteps.map((step, index) => (
               <motion.div
                 key={index}
