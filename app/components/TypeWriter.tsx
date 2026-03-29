@@ -10,7 +10,7 @@ interface TypeWriterProps {
 }
 
 export default function TypeWriter({ texts, speed = 80, className = "", cursorClassName = "" }: TypeWriterProps) {
-  const [displayText, setDisplayText] = useState("");
+  const [displayText, setDisplayText] = useState(texts[0] || "");
   const [textIndex, setTextIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);

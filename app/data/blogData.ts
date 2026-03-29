@@ -981,7 +981,7 @@ type JustData = Pick<ApiResponse<number>, 'data'>;
     content: `
 <p class="lead">„Tehetséges vagy” – hallom néha. De hadd meséljem el az igazat: az első félévben majdnem kirúgtak az egyetemről. A C++ pointerek sírva fakasztottak. És a mai napig vannak olyan napok, amikor azt érzem, semmit sem tudok. Mégis, valahogy mégis itt vagyok. Ez az én történetem.</p>
 
-<h2>A kezdet: középszerű diáklányból (vagy fiúból) kódoló</h2>
+<h2>A kezdet: középszerű diákból kódoló</h2>
 <p>Gimnáziumban infó órán a tanár HTML-t tanított. Nekem akkor az is csodaszámba ment, hogy a <code>&lt;b&gt;</code> kóddal félkövér lesz a szöveg. De sosem gondoltam volna, hogy ebből egyszer megélek. Érettségi után a szüleim unszolására jelentkeztem mérnökinformatikára. „Jól fogsz keresni” – mondták. Nem tudták, mibe mennek bele.</p>
 
 <h2>Az első nagy pofára esés</h2>

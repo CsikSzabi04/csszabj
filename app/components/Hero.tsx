@@ -107,6 +107,7 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold relative inline-block"
               >
+                <span className="sr-only">Csík Szabolcs - csszabj - Webfejlesztő, Frontend és Backend Fejlesztő Kecskemét</span>
                 <TypeWriter 
                   texts={typewriterTexts} 
                   speed={100} 
