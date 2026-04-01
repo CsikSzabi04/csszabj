@@ -7,9 +7,10 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isTools = pathname?.startsWith("/tools");
 
   return (
-    <footer className={`bg-[#050505] pt-20 ${isHome ? "mt-0 border-t-0" : "mt-32 border-t border-white/5"}`}>
+    <footer className={`bg-[#050505] pt-20 ${(isHome || isTools) ? "mt-0 border-t-0" : "mt-32 border-t border-white/5"}`}>
       <div className="container-custom">
        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12">

@@ -38,12 +38,11 @@ export default function Header({ onStoreClick }: HeaderProps) {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4 pointer-events-none">
       <header
-        className={`pointer-events-auto transition-all duration-300 w-full max-w-[1100px] relative ${
-          scrolled ? "mt-0" : "mt-2"
-        }`}
+        className={`pointer-events-auto transition-all duration-300 w-full max-w-[1100px] relative ${scrolled ? "mt-0" : "mt-2"
+          }`}
       >
         <div className="bg-[#050508]/85 backdrop-blur-xl border border-white/10 rounded-2xl w-full flex items-center justify-between px-4 sm:px-6 py-3 md:py-3.5 shadow-[0_8px_30px_rgb(0,0,0,0.5)] z-50 relative">
-          
+
           {/* Logo Section */}
           <Link
             href="/"
@@ -52,7 +51,7 @@ export default function Header({ onStoreClick }: HeaderProps) {
           >
             {/* Logo Image */}
             <div className="relative w-8 h-8 md:w-10 md:h-10 drop-shadow-[0_0_8px_rgba(155,89,182,0.4)] transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-              <Image 
+              <Image
                 src="/02.png"
                 alt="CsSz Logo"
                 fill
@@ -60,7 +59,7 @@ export default function Header({ onStoreClick }: HeaderProps) {
                 sizes="(max-width: 768px) 32px, 40px"
               />
             </div>
-            
+
             {/* Logo Text */}
             <span className="text-white uppercase tracking-[0.2em] flex items-center">
               <span className="font-bold text-lg md:text-xl ml-0.5">CsSz</span>
@@ -72,17 +71,17 @@ export default function Header({ onStoreClick }: HeaderProps) {
               Rólunk
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
             </Link>
-            
+
             <Link href="/projects" className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group">
               Referenciáink
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
             </Link>
-            
+
             <Link href="/blog" className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group">
               Blog
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
             </Link>
-            
+
             <Link href="/contact" className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group">
               Kapcsolat
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
@@ -92,14 +91,13 @@ export default function Header({ onStoreClick }: HeaderProps) {
           {/* CTA Button & Mobile Toggle */}
           <div className="flex items-center gap-3">
             <Link
-              href="/contact"
-              className="hidden sm:flex bg-gradient-to-r from-[#9b59b6] via-[#8e44ad] to-[#6c5ce7] text-white px-5 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold tracking-wide transition-all duration-300 shadow-[0_0_15px_rgba(155,89,182,0.4)] hover:shadow-[0_0_25px_rgba(155,89,182,0.6)] hover:-translate-y-0.5 whitespace-nowrap"
-            >
-              Megoldást akarok
+              href="/tools"
+              className="hidden sm:flex bg-gradient-to-r from-[rgba(155,89,182,0.5)] via-[rgba(142,68,173,0.5)] to-[rgba(108,92,231,0.5)] text-white px-5 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold tracking-wide transition-all duration-300 shadow-[0_0_15px_rgba(155,89,182,0.4)] hover:shadow-[0_0_25px_rgba(155,89,182,0.6)] hover:-translate-y-0.5 whitespace-nowrap"            >
+              Saját gyártásaim
             </Link>
-            
+
             {/* Mobile Menu Button (Hamburger) */}
-            <button 
+            <button
               className="lg:hidden p-2 text-white hover:text-[#9b59b6] transition-colors focus:outline-none"
               onClick={toggleMenu}
               aria-label="Toggle menu"
@@ -118,7 +116,7 @@ export default function Header({ onStoreClick }: HeaderProps) {
         {/* Mobile Navigation Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -140,14 +138,14 @@ export default function Header({ onStoreClick }: HeaderProps) {
               <Link href="/contact" onClick={closeMenu} className="text-lg font-medium text-gray-200 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
                 Kapcsolat
               </Link>
-              
+
               {/* Mobile CTA (only shown on very small screens where sm:flex hides the main CTA) */}
               <Link
-                href="/contact"
+                href="/tools"
                 onClick={closeMenu}
                 className="mt-2 text-center sm:hidden w-full bg-gradient-to-r from-[#9b59b6] to-[#8e44ad] text-white px-6 py-3 rounded-xl text-sm font-bold tracking-wide shadow-[0_0_15px_rgba(155,89,182,0.4)]"
               >
-                Megoldást akarok
+                Saját gyártásaim
               </Link>
             </motion.div>
           )}

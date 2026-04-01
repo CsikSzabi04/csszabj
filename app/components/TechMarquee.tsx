@@ -18,7 +18,7 @@ export default function TechMarquee() {
   const items = [...techStack, ...techStack, ...techStack, ...techStack, ...techStack, ...techStack];
 
   return (
-    <div className="w-full relative py-8 mt-auto bg-[#050508]/80 border-t border-[#9b59b6]/30 overflow-hidden flex items-center backdrop-blur-sm group z-20 shadow-[0_0_30px_rgba(0,0,0,1)]">
+    <div className="w-full relative py-12 bg-[#050508] border-t border-[#9b59b6]/30 overflow-hidden flex items-center backdrop-blur-sm group z-20 shadow-[0_0_30px_rgba(0,0,0,1)]">
       {/* Glossy gradient highlight across the top */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#9b59b6]/80 to-transparent"></div>
       
