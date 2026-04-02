@@ -10,7 +10,6 @@ export default function ToolsLayout({
   return (
     <>
       {children}
-      <TechMarquee />
     </>
   );
 }

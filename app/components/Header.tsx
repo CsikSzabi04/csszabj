@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface HeaderProps {
   onStoreClick?: () => void;
@@ -12,6 +13,7 @@ interface HeaderProps {
 export default function Header({ onStoreClick }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,22 +70,22 @@ export default function Header({ onStoreClick }: HeaderProps) {
 
           <nav className="hidden lg:flex items-center gap-8 mr-4">
             <Link href="/about" className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group">
-              Rólunk
+              {t("nav.about")}
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
             </Link>
 
             <Link href="/projects" className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group">
-              Referenciáink
+              {t("nav.projects")}
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
             </Link>
 
             <Link href="/blog" className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group">
-              Blog
+              {t("nav.blog")}
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
             </Link>
 
             <Link href="/contact" className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group">
-              Kapcsolat
+              {t("nav.contact")}
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
             </Link>
           </nav>
@@ -93,7 +95,7 @@ export default function Header({ onStoreClick }: HeaderProps) {
             <Link
               href="/tools"
               className="hidden sm:flex bg-gradient-to-r from-[rgba(155,89,182,0.5)] via-[rgba(142,68,173,0.5)] to-[rgba(108,92,231,0.5)] text-white px-5 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold tracking-wide transition-all duration-300 shadow-[0_0_15px_rgba(155,89,182,0.4)] hover:shadow-[0_0_25px_rgba(155,89,182,0.6)] hover:-translate-y-0.5 whitespace-nowrap"            >
-              Saját gyártásaim
+              {t("nav.tools")}
             </Link>
 
             {/* Mobile Menu Button (Hamburger) */}
@@ -124,19 +126,19 @@ export default function Header({ onStoreClick }: HeaderProps) {
               className="absolute top-full left-0 right-0 mt-3 p-4 bg-[#0a0a0f]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.6)] flex flex-col gap-4 lg:hidden origin-top z-40"
             >
               <Link href="/about" onClick={closeMenu} className="text-lg font-medium text-gray-200 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
-                Rólunk
+                {t("nav.about")}
               </Link>
               <div className="h-px w-full bg-white/5" />
               <Link href="/projects" onClick={closeMenu} className="text-lg font-medium text-gray-200 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
-                Referenciáink
+                {t("nav.projects")}
               </Link>
               <div className="h-px w-full bg-white/5" />
               <Link href="/blog" onClick={closeMenu} className="text-lg font-medium text-gray-200 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
-                Blog
+                {t("nav.blog")}
               </Link>
               <div className="h-px w-full bg-white/5" />
               <Link href="/contact" onClick={closeMenu} className="text-lg font-medium text-gray-200 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
-                Kapcsolat
+                {t("nav.contact")}
               </Link>
 
               {/* Mobile CTA (only shown on very small screens where sm:flex hides the main CTA) */}
@@ -145,7 +147,7 @@ export default function Header({ onStoreClick }: HeaderProps) {
                 onClick={closeMenu}
                 className="mt-2 text-center sm:hidden w-full bg-gradient-to-r from-[#9b59b6] to-[#8e44ad] text-white px-6 py-3 rounded-xl text-sm font-bold tracking-wide shadow-[0_0_15px_rgba(155,89,182,0.4)]"
               >
-                Saját gyártásaim
+                {t("nav.tools")}
               </Link>
             </motion.div>
           )}

@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { personalInfo, softSkills, languages } from "../data/portfolio";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { language } = useLanguage();
 
   return (
     <section ref={containerRef} className="section relative py-32 overflow-hidden">
@@ -47,13 +49,13 @@ export default function About() {
           className="text-center mb-20"
         >
           <span className="inline-block px-5 py-2.5 bg-blue-900/20 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            Rólam
+            {language === "en" ? "About Me" : "Rólam"}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
-            Ismerj Meg!
+            {language === "en" ? "Get To Know Me!" : "Ismerj Meg!"}
           </h2>
           <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
-            Szenvedélyes full stack fejlesztő, aki élvezi a komplex problémák megoldását.
+            {language === "en" ? "A passionate full stack developer who enjoys solving complex problems." : "Szenvedélyes full stack fejlesztő, aki élvezi a komplex problémák megoldását."}
           </p>
         </motion.div>
 
@@ -96,9 +98,9 @@ export default function About() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { icon: "📧", label: "Email", value: "alexszabi04@gmail.com" },
-                { icon: "📍", label: "Helyszín", value: personalInfo.location },
-                { icon: "🎂", label: "Született", value: personalInfo.birthday },
-                { icon: "💼", label: "Státusz", value: "Elérhető" }
+                { icon: "📍", label: language === "en" ? "Location" : "Helyszín", value: personalInfo.location },
+                { icon: "🎂", label: language === "en" ? "Born" : "Született", value: language === "en" ? "January 23, 2004" : personalInfo.birthday },
+                { icon: "💼", label: language === "en" ? "Status" : "Státusz", value: language === "en" ? "Available" : "Elérhető" }
               ].map((item, index) => (
                 <motion.div
                   key={index}
@@ -132,14 +134,18 @@ export default function About() {
             <div className="bg-[#0d0d0d] rounded-2xl p-6 sm:p-8 border border-white/5">
               <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                 <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
-                Profil Összefoglaló
+                {language === "en" ? "Profile Summary" : "Profil Összefoglaló"}
               </h3>
               <div className="space-y-4 text-zinc-400 leading-relaxed">
                 <p>
-                  Szenvedélyes full stack fejlesztő hallgató, aki élvezi a komplex problémák megoldását és a modern webtechnológiák alkalmazását. Az egyetemi tanulmányok mellett aktívan fejlesztem saját projekteket.
+                  {language === "en" 
+                    ? "A passionate full stack developer student who enjoys solving complex problems and applying modern web technologies. Alongside my university studies, I actively build personal projects." 
+                    : "Szenvedélyes full stack fejlesztő hallgató, aki élvezi a komplex problémák megoldását és a modern webtechnológiák alkalmazását. Az egyetemi tanulmányok mellett aktívan fejlesztem saját projekteket."}
                 </p>
                 <p>
-                  Különösen érdekel a <span className="text-blue-400">React és Node.js</span> ökoszisztéma, valamint a felhőalapú megoldások. Célom, hogy innovatív szoftvereket hozzak létre.
+                  {language === "en" 
+                    ? <span key="1">I'm especially interested in the <span className="text-blue-400">React and Node.js</span> ecosystem, as well as cloud-based solutions. My goal is to build innovative software.</span>
+                    : <span key="2">Különösen érdekel a <span className="text-blue-400">React és Node.js</span> ökoszisztéma, valamint a felhőalapú megoldások. Célom, hogy innovatív szoftvereket hozzak létre.</span>}
                 </p>
               </div>
             </div>
@@ -148,7 +154,7 @@ export default function About() {
             <div>
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                 <span className="w-1 h-6 bg-purple-500 rounded-full"></span>
-                Személyes Készségek
+                {language === "en" ? "Personal Skills" : "Személyes Készségek"}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {softSkills.map((skill, index) => (
@@ -175,7 +181,7 @@ export default function About() {
             <div>
               <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                 <span className="w-1 h-6 bg-emerald-500 rounded-full"></span>
-                Nyelvismeret
+                {language === "en" ? "Languages" : "Nyelvismeret"}
               </h3>
               <div className="space-y-4">
                 {languages.map((lang, index) => (

@@ -2,15 +2,17 @@
 
 import { personalInfo } from "../data/portfolio";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function Footer() {
+  const { language } = useLanguage();
   const currentYear = new Date().getFullYear();
   const pathname = usePathname();
   const isHome = pathname === "/";
   const isTools = pathname?.startsWith("/tools");
 
   return (
-    <footer className={`bg-[#050505] pt-20 ${(isHome || isTools) ? "mt-0 border-t-0" : "mt-32 border-t border-white/5"}`}>
+    <footer className="bg-[#050505] pt-20">
       <div className="container-custom">
        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12">
@@ -20,7 +22,9 @@ export default function Footer() {
               <span className="text-[#9b59b6]">Cs</span><span className="text-white">Sz</span>
             </h3>
             <p className="text-zinc-500 leading-relaxed mb-6">
-              Szenvedélyes full stack fejlesztő, aki élvezi a komplex problémák megoldását és a modern webtechnológiák alkalmazását. Célom, hogy értékes és innovatív szoftvereket hozzak létre.
+              {language === "en" 
+                ? "A passionate full stack developer who enjoys solving complex problems and applying modern web technologies. My goal is to build valuable and innovative software." 
+                : "Szenvedélyes full stack fejlesztő, aki élvezi a komplex problémák megoldását és a modern webtechnológiák alkalmazását. Célom, hogy értékes és innovatív szoftvereket hozzak létre."}
             </p>
            
             <div className="flex gap-3">
@@ -57,36 +61,36 @@ export default function Footer() {
 
           
           <div>
-            <h4 className="text-lg font-semibold mb-6 text-white">Navigáció</h4>
+            <h4 className="text-lg font-semibold mb-6 text-white">{language === "en" ? "Navigation" : "Navigáció"}</h4>
             <ul className="space-y-4">
               <li>
                 <a href="#home" className="text-zinc-500 hover:text-blue-400 transition-colors flex items-center gap-2 group">
                   <span className="w-1.5 h-1.5 bg-zinc-700 rounded-full group-hover:bg-blue-500 transition-colors" />
-                  Kezdőlap
+                  {language === "en" ? "Home" : "Kezdőlap"}
                 </a>
               </li>
               <li>
                 <a href="#about" className="text-zinc-500 hover:text-blue-400 transition-colors flex items-center gap-2 group">
                   <span className="w-1.5 h-1.5 bg-zinc-700 rounded-full group-hover:bg-blue-500 transition-colors" />
-                  Rólam
+                  {language === "en" ? "About Me" : "Rólam"}
                 </a>
               </li>
               <li>
                 <a href="#skills" className="text-zinc-500 hover:text-blue-400 transition-colors flex items-center gap-2 group">
                   <span className="w-1.5 h-1.5 bg-zinc-700 rounded-full group-hover:bg-blue-500 transition-colors" />
-                  Készségek
+                  {language === "en" ? "Skills" : "Készségek"}
                 </a>
               </li>
               <li>
                 <a href="#experience" className="text-zinc-500 hover:text-blue-400 transition-colors flex items-center gap-2 group">
                   <span className="w-1.5 h-1.5 bg-zinc-700 rounded-full group-hover:bg-blue-500 transition-colors" />
-                  Tapasztalat
+                  {language === "en" ? "Experience" : "Tapasztalat"}
                 </a>
               </li>
               <li>
                 <a href="#projects" className="text-zinc-500 hover:text-blue-400 transition-colors flex items-center gap-2 group">
                   <span className="w-1.5 h-1.5 bg-zinc-700 rounded-full group-hover:bg-blue-500 transition-colors" />
-                  Projektek
+                  {language === "en" ? "Projects" : "Projektek"}
                 </a>
               </li>
             </ul>
@@ -157,10 +161,10 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-zinc-600 text-sm">
-              © {currentYear} <span className="text-zinc-400">{personalInfo.name}</span>. Minden jog fenntartva.
+              © {currentYear} <span className="text-zinc-400">{personalInfo.name}</span>. {language === "en" ? "All rights reserved." : "Minden jog fenntartva."}
             </p>
             <div className="flex items-center gap-6 text-sm">
-              <span className="text-zinc-600">Készült</span>
+              <span className="text-zinc-600">{language === "en" ? "Built with" : "Készült"}</span>
               <div className="flex items-center gap-2">
                 <span className="text-zinc-400 hover:text-blue-400 transition-colors">Next.js</span>
                 <span className="text-zinc-700">&</span>

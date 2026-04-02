@@ -2,17 +2,33 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { blogPosts } from "../data/blogData";
-
-const categories = ["Összes", "Frontend", "Tutorial", "Karrier", "DevOps", "Backend", "Személyes"];
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function Blog() {
+  const { language } = useLanguage();
+  const catAll = language === "en" ? "All" : "Összes";
+  const catCareer = language === "en" ? "Career" : "Karrier";
+  const catPersonal = language === "en" ? "Personal" : "Személyes";
+  const categories = [catAll, "Frontend", "Tutorial", catCareer, "DevOps", "Backend", catPersonal];
+
   const [selectedCategory, setSelectedCategory] = useState("Összes");
 
-  const filteredPosts = selectedCategory === "Összes"
+  useEffect(() => {
+    setSelectedCategory(language === "en" ? "All" : "Összes");
+  }, [language]);
+
+  const filteredPosts = selectedCategory === catAll || selectedCategory === "Összes" || selectedCategory === "All"
     ? blogPosts
-    : blogPosts.filter(post => post.category === selectedCategory);
+    : blogPosts.filter(post => {
+        let postCat = post.category;
+        if (language === "en") {
+           if (postCat === "Karrier") postCat = "Career";
+           if (postCat === "Személyes") postCat = "Personal";
+        }
+        return postCat === selectedCategory;
+      });
 
   return (
     <section id="blog" className="section relative py-32 overflow-hidden">
@@ -33,13 +49,13 @@ export default function Blog() {
           className="text-center mb-16"
         >
           <span className="inline-block px-5 py-2.5 bg-blue-900/20 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            Blog
+            {language === "en" ? "Blog" : "Blog"}
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Legújabb Írásaim
+            {language === "en" ? "Latest Articles" : "Legújabb Írásaim"}
           </h2>
           <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            Hasznos tippek, trükkök, útmutatók és személyes történetek a webfejlesztés világából.
+            {language === "en" ? "Useful tips, tricks, guides, and personal stories from the web development world." : "Hasznos tippek, trükkök, útmutatók és személyes történetek a webfejlesztés világából."}
           </p>
         </motion.div>
 
@@ -92,11 +108,11 @@ export default function Blog() {
                   </div>
 
                   <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors line-clamp-2">
-                    {post.title}
+                    {language === "en" && (post as any).titleEn ? (post as any).titleEn : post.title}
                   </h3>
 
                   <p className="text-sm text-zinc-400 leading-relaxed mb-4 line-clamp-3">
-                    {post.excerpt}
+                    {language === "en" && (post as any).excerptEn ? (post as any).excerptEn : post.excerpt}
                   </p>
 
                   <div className="flex flex-wrap gap-2 mt-auto mb-3">
@@ -106,7 +122,7 @@ export default function Blog() {
                   </div>
 
                   <div className="flex items-center gap-2 text-blue-400 text-sm font-medium group-hover:gap-3 transition-all">
-                    <span>Olvass tovább</span>
+                    <span>{language === "en" ? "Read more" : "Olvass tovább"}</span>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -120,7 +136,7 @@ export default function Blog() {
         {/* Üzenet, ha nincs találat */}
         {filteredPosts.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-zinc-500">Nincs cikk ebben a kategóriában.</p>
+            <p className="text-zinc-500">{language === "en" ? "No articles in this category." : "Nincs cikk ebben a kategóriában."}</p>
           </div>
         )}
 
@@ -133,10 +149,10 @@ export default function Blog() {
           className="text-center mt-16"
         >
           <button
-            onClick={() => setSelectedCategory("Összes")}
+            onClick={() => setSelectedCategory(language === "en" ? "All" : "Összes")}
             className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 text-white rounded-xl font-semibold border border-white/10 hover:border-blue-500 hover:text-blue-400 transition-all duration-300"
           >
-            <span>Minden cikk megtekintése</span>
+            <span>{language === "en" ? "View all articles" : "Minden cikk megtekintése"}</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>

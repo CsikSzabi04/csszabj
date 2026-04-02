@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { personalInfo } from "../data/portfolio";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function Contact() {
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -56,13 +58,13 @@ export default function Contact() {
           >
             <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#9b59b6]/10 border border-[#9b59b6]/30 rounded-full text-[#9b59b6] text-sm font-mono mb-6">
               <span className="w-2 h-2 bg-[#9b59b6] rounded-full animate-pulse shadow-[0_0_10px_#9b59b6]"></span>
-              Kapcsolat
+              {language === "en" ? "Contact" : "Kapcsolat"}
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
-              Lépj Velem <span className="text-[#ff2d2d]">Kapcsolatba</span>!
+              {language === "en" ? "Let's Get In " : "Lépj Velem "}<span className="text-[#ff2d2d]">{language === "en" ? "Touch" : "Kapcsolatba"}</span>!
             </h2>
             <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed font-mono px-4">
-              // Ha bármilyen kérdésed van, vagy együtt szeretnél dolgozni, ne habozz megkeresni!
+              // {language === "en" ? "If you have any questions or want to work together, don't hesitate to reach out!" : "Ha bármilyen kérdésed van, vagy együtt szeretnél dolgozni, ne habozz megkeresni!"}
             </p>
           </motion.div>
         </div>
@@ -79,7 +81,7 @@ export default function Contact() {
             >
               <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                 <span className="w-2 h-8 bg-[#ff2d2d] rounded-full shadow-[0_0_15px_#ff2d2d]"></span>
-                Kapcsolati Információk
+                {language === "en" ? "Contact Information" : "Kapcsolati Információk"}
               </h3>
               
               <div className="space-y-6">
@@ -102,7 +104,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 font-mono">Telefon</p>
+                    <p className="text-sm text-gray-500 font-mono">{language === "en" ? "Phone" : "Telefon"}</p>
                     <p className="font-semibold text-white group-hover:text-[#ff2d2d] transition-colors">{personalInfo.phone}</p>
                   </div>
                 </div>
@@ -115,7 +117,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 font-mono">Helyszín</p>
+                    <p className="text-sm text-gray-500 font-mono">{language === "en" ? "Location" : "Helyszín"}</p>
                     <p className="font-semibold text-white group-hover:text-[#ff2d2d] transition-colors">{personalInfo.location}</p>
                   </div>
                 </div>
@@ -123,7 +125,7 @@ export default function Contact() {
 
               {/* Social Links - Star Wars Style */}
               <div className="mt-8 pt-6 border-t border-[#ff2d2d]/20">
-                <p className="text-sm text-gray-500 mb-4 font-mono">// Kövess:</p>
+                <p className="text-sm text-gray-500 mb-4 font-mono">// {language === "en" ? "Follow me:" : "Kövess:"}</p>
                 <div className="flex gap-4">
                   <a
                     href={personalInfo.github}
@@ -162,8 +164,8 @@ export default function Contact() {
                   <span className="w-3 h-3 bg-[#00ff41] rounded-full animate-pulse shadow-[0_0_10px_#00ff41]" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white">Elérhető vagyok</h4>
-                  <p className="text-sm text-gray-500 font-mono">// Azonnali munkakezdés lehetséges</p>
+                  <h4 className="font-semibold text-white">{language === "en" ? "Available for work" : "Elérhető vagyok"}</h4>
+                  <p className="text-sm text-gray-500 font-mono">// {language === "en" ? "Ready to start immediately" : "Azonnali munkakezdés lehetséges"}</p>
                 </div>
               </div>
             </motion.div>
@@ -179,7 +181,7 @@ export default function Contact() {
           >
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
               <span className="w-2 h-8 bg-[#9b59b6] rounded-full shadow-[0_0_15px_#9b59b6]"></span>
-              Üzenet Küldése
+              {language === "en" ? "Send Message" : "Üzenet Küldése"}
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -196,7 +198,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-black/50 border border-[#9b59b6]/20 focus:border-[#9b59b6] focus:ring-2 focus:ring-[#9b59b6]/20 outline-none transition-all text-white placeholder-gray-600 font-mono"
-                    placeholder="Teljes név"
+                    placeholder={language === "en" ? "Full Name" : "Teljes név"}
                   />
                 </div>
                 <div>
@@ -211,7 +213,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 rounded-xl bg-black/50 border border-[#9b59b6]/20 focus:border-[#9b59b6] focus:ring-2 focus:ring-[#9b59b6]/20 outline-none transition-all text-white placeholder-gray-600 font-mono"
-                    placeholder="email@cim.hu"
+                    placeholder={language === "en" ? "email@address.com" : "email@cim.hu"}
                   />
                 </div>
               </div>
@@ -228,11 +230,11 @@ export default function Contact() {
                   required
                   className="w-full px-4 py-3 rounded-xl bg-black/50 border border-[#9b59b6]/20 focus:border-[#9b59b6] focus:ring-2 focus:ring-[#9b59b6]/20 outline-none transition-all text-white font-mono"
                 >
-                  <option value="" className="bg-black">Válassz tárgyat</option>
-                  <option value="project" className="bg-black">Projekt együttműködés</option>
-                  <option value="job" className="bg-black">Állásajánlat</option>
-                  <option value="freelance" className="bg-black">Freelance munka</option>
-                  <option value="other" className="bg-black">Egyéb</option>
+                  <option value="" className="bg-black">{language === "en" ? "Select subject" : "Válassz tárgyat"}</option>
+                  <option value="project" className="bg-black">{language === "en" ? "Project collaboration" : "Projekt együttműködés"}</option>
+                  <option value="job" className="bg-black">{language === "en" ? "Job offer" : "Állásajánlat"}</option>
+                  <option value="freelance" className="bg-black">{language === "en" ? "Freelance work" : "Freelance munka"}</option>
+                  <option value="other" className="bg-black">{language === "en" ? "Other" : "Egyéb"}</option>
                 </select>
               </div>
 
@@ -248,7 +250,7 @@ export default function Contact() {
                   required
                   rows={5}
                   className="w-full px-4 py-3 rounded-xl bg-black/50 border border-[#9b59b6]/20 focus:border-[#9b59b6] focus:ring-2 focus:ring-[#9b59b6]/20 outline-none transition-all resize-none text-white placeholder-gray-600 font-mono"
-                  placeholder="// Írd le a kérdésed vagy üzeneted..."
+                  placeholder={`// ${language === "en" ? "Write your question or message..." : "Írd le a kérdésed vagy üzeneted..."}`}
                 />
               </div>
 
@@ -265,11 +267,11 @@ export default function Contact() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    <span>Küldés...</span>
+                    <span>{language === "en" ? "Sending..." : "Küldés..."}</span>
                   </>
                 ) : (
                   <>
-                    <span>Üzenet Küldése</span>
+                    <span>{language === "en" ? "Send Message" : "Üzenet Küldése"}</span>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -286,7 +288,7 @@ export default function Contact() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>// Köszönöm az üzeneted! Hamarosan válaszolok.</span>
+                  <span>// {language === "en" ? "Thank you for your message! I'll reply soon." : "Köszönöm az üzeneted! Hamarosan válaszolok."}</span>
                 </motion.div>
               )}
             </form>

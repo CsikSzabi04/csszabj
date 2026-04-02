@@ -6,10 +6,12 @@ import Link from "next/link";
 import { personalInfo, stats } from "../data/portfolio";
 import TypeWriter from "./TypeWriter";
 import TypeWriterSkills from "./TypeWriterSkills";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const { language } = useLanguage();
   
   const skills = [
     "React.js", "Next.js", "Node.js", "Java", 
@@ -17,7 +19,13 @@ export default function Hero() {
   ];
 
   // TypeWriter texts - cycles through name and roles
-  const typewriterTexts = [
+  const typewriterTexts = language === "en" ? [
+    personalInfo.name,
+    "Frontend Developer",
+    "Backend Developer",
+    "Software Engineer",
+    "Tester"
+  ] : [
     personalInfo.name,
     "Frontend fejlesztő",
     "Backend fejlesztő",
@@ -182,7 +190,7 @@ export default function Hero() {
                   whileTap={{ scale: 0.98 }}
                   className="group relative px-6 py-3 sm:px-8 sm:py-3.5 bg-gradient-to-r from-[#9b59b6] via-[#8e44ad] to-[#6c5ce7] rounded-xl overflow-hidden shadow-[0_0_15px_rgba(155,89,182,0.4)] hover:shadow-[0_0_25px_rgba(155,89,182,0.6)] cursor-pointer flex items-center justify-center transition-all duration-300 w-full sm:w-auto"
                 >
-                  <span className="relative text-white font-semibold tracking-wide text-sm sm:text-base">Munkáim megtekintése</span>
+                  <span className="relative text-white font-semibold tracking-wide text-sm sm:text-base">{language === "en" ? "View My Work" : "Munkáim megtekintése"}</span>
                 </motion.div>
               </Link>
 
@@ -193,7 +201,7 @@ export default function Hero() {
                   whileTap={{ scale: 0.98 }}
                   className="group relative px-6 py-3 sm:px-8 sm:py-3.5 bg-black/40 rounded-xl border border-white/10 hover:border-white/20 overflow-hidden backdrop-blur-sm cursor-pointer hover:bg-white/5 transition-all duration-300 flex items-center justify-center w-full sm:w-auto"
                 >
-                  <span className="relative text-gray-200 group-hover:text-white font-semibold tracking-wide transition-colors text-sm sm:text-base">Projekt megbeszélése</span>
+                  <span className="relative text-gray-200 group-hover:text-white font-semibold tracking-wide transition-colors text-sm sm:text-base">{language === "en" ? "Discuss a Project" : "Projekt megbeszélése"}</span>
                 </motion.div>
               </Link>
             </motion.div>

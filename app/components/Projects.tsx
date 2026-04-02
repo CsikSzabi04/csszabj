@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import { projects, personalInfo } from "../data/portfolio";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function Projects() {
+  const { language } = useLanguage();
   return (
     <section className="section relative py-32 overflow-hidden">
       {/* Background - Like Blog */}
@@ -39,13 +41,13 @@ export default function Projects() {
           className="text-center mb-20"
         >
           <span className="inline-block px-5 py-2.5 bg-blue-900/20 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            Projektjeim
+            {language === "en" ? "My Projects" : "Projektjeim"}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
-            Legutóbbi Munkáim
+            {language === "en" ? "My Recent Works" : "Legutóbbi Munkáim"}
           </h2>
           <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
-            Néhány projekt, amelyen dolgoztam.
+            {language === "en" ? "Some of the projects I've recently worked on." : "Néhány projekt, amelyen dolgoztam."}
           </p>
         </motion.div>
 
@@ -99,7 +101,7 @@ export default function Projects() {
                             isEven ? 'bg-purple-600 hover:bg-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.3)]' : 'bg-blue-600 hover:bg-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.3)]'
                           }`}
                         >
-                          Kipróbálom
+                          {language === "en" ? "Try it out" : "Kipróbálom"}
                         </a>
                         <a
                           href={project.github}
@@ -163,7 +165,7 @@ export default function Projects() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-10 py-5 bg-white/5 text-white rounded-full font-semibold border border-white/10 hover:bg-white/10 hover:scale-105 transition-all duration-300"
           >
-            <span>Összes projekt megtekintése GitHub-on</span>
+            <span>{language === "en" ? "View all projects on GitHub" : "Összes projekt megtekintése GitHub-on"}</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface BlogShareProps {
   title: string;
@@ -9,6 +10,7 @@ interface BlogShareProps {
 
 export default function BlogShare({ title, slug }: BlogShareProps) {
   const [baseUrl, setBaseUrl] = useState("");
+  const { language } = useLanguage();
 
   useEffect(() => {
     setBaseUrl(window.location.origin);
@@ -18,13 +20,13 @@ export default function BlogShare({ title, slug }: BlogShareProps) {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(fullUrl);
-    alert("Link a vágólapra másolva!");
+    alert(language === "en" ? "Link copied to clipboard!" : "Link a vágólapra másolva!");
   };
 
   return (
     <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap gap-4 justify-between items-center">
       <div className="flex gap-4">
-        <span className="text-zinc-400 text-sm">Oszd meg:</span>
+        <span className="text-zinc-400 text-sm">{language === "en" ? "Share:" : "Oszd meg:"}</span>
         <a
           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(fullUrl)}`}
           target="_blank"
@@ -52,7 +54,7 @@ export default function BlogShare({ title, slug }: BlogShareProps) {
         onClick={copyToClipboard}
         className="text-sm text-zinc-400 hover:text-blue-400 transition flex items-center gap-1.5 px-3 py-1.5 bg-white/5 rounded-lg border border-white/5 hover:border-blue-500/30"
       >
-        <span>🔗 Link másolása</span>
+        <span>🔗 {language === "en" ? "Copy Link" : "Link másolása"}</span>
       </button>
     </div>
   );
