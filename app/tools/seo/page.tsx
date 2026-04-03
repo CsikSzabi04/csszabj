@@ -76,14 +76,14 @@ export default function SEOChecker() {
         if (!targetUrl.startsWith("http")) targetUrl = "https://" + targetUrl;
 
         // Using a CORS proxy for client-side fetching
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
         const response = await fetch(proxyUrl);
         
         if (!response.ok) throw new Error("Nem sikerült lekérni az oldalt.");
         
-        const data = await response.json();
-        if (data.contents) {
-          performAnalysis(data.contents);
+        const html = await response.text();
+        if (html) {
+          performAnalysis(html);
         } else {
           throw new Error("Üres válasz érkezett az oldalról.");
         }

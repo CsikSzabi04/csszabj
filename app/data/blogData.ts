@@ -3146,5 +3146,189 @@ Sitemap: https://example.com/sitemap.xml</code></pre>
 <h2>Conclusion – CPA is just a number, but context is everything</h2>
 <p>CPA by itself doesn't answer whether your business model works. It only gains weight alongside LTV, conversion rate, and CPC. Leveraging these methods enables you to trim acquisition wastes effortlessly and explode your marketing ROI. Your next step: calculate your direct CPA and your LTV today. Got questions? Let me know in the comments!</p>
     `
+  },
+  {
+    id: 101,
+    title: "Hogyan működik a saját SEO Ellenőrző eszközöm?",
+    slug: "hogyan-mukodik-a-seo-ellenorzo",
+    excerpt: "Betekintés a kulisszák mögé: Hogyan építettem meg egy teljes mértékben kliensoldali SEO auditáló eszközt, amely CORS proxy-t és DOM elemzést használ a weboldalak technikai állapotának felmérésére.",
+    category: "Technical",
+    date: "2025. május 12.",
+    readTime: "15 perc",
+    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200",
+    tags: ["SEO", "JavaScript", "CORS", "Web Development", "DOM API"],
+    content: `
+<p class="lead">Az SEO (Keresőoptimalizálás) elemzése gyakran bonyolult és drága eszközöket igényel. Ebben a bejegyzésben megmutatom, hogyan készítettem el egy saját, villámgyors és privát SEO ellenőrző eszközt, amely kizárólag a böngésződben fut.</p>
+
+<figure class="w-full md:w-[45%] float-none md:float-right md:ml-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="SEO Analysis" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
+
+<h2>A legnagyobb kihívás: A CORS probléma</h2>
+<p>Amikor egy böngészőből próbálunk lekérni egy másik weboldalt (például a <code>fetch()</code> függvénnyel), a böngésző biztonsági okokból letiltja azt, ha a céloldal nem engedélyezi kifejezetten a hozzáférést (ez a Cross-Origin Resource Sharing). Ezt a problémát egy <strong>CORS Proxy</strong> használatával hidaltam át.</p>
+
+<p>Az eszközöm a <code>corsproxy.io</code> szolgáltatást használja, amely "bebugyolálja" a kérést, így a böngésző azt hiszi, hogy egy engedélyezett forrásból érkezik a tartalom. Ez lehetővé teszi, hogy tiszta HTML kódot kapjunk bármilyen publikus weboldalról.</p>
+
+<pre><code>// Így kérjük le a nyers HTML-t
+const proxyUrl = \`https://corsproxy.io/?\${encodeURIComponent(targetUrl)}\`;
+const response = await fetch(proxyUrl);
+const html = await response.text();</code></pre>
+
+<h2>A HTML feldolgozása DOMParser-rel</h2>
+<p>Miután megvan a nyers szöveges HTML, azt valahogy értelmezni kell. Ahelyett, hogy bonyolult reguláris kifejezésekkel (RegEx) próbálnám kibányászni az adatokat, a beépített <code>DOMParser</code> API-t használom. Ez létrehoz egy virtuális dokumentum fát, amin éppen úgy navigálhatok, mint a valódi weboldalon a <code>document.querySelector</code> segítségével.</p>
+
+<pre><code>const parser = new DOMParser();
+const doc = parser.parseFromString(html, "text/html");
+
+// Adatok kinyerése
+const title = doc.querySelector("title")?.innerText;
+const description = doc.querySelector('meta[name="description"]')?.getAttribute("content");
+const h1Count = doc.querySelectorAll("h1").length;</code></pre>
+
+<figure class="w-full md:w-[45%] float-none md:float-left md:mr-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1551288049-bbbda536339a?w=800" alt="Technical SEO" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
+
+<h2>Mit ellenőriz az audit?</h2>
+<p>Az eszköz jelenleg a következő kritikus SEO faktorokat vizsgálja:</p>
+<ul>
+  <li>✅ <strong>Meta adatok:</strong> Megvan-e a Title és a Description?</li>
+  <li>✅ <strong>Címsor struktúra:</strong> Pontosan egy H1 van az oldalon? Megfelelő a H2-H6 hierarchia?</li>
+  <li>✅ <strong>Képek optimalizálása:</strong> Minden kép rendelkezik-e <code>alt</code> szöveggel az akadálymentességhez?</li>
+  <li>✅ <strong>Technikai tagek:</strong> Be van-e állítva a <code>viewport</code> mobilbarát nézethez és a <code>charset</code> a karakterkódoláshoz?</li>
+  <li>✅ <strong>Canonical URL:</strong> Jelölve van-e az eredeti tartalom forrása?</li>
+  <li>✅ <strong>Linkek:</strong> Hány belső és külső link található az oldalon?</li>
+</ul>
+
+<h2>Személyes és Biztonságos</h2>
+<p>A legnagyobb előnye ennek a megoldásnak, hogy <strong>minden folyamat kliensoldalon történik</strong>. Nem küldöm el az adataidat semmilyen szerverre, nem mentem el a kereséseidet. Ez a "Lab Tech" filozófiám lényege: erőteljes eszközök, amelyek tiszteletben tartják a magánéletet.</p>
+
+<p>Próbáld ki te is az eszközt a Labor részlegben, és nézd meg, hogyan teljesít a saját weboldalad!</p>
+    `,
+    titleEn: "How does my custom SEO Checker tool work?",
+    excerptEn: "Behind the scenes: How I built a fully client-side SEO auditing tool using a CORS proxy and DOM parsing to assess the technical health of websites.",
+    categoryEn: "Technical",
+    contentEn: `
+<p class="lead">SEO (Search Engine Optimization) analysis often requires complex and expensive tools. In this post, I'll show you how I created my own lightning-fast and private SEO checker tool that runs exclusively in your browser.</p>
+
+<figure class="w-full md:w-[45%] float-none md:float-right md:ml-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="SEO Analysis" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
+
+<h2>The Biggest Challenge: The CORS Problem</h2>
+<p>When trying to fetch another website from a browser (e.g., with the <code>fetch()</code> function), the browser blocks it for security reasons if the destination site doesn't explicitly allow access (this is Cross-Origin Resource Sharing). I bypassed this issue by using a <strong>CORS Proxy</strong>.</p>
+
+<p>My tool uses the <code>corsproxy.io</code> service, which "wraps" the request so the browser thinks the content is coming from an authorized source. This allows us to receive clean HTML code from any public website.</p>
+
+<pre><code>// This is how we fetch raw HTML
+const proxyUrl = \`https://corsproxy.io/?\${encodeURIComponent(targetUrl)}\`;
+const response = await fetch(proxyUrl);
+const html = await response.text();</code></pre>
+
+<h2>Formatting HTML with DOMParser</h2>
+<p>Once we have the raw text HTML, it needs to be interpreted. Instead of trying to extract data with complex regular expressions (RegEx), I use the built-in <code>DOMParser</code> API. This creates a virtual document tree where I can navigate just like on a real website using <code>document.querySelector</code>.</p>
+
+<pre><code>const parser = new DOMParser();
+const doc = parser.parseFromString(html, "text/html");
+
+// Extracting data
+const title = doc.querySelector("title")?.innerText;
+const description = doc.querySelector('meta[name="description"]')?.getAttribute("content");
+const h1Count = doc.querySelectorAll("h1").length;</code></pre>
+
+<figure class="w-full md:w-[45%] float-none md:float-left md:mr-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1551288049-bbbda536339a?w=800" alt="Technical SEO" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
+
+<h2>What does the audit check?</h2>
+<p>The tool currently examines the following critical SEO factors:</p>
+<ul>
+  <li>✅ <strong>Meta data:</strong> Are Title and Description present?</li>
+  <li>✅ <strong>Heading structure:</strong> Is there exactly one H1 on the page? Is the H2-H6 hierarchy correct?</li>
+  <li>✅ <strong>Image optimization:</strong> Does every image have <code>alt</code> text for accessibility?</li>
+  <li>✅ <strong>Technical tags:</strong> Are <code>viewport</code> for mobile-friendly view and <code>charset</code> for character encoding set?</li>
+  <li>✅ <strong>Canonical URL:</strong> Is the original content source marked?</li>
+  <li>✅ <strong>Links:</strong> How many internal and external links are on the page?</li>
+</ul>
+
+<h2>Private and Secure</h2>
+<p>The biggest advantage of this solution is that <strong>all processes happen on the client side</strong>. I don't send your data to any server or save your searches. This is the essence of my "Lab Tech" philosophy: powerful tools that respect privacy.</p>
+
+<p>Try the tool for yourself in the Lab section and see how your own website performs!</p>
+    `
+  },
+  {
+    id: 102,
+    title: "Weboldal sebességmérés modern eszközökkel: Így működik a Sebességtesztem",
+    slug: "igy-mukodik-a-sebessegteszt",
+    excerpt: "Nem kell mindig Lighthouse! Ismerd meg, hogyan mérheted weboldalad betöltési sebességét, az erőforrások nagyságát és a TTFB értéket közvetlenül a böngésződben.",
+    category: "Technical",
+    date: "2025. május 15.",
+    readTime: "12 perc",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200",
+    tags: ["Performance", "Web Development", "JavaScript", "UX", "Web Performance"],
+    content: `
+<p class="lead">A sebesség nem csak kényelmi szempont – az SEO és a felhasználói élmény egyik legfontosabb pillére. Megmutatom, hogyan építettem fel a saját Sebességteszt eszközömet, amely segít átlátni a weboldalak betöltési folyamatát.</p>
+
+<figure class="w-full md:w-[45%] float-none md:float-right md:ml-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="Web Performance" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
+
+<h2>Miért fontos a sebesség mérése?</h2>
+<p>A Google adatai szerint ha egy oldal betöltése 1 másodpercről 3-ra nő, a visszafordulási arány (bounce rate) 32%-kal ugrik meg. Ahhoz, hogy optimalizálni tudjunk, először mérnünk kell. Az eszközöm a böngészők beépített <code>Performance</code> API-ját és egy egyedi mérési logikát használ az adatok gyűjtéséhez.</p>
+
+<h2>A mérési metódus: TTFB és Load Time</h2>
+<p>Az eszközöm két fő fázisra bontja a mérést:</p>
+<ol>
+  <li><strong>TTFB (Time to First Byte):</strong> Ez azt méri, mennyi idő telik el a kérés elküldése és az első bájt megérkezése között. Ez kritikus a szerver válaszidejének megértéséhez.</li>
+  <li><strong>Total Load Time:</strong> A teljes folyamat, amíg a HTML, a képek és a szkriptek betöltődnek és a böngésző alkalmassá válik az interakcióra.</li>
+</ol>
+
+<pre><code>// Elméleti példa a mérésre
+const start = performance.now();
+const response = await fetch(url);
+const ttfb = performance.now() - start;
+const html = await response.text();
+const fullLoad = performance.now() - start;</code></pre>
+
+<figure class="w-full md:w-[45%] float-none md:float-left md:mr-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800" alt="Data Visualization" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
+
+<h2>A Waterfall (Vízesés) diagram szimulálása</h2>
+<p>Egy igazi profi sebességmérő megmutatja, melyik erőforrás mennyi ideig töltődik. Mivel a böngészők Cross-Origin korlátozásai miatt nem érhetünk el minden részletet külső oldalakról, az eszközöm egy okos szimulációt használ a válaszidők és a fájlméretek alapján, hogy vizualizálja a "vízesés" szerű betöltődést.</p>
+
+<p>Ez segít a felhasználónak felismerni, ha egy túl nagy kép vagy egy lassú script akadályozza (blokkolja) az oldal megjelenítését.</p>
+
+<h2>Helyi mérés, szerver nélkül</h2>
+<p>Ahogy az SEO ellenőrzőnél, itt is fontos szempont volt, hogy a mérés <strong>szervermentes</strong> legyen. Nem használok külső API-kat (mint a Lighthouse vagy a PageSpeed Insights), így a mérés azonnali, és az adatok soha nem hagyják el a gépedet. Ez lehetővé teszi a fejlesztőknek, hogy gyorsan, "inkognitóban" teszteljenek bármilyen oldalt.</p>
+
+<p>Használd az eszközt a saját projekteden, és találd meg a szűk keresztmetszeteket!</p>
+    `,
+    titleEn: "Measuring website speed with modern tools: How my Speed Test works",
+    excerptEn: "You don't always need Lighthouse! Learn how to measure your website's loading speed, resource sizes, and TTFB directly in your browser.",
+    categoryEn: "Technical",
+    contentEn: `
+<p class="lead">Speed is not just a convenience factor – it is one of the most important pillars of SEO and user experience. I'll show you how I built my own Speed Test tool to help you understand the website loading process.</p>
+
+<figure class="w-full md:w-[45%] float-none md:float-right md:ml-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="Web Performance" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
+
+<h2>Why measuring speed is important?</h2>
+<p>According to Google's data, if a page load increases from 1 second to 3, the bounce rate jumps by 32%. To optimize, we must first measure. My tool uses the browser's built-in <code>Performance</code> API and custom measurement logic to collect data.</p>
+
+<h2>The measurement method: TTFB and Load Time</h2>
+<p>My tool breaks down the measurement into two main phases:</p>
+<ol>
+  <li><strong>TTFB (Time to First Byte):</strong> This measures how much time passes between sending the request and receiving the first byte. This is critical for understanding server response time.</li>
+  <li><strong>Total Load Time:</strong> The entire process until HTML, images, and scripts load and the browser becomes interactive.</li>
+</ol>
+
+<pre><code>// Theoretical example for measurement
+const start = performance.now();
+const response = await fetch(url);
+const ttfb = performance.now() - start;
+const html = await response.text();
+const fullLoad = performance.now() - start;</code></pre>
+
+<figure class="w-full md:w-[45%] float-none md:float-left md:mr-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800" alt="Data Visualization" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
+
+<h2>Simulating the Waterfall diagram</h2>
+<p>A real pro speed tester shows which resource takes how long to load. Since browser Cross-Origin restrictions prevent us from accessing every detail from external sites, my tool uses a smart simulation based on response times and file sizes to visualize the "waterfall-like" loading.</p>
+
+<p>This helps users recognize if an oversized image or a slow script is hindering (blocking) the page display.</p>
+
+<h2>Local measurement, without a server</h2>
+<p>As with the SEO checker, it was important for the measurement to be <strong>serverless</strong>. I don't use external APIs (like Lighthouse or PageSpeed Insights), so the measurement is immediate, and the data never leaves your computer. This allows developers to quickly test any site "incognito".</p>
+
+<p>Use the tool on your own project and find the bottlenecks!</p>
+    `
   }
 ];

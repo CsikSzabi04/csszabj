@@ -46,12 +46,12 @@ const tools = [
     link: "/tools/speed"
   },
   {
-    id: "manager",
-    title: "Prompt & Asset Manager",
-    description: "Helyben tárolt promptok, design elemek és kódrészletek kezelése IndexedDB-vel.",
+    id: "netspeed",
+    title: "Internet Sebességmérő",
+    description: "Hálózat letöltési sebességének és stabilitásának tesztelése a böngészőben.",
     icon: Search,
     color: "#00ffff",
-    link: "/tools/manager"
+    link: "/tools/netspeed"
   }
 ];
 
