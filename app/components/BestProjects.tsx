@@ -14,6 +14,17 @@ const bestProjects = [
     mobileImage: "/dbdmobile.png",
   },
   {
+    id: "forarch",
+    title: "ForArch - Forecast Archaeology Engine",
+    category: "DevTool & Automation",
+    description: "Modern, comprehensive project auditing ecosystem and 'Digital Archaeologist'. It features parallel dependency analysis, decay forecasting based on GitHub metrics, and a real-time Remote Hub Dashboard for CLI orchestration via Firebase.",
+    technologies: ["Python", "React", "Firebase", "Real-time Hub"],
+    live: "https://forarch.vercel.app/",
+    github: "https://github.com/CsikSzabi04/forarch.git",
+    image: "/forarch.png",
+    mobileImage: "/forarch_mobile.png",
+  },
+  {
     id: "gamehub",
     title: "Game Data Hub",
     category: "Webalkalmazás",
