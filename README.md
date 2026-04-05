@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alexander Sz. Csík' Portfolio
 
-## Getting Started
+## About Me
 
-First, run the development server:
+Hi there!  
+I'm Szabolcs Alex Csík, a recent graduate in Software Development and Testing from Kecskeméti SZC Kandó Kálmán Technical School with a final grade of 89%. I am currently awaiting admission results from the University of Szeged or Neumann János University.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+My goal is to contribute to a stable and innovative company while continuously learning and growing professionally.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Skills and Knowledge
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **MS Office**: Basic knowledge (Word, PowerPoint, Excel, Access)
+- **Development Environments**: Visual Studio Code (intermediate), Unity (basic)
+- **Programming Languages**: Java, JavaScript, HTML, CSS, Python
+- **Frameworks & Technologies**: React.js, React Native, Tailwind CSS, Bootstrap
+- **Database Management**: MySQL, Access, Firebase
+- **Back-End Development**: Node.js, API development, Backend Web Development
+- **Front-End Development**: HTML, CSS, JavaScript, Web Design, Web Development
+- **Additional Skills**:
+  - GitHub (user level)
+  - Basic knowledge of Cloud Infrastructure
+  - Database Testing
+  - Web Applications and Web Services
+  - Basic understanding of Artificial Intelligence (AI)
+  - Basic IT Management skills
+  - Communication & customer service abilities
+  - Online marketing: Advertising, Online Advertising, Strategy
+  - Basic Adobe Photoshop
+  - Active participation in trainings and a strong willingness to learn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Language Skills
 
-## Learn More
+- **English**: 86% on Advanced Level Final Exam (equivalent to B2 Complex Language Certificate)
 
-To learn more about Next.js, take a look at the following resources:
+## Contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Email**: alexszabi04@gmail.com  
+- **Phone**: +36 70 242 1586  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+> This portfolio showcases my technical knowledge and practical experience acquired through my studies and personal projects.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
