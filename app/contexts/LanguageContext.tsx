@@ -20,6 +20,7 @@ const dictionary = {
     "nav.blog": "Blog",
     "nav.contact": "Kapcsolat",
     "nav.tools": "Eszközök",
+    "nav.cv": "Önéletrajz",
 
     // Hero sekció
     "hero.greeting": "Üdv, Szabolcs Alex vagyok",
@@ -70,6 +71,7 @@ const dictionary = {
     "nav.blog": "Blog",
     "nav.contact": "Contact",
     "nav.tools": "Tools",
+    "nav.cv": "CV",
 
     // Hero section
     "hero.greeting": "Hi, I'm Alex Szabolcs",

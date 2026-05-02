@@ -88,6 +88,11 @@ export default function Header({ onStoreClick }: HeaderProps) {
               {t("nav.contact")}
               <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
             </Link>
+
+            <Link href="/cv" className="relative text-sm font-medium text-gray-300 hover:text-white transition-colors group">
+              {t("nav.cv")}
+              <span className="absolute -bottom-3 -left-2 -right-2 h-[3px] rounded-full bg-[#9b59b6] shadow-[0_0_12px_rgba(155,89,182,0.8)] opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 origin-center transition-all duration-300 ease-out"></span>
+            </Link>
           </nav>
 
           {/* CTA Button & Mobile Toggle */}
@@ -139,6 +144,10 @@ export default function Header({ onStoreClick }: HeaderProps) {
               <div className="h-px w-full bg-white/5" />
               <Link href="/contact" onClick={closeMenu} className="text-lg font-medium text-gray-200 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
                 {t("nav.contact")}
+              </Link>
+              <div className="h-px w-full bg-white/5" />
+              <Link href="/cv" onClick={closeMenu} className="text-lg font-medium text-gray-200 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/5">
+                {t("nav.cv")}
               </Link>
 
               {/* Mobile CTA (only shown on very small screens where sm:flex hides the main CTA) */}
