@@ -30,7 +30,7 @@ const bestProjects = [
     category: "Webalkalmazás",
     description: "Video game data management platform with comprehensive game database, user profiles, and interactive features.",
     technologies: ["React", "API", "Tailwind CSS"],
-    live: "https://gamehub.hu",
+    live: "https://gamedatahub.netlify.app/",
     github: "https://github.com/csikszabi04/gamehub",
     image: "/gamehubpc.png",
     mobileImage: "/gamehubmobile.png",
