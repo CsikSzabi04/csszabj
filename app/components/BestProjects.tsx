@@ -1,17 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Project } from "../data/portfolio";
 
-const bestProjects = [
+const bestProjects: Project[] = [
   {
-    id: "dbd-hub",
-    title: "Dead by Daylight Community & Builds - DBD Hub",
-    category: "Közösségi Portál",
-    description: "The ultimate Dead by Daylight fan community. Share posts, discover killer & survivor builds, follow top streamers, and connect with other DBD players.",
-    technologies: ["Next.js", "React", "Tailwind CSS", "API"],
-    live: "https://www.dbdwiki.eu/",
-    image: "/dbdwiki.png",
-    mobileImage: "/dbdmobile.png",
+    id: "climarkai",
+    title: "CliMarkAI - AI Marketing Platform",
+    category: "AI SaaS Platform",
+    description: "AI-powered marketing platform that helps businesses generate, optimize and automate their marketing content and campaigns with modern, data-driven tools.",
+    technologies: ["Next.js", "React", "AI API", "Tailwind CSS"],
+    live: "https://www.climarkai.com/",
+    image: "/climark.png",
+    mobileImage: "/climark_mobile.png",
+  },
+  {
+    id: "aurigpt",
+    title: "AuriGPT - AI Assistant",
+    category: "AI Assistant",
+    description: "A sleek conversational AI assistant powered by large language models, delivering fast and helpful responses through a clean, modern interface.",
+    technologies: ["Next.js", "React", "AI API", "Tailwind CSS"],
+    live: "https://aurigpt.vercel.app/",
+    image: "/aurigpt.png",
+    mobileImage: "/aurigpt_mobile.png",
   },
   {
     id: "forarch",
@@ -23,17 +34,6 @@ const bestProjects = [
     github: "https://github.com/CsikSzabi04/forarch.git",
     image: "/forarch.png",
     mobileImage: "/forarch_mobile.png",
-  },
-  {
-    id: "gamehub",
-    title: "Game Data Hub",
-    category: "Webalkalmazás",
-    description: "Video game data management platform with comprehensive game database, user profiles, and interactive features.",
-    technologies: ["React", "API", "Tailwind CSS"],
-    live: "https://gamehub.hu",
-    github: "https://github.com/csikszabi04/gamehub",
-    image: "/gamehubpc.png",
-    mobileImage: "/gamehubmobile.png",
   }
 ];
 

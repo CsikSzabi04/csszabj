@@ -146,7 +146,43 @@ export const education = [
   },
 ];
 
-export const projects = [
+export interface Project {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  technologies: string[];
+  live: string;
+  github?: string;
+  image: string;
+  mobileImage?: string;
+  featured?: boolean;
+  objectPosition?: string;
+}
+
+export const projects: Project[] = [
+  {
+    id: "climarkai",
+    title: "CliMarkAI - AI Marketing Platform",
+    category: "AI SaaS Platform",
+    description: "AI-powered marketing platform that helps businesses generate, optimize and automate their marketing content and campaigns with modern, data-driven tools.",
+    technologies: ["Next.js", "React", "AI API", "Tailwind CSS"],
+    live: "https://www.climarkai.com/",
+    image: "/climark.png",
+    mobileImage: "/climark_mobile.png",
+    featured: true,
+  },
+  {
+    id: "aurigpt",
+    title: "AuriGPT - AI Assistant",
+    category: "AI Assistant",
+    description: "A sleek conversational AI assistant powered by large language models, delivering fast and helpful responses through a clean, modern interface.",
+    technologies: ["Next.js", "React", "AI API", "Tailwind CSS"],
+    live: "https://aurigpt.vercel.app/",
+    image: "/aurigpt.png",
+    mobileImage: "/aurigpt_mobile.png",
+    featured: true,
+  },
   {
     id: "dbd-hub",
     title: "Dead by Daylight Community & Builds - DBD Hub",
@@ -169,7 +205,7 @@ export const projects = [
     github: "https://github.com/CsikSzabi04/forarch.git",
     image: "/forarch.png",
     mobileImage: "/forarch_mobile.png",
-    featured: true,
+    featured: false,
     objectPosition: "left", // Custom position request
   },
   {
@@ -178,11 +214,11 @@ export const projects = [
     category: "Webalkalmazás",
     description: "Video game data management platform with comprehensive game database, user profiles, and interactive features.",
     technologies: ["React", "API", "Tailwind CSS"],
-    live: "https://gamehub.hu",
+    live: "https://gamedatahub.netlify.app/",
     github: "https://github.com/csikszabi04/gamehub",
     image: "/gamehubpc.png",
     mobileImage: "/gamehubmobile.png",
-    featured: true,
+    featured: false,
   },
   {
     id: "hairranch",
