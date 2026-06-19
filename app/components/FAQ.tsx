@@ -40,29 +40,32 @@ export default function FAQ() {
   return (
     <section className="section relative py-32">
       {/* Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: `linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px'
+          backgroundImage: `linear-gradient(rgba(155, 89, 182, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(155, 89, 182, 0.12) 1px, transparent 1px)`,
+          backgroundSize: '50px 50px',
+          maskImage: 'radial-gradient(ellipse 60% 50% at 50% 40%, #000 60%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 40%, #000 60%, transparent 100%)'
         }} />
       </div>
 
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-14 md:mb-16"
         >
-          <span className="inline-block px-5 py-2.5 bg-blue-900/30 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
+          <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#9b59b6]/10 border border-[#9b59b6]/20 rounded-full text-[#9b59b6] text-sm font-medium mb-6">
+            <span className="w-1.5 h-1.5 bg-[#9b59b6] rounded-full animate-pulse" />
             GYIK
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Gyakran Ismételt Kérdések
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight">
+            Gyakran Ismételt <span className="text-[#9b59b6] drop-shadow-[0_0_15px_rgba(155,89,182,0.4)]">Kérdések</span>
           </h2>
-          <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
             Válaszok a leggyakoribb kérdésekre. Ha nem találod a választ, keress meg nyugodtan!
           </p>
         </motion.div>
@@ -76,20 +79,20 @@ export default function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
               viewport={{ once: true }}
-              className="bg-[#0d0d0d] rounded-2xl border border-white/5 overflow-hidden"
+              className={`bg-[#0a0a0f] rounded-2xl border overflow-hidden transition-colors ${openIndex === index ? 'border-[#9b59b6]/30' : 'border-white/5 hover:border-white/10'}`}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-8 py-6 flex items-center justify-between text-left"
+                className="w-full px-6 sm:px-8 py-5 flex items-center justify-between text-left gap-4"
               >
-                <span className="text-white font-medium pr-4">{faq.question}</span>
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full bg-blue-900/30 flex items-center justify-center transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}>
-                  <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className={`font-medium pr-4 transition-colors ${openIndex === index ? 'text-[#9b59b6]' : 'text-white'}`}>{faq.question}</span>
+                <div className={`flex-shrink-0 w-8 h-8 rounded-full bg-[#9b59b6]/10 border border-[#9b59b6]/20 flex items-center justify-center text-[#9b59b6] transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
               </button>
-              
+
               <AnimatePresence>
                 {openIndex === index && (
                   <motion.div
@@ -98,7 +101,7 @@ export default function FAQ() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="px-8 pb-6 text-zinc-400 leading-relaxed">
+                    <div className="px-6 sm:px-8 pb-6 text-gray-400 leading-relaxed">
                       {faq.answer}
                     </div>
                   </motion.div>
@@ -114,18 +117,18 @@ export default function FAQ() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mt-16"
+          className="text-center mt-14"
         >
-          <p className="text-zinc-400 mb-6">
+          <p className="text-gray-400 mb-6">
             Nem találtad meg a választ?
           </p>
-          <a 
-            href="#contact" 
-            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-500 transition-all duration-300"
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-[#9b59b6] to-[#6c5ce7] text-white rounded-xl font-semibold transition-all duration-300 shadow-[0_0_20px_rgba(155,89,182,0.25)] hover:shadow-[0_0_30px_rgba(155,89,182,0.45)] hover:-translate-y-0.5"
           >
-            <span>Keress Meg</span>
+            <span>Keress meg</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </a>
         </motion.div>

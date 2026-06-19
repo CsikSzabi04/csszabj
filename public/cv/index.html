@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="hu" data-lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Csík Szabolcs Alex – Full Stack Developer | CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #07080c;
+            --card: #0e1017;
+            --panel: #11131c;
+            --panel-2: #161925;
+            --text: #e9ebf2;
+            --muted: #9aa1b4;
+            --faint: #6f7689;
+            --line: rgba(255, 255, 255, .08);
+            --line-2: rgba(255, 255, 255, .13);
+            --accent: #7c5cff;
+            --accent-2: #22d3ee;
+            --accent-soft: rgba(124, 92, 255, .15);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+            color: var(--text);
+            line-height: 1.5;
+            background:
+                radial-gradient(1100px 600px at 12% -10%, rgba(124, 92, 255, .12), transparent 55%),
+                radial-gradient(1000px 600px at 100% 0%, rgba(34, 211, 238, .08), transparent 55%),
+                var(--bg);
+            min-height: 100vh;
+            padding: 36px 16px 120px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== A4 CARD (this is the element captured on export) ===== */
+        .resume-container {
+            width: 1000px;
+            min-height: 1123px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .55);
+            font-size: 11px;
+        }
+
+        /* ===== HEADER ===== */
+        .cv-header {
+            position: relative;
+            padding: 30px 36px 26px;
+            text-align: center;
+            background:
+                radial-gradient(820px 280px at 18% -55%, rgba(124, 92, 255, .42), transparent 60%),
+                radial-gradient(680px 280px at 92% -20%, rgba(34, 211, 238, .26), transparent 58%),
+                linear-gradient(135deg, #15132b, #0a0c15);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .cv-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            opacity: .8;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 30%;
+            margin: 0 auto 10px;
+            background-position: 50% 30%;
+            background-size: 80%;
+            background-repeat: no-repeat;
+            background-color: #1b1e2b;
+            border: 3px solid rgba(255, 255, 255, .9);
+            box-shadow: 0 0 0 4px rgba(124, 92, 255, .35), 0 10px 26px rgba(0, 0, 0, .45);
+        }
+
+        .cv-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            line-height: 1.12;
+            background: linear-gradient(90deg, #ffffff, #cdd3ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cv-header .role {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 6px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cv-header .sub {
+            font-size: 11.5px;
+            color: var(--muted);
+            margin-top: 7px;
+        }
+
+        .cv-header .sub i {
+            color: var(--accent-2);
+            margin-right: 5px;
+        }
+
+        /* Solid-color fallback used only while exporting (html2canvas can't clip gradient text) */
+        .exporting .cv-header h1 {
+            background: none;
+            -webkit-text-fill-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .exporting .cv-header .role {
+            background: none;
+            -webkit-text-fill-color: #22d3ee;
+            color: #22d3ee;
+        }
+
+        /* ===== LAYOUT ===== */
+        .cv-body {
+            display: grid;
+            grid-template-columns: 292px 1fr;
+        }
+
+        .cv-left {
+            padding: 26px 22px;
+            background: linear-gradient(180deg, #0b0d14, #0a0c12);
+            border-right: 1px solid var(--line);
+        }
+
+        .cv-right {
+            padding: 26px 28px;
+        }
+
+        .section {
+            margin-bottom: 22px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+            color: #fff;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .section-title i {
+            display: none;
+        }
+
+        .section-title::before {
+            content: '';
+            flex: 0 0 auto;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2.5px solid var(--accent);
+            box-shadow: 0 0 0 3px rgba(124, 92, 255, .15);
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--line-2), transparent);
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 9px;
+            font-size: 11px;
+            color: var(--text);
+        }
+
+        .contact-list .ico {
+            width: 26px;
+            height: 26px;
+            flex: 0 0 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 7px;
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+            color: var(--accent-2);
+            font-size: 11px;
+        }
+
+        a {
+            color: #b9c0ff;
+            text-decoration: none;
+            transition: color .2s;
+            border-bottom: 1px dotted rgba(185, 192, 255, .35);
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        /* ===== LANGUAGES ===== */
+        .lang-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11.5px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .lang-row .lvl {
+            color: var(--accent-2);
+            font-weight: 600;
+        }
+
+        .lang-track {
+            height: 7px;
+            background: rgba(255, 255, 255, .07);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .lang-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        }
+
+        .lang-note {
+            font-size: 10px;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+
+        /* ===== SKILLS ===== */
+        .skill-group {
+            margin-bottom: 12px;
+        }
+
+        .skill-group h6 {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            color: var(--accent-2);
+            margin-bottom: 7px;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .chip {
+            font-size: 10px;
+            font-weight: 500;
+            padding: 4px 11px;
+            border-radius: 7px;
+            color: #dfe3f0;
+            background: linear-gradient(180deg, rgba(124, 92, 255, .16), rgba(34, 211, 238, .05));
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            line-height: 1.4;
+            transition: all .2s ease;
+        }
+
+        .chip:hover {
+            border-left-color: var(--accent-2);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* ===== SOFT SKILLS ===== */
+        .soft-list {
+            list-style: none;
+        }
+
+        .soft-list li {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 11px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .soft-list i {
+            color: var(--accent);
+            width: 15px;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        /* ===== PROFILE SUMMARY ===== */
+        .summary {
+            font-size: 11.5px;
+            color: #cfd4e2;
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        /* ===== EXPERIENCE 2-COLUMN GRID ===== */
+        .exp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 22px;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            padding-left: 22px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            bottom: 4px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), rgba(34, 211, 238, .25));
+        }
+
+        .tl-item {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .tl-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 3px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124, 92, 255, .25);
+        }
+
+        .tl-date {
+            display: inline-block;
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            color: var(--accent-2);
+            background: var(--accent-soft);
+            border: 1px solid var(--line);
+            padding: 2px 9px;
+            border-radius: 20px;
+            margin-bottom: 6px;
+        }
+
+        .tl-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .tl-sub {
+            font-size: 11px;
+            font-style: italic;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .tl-item ul {
+            list-style: none;
+        }
+
+        .tl-item li {
+            position: relative;
+            padding-left: 15px;
+            font-size: 11px;
+            color: #cfd4e2;
+            margin-bottom: 3px;
+        }
+
+        .tl-item li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-2);
+        }
+
+        /* ===== FEATURED PROJECTS ===== */
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .project-card {
+            background: linear-gradient(180deg, rgba(124, 92, 255, .09), rgba(255, 255, 255, .02));
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent-2);
+            border-radius: 9px;
+            padding: 10px 12px;
+        }
+
+        .project-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .project-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .project-link {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--accent-2);
+            border-bottom: none;
+            white-space: nowrap;
+        }
+
+        .project-link i {
+            font-size: 8px;
+        }
+
+        .project-desc {
+            font-size: 10px;
+            color: #cfd4e2;
+            line-height: 1.5;
+            margin-bottom: 7px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            font-size: 9px;
+            font-weight: 500;
+            padding: 2px 7px;
+            border-radius: 5px;
+            color: #c9cee0;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid var(--line);
+        }
+
+        /* ===== NOW LEARNING ===== */
+        .now-chips .chip {
+            border-left-color: var(--accent-2);
+        }
+
+        /* ===== OPEN TO WORK BANNER ===== */
+        .cta-banner {
+            grid-column: 1 / -1;
+            margin: 2px 26px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 13px 18px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(124, 92, 255, .24), rgba(34, 211, 238, .12));
+            border: 1px solid var(--line-2);
+        }
+
+        .cta-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cta-dot {
+            width: 10px;
+            height: 10px;
+            flex: 0 0 10px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, .22);
+        }
+
+        .cta-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .cta-sub {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .cta-btn {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent), #5b3df0);
+            padding: 9px 16px;
+            border-radius: 10px;
+            border-bottom: none;
+            white-space: nowrap;
+        }
+
+        .cta-btn:hover {
+            color: #fff;
+            filter: brightness(1.1);
+        }
+
+        /* ===== CARD FOOTER ===== */
+        .cv-footer {
+            grid-column: 1 / -1;
+            border-top: 1px solid var(--line);
+            padding: 14px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: var(--faint);
+            background: linear-gradient(180deg, transparent, rgba(124, 92, 255, .05));
+        }
+
+        .cv-footer a {
+            color: var(--accent-2);
+            font-weight: 600;
+        }
+
+        /* ===== BOTTOM TOOLBAR (never exported) ===== */
+        .toolbar {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 16px;
+            background: rgba(17, 19, 28, .82);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--line-2);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, .55);
+            z-index: 1000;
+        }
+
+        .toolbar button {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--panel-2);
+            border: 1px solid var(--line-2);
+            padding: 9px 14px;
+            border-radius: 11px;
+            cursor: pointer;
+            transition: all .18s ease;
+        }
+
+        .toolbar button:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        .toolbar button i {
+            color: var(--accent-2);
+        }
+
+        .toolbar .btn-lang {
+            background: linear-gradient(135deg, var(--accent), #5b3df0);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .toolbar .btn-lang i {
+            color: #fff;
+        }
+
+        /* ===== CONTEXT MENU ===== */
+        .context-menu {
+            position: fixed;
+            min-width: 210px;
+            background: rgba(17, 19, 28, .96);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--line-2);
+            border-radius: 12px;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, .6);
+            z-index: 1100;
+            display: none;
+            overflow: hidden;
+            padding: 5px;
+        }
+
+        .context-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px 12px;
+            font-size: 12.5px;
+            color: var(--text);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background .15s;
+        }
+
+        .context-menu-item:hover {
+            background: var(--accent-soft);
+        }
+
+        .context-menu-item i {
+            color: var(--accent-2);
+            width: 16px;
+            text-align: center;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(12px);
+            background: #11131c;
+            color: #fff;
+            padding: 11px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--line-2);
+            font-size: 12.5px;
+            font-weight: 500;
+            box-shadow: 0 14px 38px rgba(0, 0, 0, .55);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .25s ease;
+            z-index: 1200;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-2);
+            margin-right: 9px;
+            vertical-align: middle;
+        }
+
+        /* ===== PRINT (native fallback keeps dark theme) ===== */
+        @media print {
+            body {
+                background: #07080c !important;
+                padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .resume-container {
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+                margin: 0;
+                width: 100%;
+                min-height: 100vh;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 840px) {
+            .resume-container {
+                width: 100%;
+            }
+
+            .cv-body {
+                grid-template-columns: 1fr;
+            }
+
+            .cv-left {
+                border-right: none;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .exp-grid,
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-banner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== Right-click context menu (not exported) ===== -->
+    <div class="context-menu no-print" id="contextMenu" data-html2canvas-ignore>
+        <div class="context-menu-item" onclick="exportAsPDF()">
+            <i class="fas fa-file-pdf"></i> <span data-en="Save as PDF (links work)">Mentés PDF-ként (linkekkel)</span>
+        </div>
+        <div class="context-menu-item" onclick="exportAsPNG()">
+            <i class="fas fa-file-image"></i> <span data-en="Save as PNG (Full HD)">Mentés PNG-ként (Full HD)</span>
+        </div>
+        <div class="context-menu-item" onclick="window.print()">
+            <i class="fas fa-print"></i> <span data-en="Print">Nyomtatás</span>
+        </div>
+        <div class="context-menu-item" onclick="copyToClipboard()">
+            <i class="fas fa-copy"></i> <span data-en="Copy text">Szöveg másolása</span>
+        </div>
+    </div>
+
+    <!-- ===== Toast ===== -->
+    <div class="toast no-print" id="toast" data-html2canvas-ignore><span class="dot"></span><span id="toastMsg"></span></div>
+
+    <!-- ===== CV CARD (captured element) ===== -->
+    <div class="resume-container" id="resume-content">
+        <!-- Header -->
+        <header class="cv-header">
+            <div class="avatar" id="avatar"></div>
+            <h1>Csík Szabolcs Alex</h1>
+            <div class="role" data-en="Full Stack Developer &amp; Software Engineer">Full Stack Fejlesztő &amp;
+                Szoftverfejlesztő</div>
+            <div class="sub"><i class="fas fa-graduation-cap"></i><span
+                    data-en="Computer Engineering Student | Neumann János University">Mérnökinformatikus hallgató |
+                    Neumann János Egyetem</span></div>
+        </header>
+
+        <div class="cv-body">
+            <!-- LEFT COLUMN -->
+            <aside class="cv-left">
+                <!-- Contact -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-address-card"></i><span data-en="Contact">Kapcsolat</span>
+                    </h2>
+                    <ul class="contact-list">
+                        <li><span class="ico"><i class="fas fa-phone"></i></span><span>+36 70 242 1586</span></li>
+                        <li><span class="ico"><i class="fas fa-envelope"></i></span><a
+                                href="mailto:alexszabi04@gmail.com">alexszabi04@gmail.com</a></li>
+                        <li><span class="ico"><i class="fas fa-globe"></i></span><a href="https://csszabj.hu/"
+                                target="_blank" rel="noopener">csszabj.hu</a></li>
+                        <li><span class="ico"><i class="fab fa-github"></i></span><a href="https://github.com/csszabj"
+                                target="_blank" rel="noopener">github.com/csszabj</a></li>
+                        <li><span class="ico"><i class="fab fa-linkedin-in"></i></span><a
+                                href="https://www.linkedin.com/in/csszabj" target="_blank"
+                                rel="noopener">linkedin.com/in/csszabj</a></li>
+                        <li><span class="ico"><i class="fas fa-location-dot"></i></span><span
+                                data-en="Kecskemét, Hungary">Kecskemét, Magyarország</span></li>
+                        <li><span class="ico"><i class="fas fa-cake-candles"></i></span><span data-en="23 January 2004">2004.
+                                január 23.</span></li>
+                        <li><span class="ico"><i class="fas fa-car"></i></span><span
+                                data-en="Category B driving license">B kategóriás jogosítvány</span></li>
+                    </ul>
+                </div>
+
+                <!-- Languages -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-language"></i><span
+                            data-en="Languages">Nyelvismeret</span></h2>
+                    <div class="lang-row"><span data-en="Hungarian">Magyar</span><span class="lvl"
+                            data-en="Native">Anyanyelv</span></div>
+                    <div class="lang-track">
+                        <div class="lang-fill" style="width:100%"></div>
+                    </div>
+                    <div class="lang-note" style="margin-bottom:14px">&nbsp;</div>
+                    <div class="lang-row"><span data-en="English">Angol</span><span class="lvl">B2</span></div>
+                    <div class="lang-track">
+                        <div class="lang-fill" style="width:85%"></div>
+                    </div>
+                    <div class="lang-note"><span data-en="Advanced-level final exam (86%)">Emelt szintű érettségi
+                            (86%)</span><br><span data-en="B2 complex language exam">B2 komplex nyelvvizsga</span></div>
+                </div>
+
+                <!-- Tech stack -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-layer-group"></i><span data-en="Tech Stack">Technológiai
+                            Stack</span></h2>
+
+                    <div class="skill-group">
+                        <h6>Frontend</h6>
+                        <div class="chips">
+                            <span class="chip">HTML5</span><span class="chip">CSS3</span><span
+                                class="chip">JavaScript</span><span class="chip">React.js</span><span
+                                class="chip">Angular</span><span class="chip">Tailwind CSS</span><span
+                                class="chip">Bootstrap</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h6>Backend</h6>
+                        <div class="chips">
+                            <span class="chip">Node.js</span><span class="chip">Express.js</span><span
+                                class="chip">Java</span><span class="chip">Spring Boot</span><span class="chip">.NET
+                                8</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h6 data-en="Database">Adatbázis</h6>
+                        <div class="chips">
+                            <span class="chip">MySQL</span><span class="chip">MongoDB</span><span
+                                class="chip">Firebase</span><span class="chip">SQLite</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h6 data-en="Tools &amp; Other">Eszközök &amp; Egyéb</h6>
+                        <div class="chips">
+                            <span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">VS
+                                Code</span><span class="chip">IntelliJ</span><span class="chip">REST API</span><span
+                                class="chip">Docker</span><span class="chip">Figma</span><span
+                                class="chip">Postman</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h6 data-en="AI &amp; Tooling">AI Tudás</h6>
+                        <div class="chips">
+                            <span class="chip">ChatGPT</span><span class="chip">Claude AI</span><span
+                                class="chip">Gemini</span><span class="chip">Deepseek</span><span class="chip">GitHub
+                                Copilot</span><span class="chip">Google AI Studio</span>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h6>Cloud / Hosting</h6>
+                        <div class="chips">
+                            <span class="chip">Vercel</span><span class="chip">Netlify</span><span
+                                class="chip">Render</span><span class="chip">Fly.io</span><span
+                                class="chip">Rackhost</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </aside>
+
+            <!-- RIGHT COLUMN -->
+            <main class="cv-right">
+                <!-- Profile -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-user"></i><span data-en="Profile Summary">Profil
+                            Összefoglaló</span></h2>
+                    <p class="summary"
+                        data-en="Passionate full-stack developer and engineering student who enjoys solving complex problems and applying modern web technologies. Alongside my university studies I actively build my own projects and take part in hackathons. I am especially drawn to the React and Node.js ecosystem as well as cloud-based solutions. My goal is to create innovative software that delivers real value.">
+                        Szenvedélyes full stack fejlesztő hallgató, aki élvezi a komplex problémák megoldását és a modern
+                        webtechnológiák alkalmazását. Az egyetemi tanulmányok mellett aktívan fejlesztem saját
+                        projektjeimet és részt veszek hackathonokon. Különösen érdekel a React és Node.js ökoszisztéma,
+                        valamint a felhőalapú megoldások. Célom, hogy innovatív szoftvereket hozzak létre, amelyek valódi
+                        értéket teremtenek.</p>
+                </div>
+
+                <!-- Experience -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-briefcase"></i><span data-en="Professional Experience">Szakmai
+                            Tapasztalat</span></h2>
+                    <div class="exp-grid">
+                        <!-- LEFT EXPERIENCE COLUMN -->
+                        <div class="timeline">
+                            <div class="tl-item">
+                                <span class="tl-date" data-en="2024 – Present">2024 – Jelenleg</span>
+                                <div class="tl-title" data-en="Video Tutorial Creator">Videós Tananyag Készítő</div>
+                                <div class="tl-sub">Raunder</div>
+                                <ul>
+                                    <li><span data-en="Recording video tutorials in OBS">Videós oktatóanyagok rögzítése
+                                            OBS-ben</span></li>
+                                    <li><span data-en="Content creation with Canva and VS Code">Tartalomkészítés Canva és
+                                            VS Code segítségével</span></li>
+                                    <li><span data-en="Covering mainly TypeScript, JavaScript, JSX and TSX topics">Főként
+                                            TypeScript, JavaScript, JSX és TSX témák feldolgozása</span></li>
+                                    <li><span data-en="Preparing materials, scriptwriting, recording and delivery">Anyagok
+                                            előkészítése, szövegírás, felvétel és leadás</span></li>
+                                </ul>
+                            </div>
+                            <div class="tl-item">
+                                <span class="tl-date">2023 – 2025</span>
+                                <div class="tl-title" data-en="Programming Instructor">Programozási Oktató</div>
+                                <div class="tl-sub" data-en="Dr.Code Education Center – Kecskemét">Dr.Code Oktatási
+                                    Központ – Kecskemét</div>
+                                <ul>
+                                    <li><span data-en="Teaching Python and JavaScript fundamentals">Python és JavaScript
+                                            alapok oktatása</span></li>
+                                    <li><span data-en="Leading web development workshops">Webfejlesztési workshopok
+                                            vezetése</span></li>
+                                    <li><span data-en="Curriculum development and adaptation">Tananyagfejlesztés és
+                                            adaptáció</span></li>
+                                    <li><span data-en="Mentoring student projects">Diákprojektek mentorálása</span></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT EXPERIENCE COLUMN -->
+                        <div class="timeline">
+                            <div class="tl-item">
+                                <span class="tl-date" data-en="August 2025 – January 2026">2025. augusztus – 2026.
+                                    január</span>
+                                <div class="tl-title" data-en="Promoter">Promóter</div>
+                                <div class="tl-sub">Candy &amp; Haier – MediaMarkt Kecskemét</div>
+                                <ul>
+                                    <li><span data-en="Product demos and sales support">Termékbemutatók és értékesítési
+                                            támogatás</span></li>
+                                    <li><span data-en="Customer communication and product expertise">Ügyfélkommunikáció
+                                            és termékismeret</span></li>
+                                    <li><span data-en="Collecting market research data">Piackutatási adatok
+                                            gyűjtése</span></li>
+                                </ul>
+                            </div>
+                            <div class="tl-item">
+                                <span class="tl-date" data-en="Summer 2022">2022. nyár</span>
+                                <div class="tl-title" data-en="Student Worker / Liaison">Diákmunkás / Kapcsolattartó</div>
+                                <div class="tl-sub">Hirös Ízek Kft.</div>
+                                <ul>
+                                    <li><span data-en="Supporting administrative tasks">Adminisztratív feladatok
+                                            támogatása</span></li>
+                                    <li><span data-en="Coordinating procurement processes">Beszerzési folyamatok
+                                            koordinációja</span></li>
+                                    <li><span data-en="Reporting and documentation">Riportkészítés és
+                                            dokumentáció</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-graduation-cap"></i><span
+                            data-en="Education">Tanulmányok</span></h2>
+                    <div class="timeline">
+                        <div class="tl-item">
+                            <span class="tl-date" data-en="2025 – Present">2025 – Jelenleg</span>
+                            <div class="tl-title" data-en="BSc in Computer Engineering">Mérnökinformatikus BSc</div>
+                            <div class="tl-sub" data-en="Neumann János University, GAMF Faculty">Neumann János Egyetem,
+                                GAMF Kar</div>
+                            <ul>
+                                <li><span data-en="Focus areas: Software Development, Data Science, Networks">Szakterületek:
+                                        Szoftverfejlesztés, Adattudomány, Hálózatok</span></li>
+                                <li><span data-en="GPA: 4.2 / 5.0">Átlag: 4.2 / 5.0</span></li>
+                            </ul>
+                        </div>
+                        <div class="tl-item">
+                            <span class="tl-date">2020 – 2025</span>
+                            <div class="tl-title" data-en="Software Developer &amp; Tester">Szoftverfejlesztő és
+                                -tesztelő</div>
+                            <div class="tl-sub">Kecskeméti SZC Kandó Kálmán Technikum</div>
+                            <ul>
+                                <li><span data-en="Key subjects: Programming, Database Management, Web Development">Kiemelt
+                                        tantárgyak: Programozás, Adatbázis-kezelés, Webfejlesztés</span></li>
+                                <li><span data-en="Final exam average: 3.8 / 4.5">Érettségi átlag: 3.8 / 4.5</span></li>
+                            </ul>
+                        </div>
+                        <div class="tl-item">
+                            <span class="tl-date">2020</span>
+                            <div class="tl-title" data-en="Advanced English Prep (Higher Level)">Angol felsőfok/emelt
+                                szint felkészítő</div>
+                            <div class="tl-sub">Kecskeméti SZC Gróf Károlyi Sándor Technikum</div>
+                            <ul>
+                                <li><span data-en="Key subjects: Grammar, Speaking, Listening, Reading &amp; Writing">Kiemelt
+                                        tantárgyak: Grammar, Speaking, Listening, Reading &amp; Writing</span></li>
+                                <li><span data-en="GPA: 4.0">Átlag: 4.0</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Projects -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-rocket"></i><span data-en="Featured Projects">Kiemelt
+                            Projektek</span></h2>
+                    <div class="project-grid">
+                        <div class="project-card">
+                            <div class="project-head">
+                                <span class="project-name">Portfólió &amp; AI Asszisztens</span>
+                                <a href="https://csszabj.hu/" target="_blank" rel="noopener" class="project-link">csszabj.hu
+                                    <i class="fas fa-arrow-up-right-from-square"></i></a>
+                            </div>
+                            <p class="project-desc"
+                                data-en="Interactive portfolio site with a built-in AI assistant and a dynamic, downloadable CV.">
+                                Interaktív portfólió oldal beépített AI asszisztenssel és dinamikus, letölthető
+                                önéletrajzzal.</p>
+                            <div class="project-tags">
+                                <span class="tag">React</span><span class="tag">Node.js</span><span
+                                    class="tag">Vite</span><span class="tag">AI API</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-head">
+                                <span class="project-name" data-en="Full-Stack Web Apps">Full-Stack
+                                    Webalkalmazások</span>
+                                <a href="https://github.com/csszabj" target="_blank" rel="noopener"
+                                    class="project-link">GitHub <i class="fas fa-arrow-up-right-from-square"></i></a>
+                            </div>
+                            <p class="project-desc"
+                                data-en="Personal and hackathon projects: REST APIs, authentication, databases and responsive frontends.">
+                                Saját és hackathon projektek: REST API-k, autentikáció, adatbázisok és reszponzív
+                                frontendek.</p>
+                            <div class="project-tags">
+                                <span class="tag">JavaScript</span><span class="tag">Express</span><span
+                                    class="tag">MongoDB</span><span class="tag">Tailwind</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Currently Learning -->
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-seedling"></i><span data-en="Currently Learning">Jelenleg
+                            Tanulom</span></h2>
+                    <div class="chips now-chips">
+                        <span class="chip" data-en="AI agents">AI ügynökök</span>
+                        <span class="chip">Next.js</span>
+                        <span class="chip">Rust</span>
+                        <span class="chip" data-en="Cloud architecture">Felhő architektúra</span>
+                        <span class="chip">Docker &amp; DevOps</span>
+                        <span class="chip" data-en="LLM integration">LLM integráció</span>
+                    </div>
+                </div>
+            </main>
+
+
+
+            <!-- Footer -->
+            <div class="cv-footer">
+                <span><span data-en="Portfolio">Portfólió</span>: <a href="https://csszabj.hu/" target="_blank"
+                        rel="noopener">csszabj.hu</a></span>
+                <span><span data-en="Last updated">Frissítve</span>: <span id="updated"></span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Bottom toolbar (not exported) ===== -->
+    <div class="toolbar no-print" id="toolbar" data-html2canvas-ignore>
+        <button type="button" class="btn-lang" onclick="toggleLang()"><i class="fas fa-language"></i><span id="langBtnLabel">English</span></button>
+        <button type="button" onclick="exportAsPDF()"><i class="fas fa-file-pdf"></i><span data-en="Save PDF">PDF mentése</span></button>
+        <button type="button" onclick="exportAsPNG()"><i class="fas fa-image"></i><span data-en="Save PNG">PNG mentése</span></button>
+        <button type="button" onclick="window.print()"><i class="fas fa-print"></i><span data-en="Print">Nyomtatás</span></button>
+    </div>
+
+    <!-- ===== Libraries ===== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        const AVATAR_URL = 'https://i.imgur.com/M3iJpBH.png';
+        document.getElementById('avatar').style.backgroundImage = `url("${AVATAR_URL}")`;
+
+        /* ---------- Date ---------- */
+        function refreshDate() {
+            const lang = document.documentElement.getAttribute('data-lang');
+            const locale = lang === 'en' ? 'en-GB' : 'hu-HU';
+            document.getElementById('updated').textContent =
+                new Date().toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        /* ---------- Language toggle (data-en) ---------- */
+        function setLang(lang) {
+            document.documentElement.setAttribute('data-lang', lang);
+            document.documentElement.setAttribute('lang', lang);
+            document.querySelectorAll('[data-en]').forEach(el => {
+                if (el.dataset.hu === undefined) el.dataset.hu = el.innerHTML;
+                el.innerHTML = (lang === 'en') ? el.dataset.en : el.dataset.hu;
+            });
+            document.getElementById('langBtnLabel').textContent = (lang === 'en') ? 'Magyar' : 'English';
+            refreshDate();
+        }
+
+        function toggleLang() {
+            const next = document.documentElement.getAttribute('data-lang') === 'en' ? 'hu' : 'en';
+            setLang(next);
+            showToast(next === 'en' ? 'Switched to English' : 'Átváltva magyarra');
+        }
+
+        /* ---------- Toast ---------- */
+        let toastTimer;
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+        }
+
+        /* ---------- Wait for fonts + avatar before capturing ---------- */
+        async function ensureAssets() {
+            try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) { }
+            await new Promise(res => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = res; img.onerror = res;
+                img.src = AVATAR_URL;
+            });
+        }
+
+        async function renderCanvas() {
+            await ensureAssets();
+            const el = document.getElementById('resume-content');
+            return html2canvas(el, {
+                scale: 3,
+                useCORS: true,
+                backgroundColor: '#0e1017',
+                logging: false,
+                imageTimeout: 20000,
+                onclone: (clonedDoc) => {
+                    const c = clonedDoc.getElementById('resume-content');
+                    if (c) c.classList.add('exporting');
+                }
+            });
+        }
+
+        function fileName(ext) {
+            const lang = document.documentElement.getAttribute('data-lang').toUpperCase();
+            return `Csik_Szabolcs_Alex_CV_${lang}.${ext}`;
+        }
+
+        /* ---------- Export PDF with REAL clickable links ---------- */
+        async function exportAsPDF() {
+            hideMenu();
+            showToast(curLang() === 'en' ? 'Generating PDF…' : 'PDF generálása…');
+            try {
+                const el = document.getElementById('resume-content');
+                const w = el.offsetWidth;
+                const h = el.offsetHeight;
+                const canvas = await renderCanvas();
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ orientation: 'p', unit: 'px', format: [w, h], compress: true });
+                pdf.setProperties({ title: 'Csík Szabolcs Alex – CV', author: 'Csík Szabolcs Alex' });
+                pdf.addImage(imgData, 'JPEG', 0, 0, w, h);
+
+                // Overlay invisible, clickable link annotations mapped 1:1 onto each <a>.
+                const base = el.getBoundingClientRect();
+                el.querySelectorAll('a[href]').forEach(a => {
+                    let url = a.href;
+                    if (!url || url.startsWith('javascript')) return;
+                    const r = a.getBoundingClientRect();
+                    pdf.link(r.left - base.left, r.top - base.top, r.width, r.height, { url });
+                });
+
+                pdf.save(fileName('pdf'));
+                showToast(curLang() === 'en' ? 'PDF saved with working links!' : 'PDF mentve, működő linkekkel!');
+            } catch (err) {
+                console.error(err);
+                showToast(curLang() === 'en' ? 'Export failed' : 'Hiba a mentés során');
+            }
+        }
+
+        /* ---------- Export PNG (Full HD, no stretching) ---------- */
+        async function exportAsPNG() {
+            hideMenu();
+            showToast(curLang() === 'en' ? 'Generating PNG…' : 'PNG generálása…');
+            try {
+                const canvas = await renderCanvas();
+                canvas.toBlob(blob => {
+                    const link = document.createElement('a');
+                    link.download = fileName('png');
+                    link.href = URL.createObjectURL(blob);
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                    showToast(curLang() === 'en' ? 'PNG saved!' : 'PNG mentve!');
+                }, 'image/png', 1.0);
+            } catch (err) {
+                console.error(err);
+                showToast(curLang() === 'en' ? 'Export failed' : 'Hiba a mentés során');
+            }
+        }
+
+        /* ---------- Copy text ---------- */
+        async function copyToClipboard() {
+            hideMenu();
+            const text = document.getElementById('resume-content').innerText.replace(/\n{3,}/g, '\n\n').trim();
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast(curLang() === 'en' ? 'Text copied!' : 'Szöveg másolva!');
+            } catch (e) {
+                showToast(curLang() === 'en' ? 'Copy failed' : 'Hiba a másolásnál');
+            }
+        }
+
+        const curLang = () => document.documentElement.getAttribute('data-lang');
+
+        /* ---------- Context menu ---------- */
+        const menu = document.getElementById('contextMenu');
+        function hideMenu() { menu.style.display = 'none'; }
+        document.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            const mw = 220, mh = 200;
+            menu.style.left = Math.min(e.clientX, window.innerWidth - mw - 10) + 'px';
+            menu.style.top = Math.min(e.clientY, window.innerHeight - mh - 10) + 'px';
+            menu.style.display = 'block';
+        });
+        document.addEventListener('click', hideMenu);
+        document.addEventListener('scroll', hideMenu);
+
+        /* ---------- Keyboard shortcuts ---------- */
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && e.key.toLowerCase() === 's') { e.preventDefault(); exportAsPDF(); }
+            if (e.ctrlKey && e.key.toLowerCase() === 'p') { e.preventDefault(); window.print(); }
+        });
+
+        /* ---------- Init ---------- */
+        refreshDate();
+    </script>
+
+    <!-- ===== Embed helper: report height to parent so the iframe can auto-size ===== -->
+    <script>
+        (function () {
+            function postHeight() {
+                var card = document.getElementById('resume-content');
+                var h = Math.max(
+                    document.body.scrollHeight,
+                    document.documentElement.scrollHeight,
+                    card ? card.offsetHeight + 160 : 0
+                );
+                parent.postMessage({ type: 'cv-height', height: h }, '*');
+            }
+            window.addEventListener('load', postHeight);
+            window.addEventListener('resize', postHeight);
+            if (window.ResizeObserver) {
+                try { new ResizeObserver(postHeight).observe(document.body); } catch (e) { }
+            }
+            // Re-measure after fonts/late layout settle and after a language switch.
+            setTimeout(postHeight, 300);
+            setTimeout(postHeight, 1200);
+            document.addEventListener('click', function () { setTimeout(postHeight, 50); });
+
+            // ----- Forward mouse movement to the parent so its custom cursor keeps
+            // tracking over this iframe (same-origin only). Coordinates are mapped
+            // from the iframe's internal viewport into the parent viewport, taking
+            // the iframe's on-screen scale into account. -----
+            function forwardMouse(e) {
+                var fe;
+                try { fe = window.frameElement; } catch (err) { return; }
+                if (!fe) return; // standalone (not embedded) — nothing to forward
+                var rect = fe.getBoundingClientRect();
+                var sx = fe.offsetWidth ? rect.width / fe.offsetWidth : 1;
+                var sy = fe.offsetHeight ? rect.height / fe.offsetHeight : 1;
+                var px = rect.left + e.clientX * sx;
+                var py = rect.top + e.clientY * sy;
+                try {
+                    var P = parent.MouseEvent || MouseEvent;
+                    // Dispatch on parent.document with bubbles:true so it reaches both
+                    // document- and window-level listeners in the parent.
+                    parent.document.dispatchEvent(new P('mousemove', {
+                        clientX: px, clientY: py, bubbles: true
+                    }));
+                } catch (err) { /* cross-origin or detached — ignore */ }
+            }
+            window.addEventListener('mousemove', forwardMouse);
+        })();
+    </script>
+</body>
+
+</html>
