@@ -1,16 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --font-playfair: "Playfair Display", serif;
-  --font-inter: "Inter", sans-serif;
-  
+  --font-inter: "Inter", system-ui, sans-serif;
+
   /* Star Wars Theme Colors - Classic Lightsaber Colors */
   --sw-bg-dark: #000000;
   --sw-bg: #0a0a0f;
   --sw-border: #1a1a2e;
   --sw-text: #ffffff;
   --sw-text-muted: #a0a0a0;
-  
+
   /* Classic Lightsaber Colors */
   --sw-blue: #00a8ff;
   --sw-green: #00ff41;
@@ -18,7 +17,7 @@
   --sw-purple: #9b59b6;
   --sw-white: #ffffff;
   --sw-cyan: #00ffff;
-  
+
   /* Accent Colors */
   --accent-blue: #00a8ff;
   --accent-green: #00ff41;
@@ -26,7 +25,7 @@
   --accent-purple: #9b59b6;
   --accent-white: #ffffff;
   --accent-cyan: #00ffff;
-  
+
   /* Gradient Colors */
   --gradient-1: #00a8ff;
   --gradient-2: #9b59b6;
@@ -35,10 +34,6 @@
 
 * {
   box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 /* Centered container */
@@ -52,7 +47,6 @@ html {
 body {
   font-family: var(--font-inter);
   background: #000000;
-  background-attachment: fixed;
   color: var(--sw-text);
   line-height: 1.6;
   margin: 0;
@@ -67,7 +61,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 80%, rgba(0, 168, 255, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 80% 20%, rgba(255, 45, 45, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 40% 60%, rgba(155, 89, 182, 0.06) 0%, transparent 30%),
@@ -84,7 +78,7 @@ body::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 50%, transparent 50%),
     radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.6) 50%, transparent 50%),
     radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.9) 50%, transparent 50%),
@@ -100,6 +94,7 @@ body::after {
   background-size: 250px 250px;
   pointer-events: none;
   z-index: -1;
+  will-change: opacity;
   animation: twinkle 8s ease-in-out infinite;
 }
 
@@ -108,41 +103,47 @@ body::after {
   50% { opacity: 1; }
 }
 
-/* Smooth scrollbar - Lightsaber colors (Black, Red, Gray) - Star Wars themed */
+/* Scrollbar – flat dark grey, almost black, no gradients */
+html {
+  scrollbar-color: #1f1f23 #050505;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000000;
-  border-left: 1px solid #333333;
+  background: #050505;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff2d2d 0%, #666666 50%, #ff2d2d 100%);
-  border-radius: 5px;
-  border: 1px solid #ff2d2d;
-  box-shadow: 0 0 10px rgba(255, 45, 45, 0.5), 0 0 20px rgba(255, 45, 45, 0.3);
+  background: #1f1f23;
+  border: 2px solid #050505;
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ff2d2d 0%, #888888 50%, #ff2d2d 100%);
-  box-shadow: 0 0 15px rgba(255, 45, 45, 0.7), 0 0 30px rgba(255, 45, 45, 0.5);
+  background: #2a2a2f;
 }
 
 ::-webkit-scrollbar-corner {
-  background: #000000;
+  background: #050505;
 }
 
-/* Hide default cursor on desktop */
-@media (min-width: 768px) {
-  body {
-    cursor: none;
-  }
-  
-  a, button {
-    cursor: none;
-  }
+/* Custom cursor – the Cursor component adds this class only for precise pointers (mouse/trackpad) */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.has-custom-cursor :is(input, textarea, select, [contenteditable="true"]) {
+  cursor: text !important;
+}
+
+/* Intro splash: hidden before first paint when it was already shown in this session */
+html.splash-seen #startup-overlay {
+  display: none;
 }
 
 /* Typography */
@@ -229,6 +230,11 @@ h1, h2, h3, h4, h5, h6 {
   97% { opacity: 1; }
 }
 
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
@@ -244,6 +250,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-lightsaber {
   animation: lightsaber-flicker 4s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 100s linear infinite;
+  will-change: transform;
 }
 
 /* Container - transparent to show body background */
@@ -374,57 +385,14 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--sw-white);
 }
 
-/* Custom spin animation for Skills section - counter-rotate to keep text upright */
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
+/* Respect the OS "reduce motion" setting */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes counter-rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin 30s linear infinite;
-}
-
-.animate-counter-rotate {
-  animation: counter-rotate 30s linear infinite;
-}
-
-/* Clockwise spin for Skills orbit - like clock numbers */
-@keyframes clockwise-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-clockwise {
-  animation: clockwise-spin 40s linear infinite;
-}
-
-/* Counter-spin to keep skill labels horizontal while orbiting clockwise */
-@keyframes counter-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-.animate-counter-spin {
-  animation: counter-spin 40s linear infinite;
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <title>Forms</title>
+</head>
+<body>
+  <!--
+    Netlify Forms detection file. The real contact form (app/components/Contact.tsx) is rendered
+    by React, so Netlify can't see it at build time; this static copy registers the form and its
+    fields. Submissions are POSTed to this path.
+  -->
+  <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact">
+    <input name="bot-field">
+    <input name="name">
+    <input name="email" type="email">
+    <input name="subject">
+    <textarea name="message"></textarea>
+  </form>
+</body>
+</html>

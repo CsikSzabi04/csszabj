@@ -1,38 +1,43 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import StructuredData from "./components/StructuredData";
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-});
+import { SITE_URL } from "./lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
+  // latin-ext contains the Hungarian ő / ű glyphs
+  subsets: ["latin", "latin-ext"],
   display: "swap",
 });
 
+// Runs before the first paint: skips the intro splash when it was already shown in this tab
+// session or the visitor prefers reduced motion, so reloads don't flash it again.
+const splashScript = `try{if(sessionStorage.getItem("cs-splash-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("splash-seen")}catch(e){}`;
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  colorScheme: "dark",
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://csszabj.netlify.app"), // Frissítsd a végleges domainre ha megvan
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Csík Szabolcs | Full Stack Fejlesztő & Szoftverfejlesztő",
     template: "%s | Csík Szabolcs"
   },
   description: "Csík Szabolcs (csszabj) portfóliója. Tapasztalt Full Stack fejlesztő Kecskeméten. Webfejlesztés, React, Node.js, Java és modern szoftvermegoldások.",
   keywords: [
-    "Csík Szabolcs", 
-    "csszabj", 
-    "Szabolcs", 
-    "Csík", 
-    "webfejlesztő", 
-    "frontend fejlesztő", 
-    "backend fejlesztő", 
-    "full stack fejlesztő", 
-    "Kecskemét", 
+    "Csík Szabolcs",
+    "csszabj",
+    "Szabolcs",
+    "Csík",
+    "webfejlesztő",
+    "frontend fejlesztő",
+    "backend fejlesztő",
+    "full stack fejlesztő",
+    "Kecskemét",
     "szoftverfejlesztő",
     "programozó",
     "portfolio",
@@ -44,13 +49,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Csík Szabolcs | Full Stack Fejlesztő",
     description: "Csík Szabolcs (csszabj) - Innovatív webes megoldások és szoftverfejlesztés.",
-    url: "https://csszabj.netlify.app",
+    url: SITE_URL,
     siteName: "Csík Szabolcs Portfólió",
     images: [
       {
-        url: "https://i.imgur.com/go8utBV.png", // A fő kép amit a látni akar a keresőben
-        width: 1200,
-        height: 630,
+        url: "/images/profile.png",
+        width: 292,
+        height: 391,
         alt: "Csík Szabolcs Portfólió",
       },
     ],
@@ -58,10 +63,10 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Csík Szabolcs | Full Stack Fejlesztő",
     description: "Webfejlesztés és modern szoftvermegoldások.",
-    images: ["https://i.imgur.com/go8utBV.png"],
+    images: ["/images/profile.png"],
   },
   robots: {
     index: true,
@@ -85,8 +90,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="hu">
-      <body className={`${playfair.variable} ${inter.variable} font-sans bg-black text-white antialiased overflow-x-hidden w-full`}>
+    <html lang="hu" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: splashScript }} />
+      </head>
+      <body className={`${inter.variable} font-sans bg-black text-white antialiased overflow-x-hidden w-full`}>
         <StructuredData />
         <ClientLayout>{children}</ClientLayout>
       </body>

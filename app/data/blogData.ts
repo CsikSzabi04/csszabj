@@ -3151,26 +3151,29 @@ Sitemap: https://example.com/sitemap.xml</code></pre>
     id: 101,
     title: "Hogyan működik a saját SEO Ellenőrző eszközöm?",
     slug: "hogyan-mukodik-a-seo-ellenorzo",
-    excerpt: "Betekintés a kulisszák mögé: Hogyan építettem meg egy teljes mértékben kliensoldali SEO auditáló eszközt, amely CORS proxy-t és DOM elemzést használ a weboldalak technikai állapotának felmérésére.",
+    excerpt: "Betekintés a kulisszák mögé: Hogyan építettem meg egy böngészőben futó SEO auditáló eszközt, amely saját szerveroldali lekérést és DOM elemzést használ a weboldalak technikai állapotának felmérésére.",
     category: "Technical",
     date: "2025. május 12.",
     readTime: "15 perc",
     image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200",
     tags: ["SEO", "JavaScript", "CORS", "Web Development", "DOM API"],
     content: `
-<p class="lead">Az SEO (Keresőoptimalizálás) elemzése gyakran bonyolult és drága eszközöket igényel. Ebben a bejegyzésben megmutatom, hogyan készítettem el egy saját, villámgyors és privát SEO ellenőrző eszközt, amely kizárólag a böngésződben fut.</p>
+<p class="lead">Az SEO (Keresőoptimalizálás) elemzése gyakran bonyolult és drága eszközöket igényel. Ebben a bejegyzésben megmutatom, hogyan készítettem el egy saját, villámgyors és privát SEO ellenőrző eszközt, amelynek elemzése a böngésződben fut.</p>
 
 <figure class="w-full md:w-[45%] float-none md:float-right md:ml-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="SEO Analysis" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
 
 <h2>A legnagyobb kihívás: A CORS probléma</h2>
-<p>Amikor egy böngészőből próbálunk lekérni egy másik weboldalt (például a <code>fetch()</code> függvénnyel), a böngésző biztonsági okokból letiltja azt, ha a céloldal nem engedélyezi kifejezetten a hozzáférést (ez a Cross-Origin Resource Sharing). Ezt a problémát egy <strong>CORS Proxy</strong> használatával hidaltam át.</p>
+<p>Amikor egy böngészőből próbálunk lekérni egy másik weboldalt (például a <code>fetch()</code> függvénnyel), a böngésző biztonsági okokból letiltja azt, ha a céloldal nem engedélyezi kifejezetten a hozzáférést (ez a Cross-Origin Resource Sharing). Ezt a problémát egy <strong>saját, szerveroldali lekérő végponttal</strong> hidaltam át.</p>
 
-<p>Az eszközöm a <code>corsproxy.io</code> szolgáltatást használja, amely "bebugyolálja" a kérést, így a böngésző azt hiszi, hogy egy engedélyezett forrásból érkezik a tartalom. Ez lehetővé teszi, hogy tiszta HTML kódot kapjunk bármilyen publikus weboldalról.</p>
+<p>Az eszköz a megadott URL-t a saját <code>/api/page-fetch</code> végpontomnak küldi el. A szerver lekéri az oldal nyilvános HTML-jét, és visszaadja a böngészőnek. A végpont szigorúan védett: csak nyilvános címeket enged (SSRF védelem), és korlátozza a válasz méretét, az időt és a kérések számát.</p>
 
 <pre><code>// Így kérjük le a nyers HTML-t
-const proxyUrl = \`https://corsproxy.io/?\${encodeURIComponent(targetUrl)}\`;
-const response = await fetch(proxyUrl);
-const html = await response.text();</code></pre>
+const response = await fetch("/api/page-fetch", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ url: targetUrl }),
+});
+const { html } = await response.json();</code></pre>
 
 <h2>A HTML feldolgozása DOMParser-rel</h2>
 <p>Miután megvan a nyers szöveges HTML, azt valahogy értelmezni kell. Ahelyett, hogy bonyolult reguláris kifejezésekkel (RegEx) próbálnám kibányászni az adatokat, a beépített <code>DOMParser</code> API-t használom. Ez létrehoz egy virtuális dokumentum fát, amin éppen úgy navigálhatok, mint a valódi weboldalon a <code>document.querySelector</code> segítségével.</p>
@@ -3179,7 +3182,7 @@ const html = await response.text();</code></pre>
 const doc = parser.parseFromString(html, "text/html");
 
 // Adatok kinyerése
-const title = doc.querySelector("title")?.innerText;
+const title = doc.querySelector("title")?.textContent;
 const description = doc.querySelector('meta[name="description"]')?.getAttribute("content");
 const h1Count = doc.querySelectorAll("h1").length;</code></pre>
 
@@ -3197,27 +3200,30 @@ const h1Count = doc.querySelectorAll("h1").length;</code></pre>
 </ul>
 
 <h2>Személyes és Biztonságos</h2>
-<p>A legnagyobb előnye ennek a megoldásnak, hogy <strong>minden folyamat kliensoldalon történik</strong>. Nem küldöm el az adataidat semmilyen szerverre, nem mentem el a kereséseidet. Ez a "Lab Tech" filozófiám lényege: erőteljes eszközök, amelyek tiszteletben tartják a magánéletet.</p>
+<p>Az elemzés <strong>a böngésződben fut</strong>: a szerver csak a megadott oldal nyilvános HTML-jét kéri le, és semmit nem ment el a kereséseidről. Ez a "Lab Tech" filozófiám lényege: erőteljes eszközök, amelyek tiszteletben tartják a magánéletet.</p>
 
 <p>Próbáld ki te is az eszközt a Labor részlegben, és nézd meg, hogyan teljesít a saját weboldalad!</p>
     `,
     titleEn: "How does my custom SEO Checker tool work?",
-    excerptEn: "Behind the scenes: How I built a fully client-side SEO auditing tool using a CORS proxy and DOM parsing to assess the technical health of websites.",
+    excerptEn: "Behind the scenes: How I built a browser-based SEO auditing tool using a server-side fetch endpoint and DOM parsing to assess the technical health of websites.",
     categoryEn: "Technical",
     contentEn: `
-<p class="lead">SEO (Search Engine Optimization) analysis often requires complex and expensive tools. In this post, I'll show you how I created my own lightning-fast and private SEO checker tool that runs exclusively in your browser.</p>
+<p class="lead">SEO (Search Engine Optimization) analysis often requires complex and expensive tools. In this post, I'll show you how I created my own lightning-fast and private SEO checker tool whose analysis runs in your browser.</p>
 
 <figure class="w-full md:w-[45%] float-none md:float-right md:ml-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="SEO Analysis" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
 
 <h2>The Biggest Challenge: The CORS Problem</h2>
-<p>When trying to fetch another website from a browser (e.g., with the <code>fetch()</code> function), the browser blocks it for security reasons if the destination site doesn't explicitly allow access (this is Cross-Origin Resource Sharing). I bypassed this issue by using a <strong>CORS Proxy</strong>.</p>
+<p>When trying to fetch another website from a browser (e.g., with the <code>fetch()</code> function), the browser blocks it for security reasons if the destination site doesn't explicitly allow access (this is Cross-Origin Resource Sharing). I solved this with <strong>my own server-side fetch endpoint</strong>.</p>
 
-<p>My tool uses the <code>corsproxy.io</code> service, which "wraps" the request so the browser thinks the content is coming from an authorized source. This allows us to receive clean HTML code from any public website.</p>
+<p>The tool sends the URL to my own <code>/api/page-fetch</code> endpoint. The server fetches the page's public HTML and returns it to the browser. The endpoint is strictly protected: it only allows public addresses (SSRF protection) and limits response size, time and request rate.</p>
 
 <pre><code>// This is how we fetch raw HTML
-const proxyUrl = \`https://corsproxy.io/?\${encodeURIComponent(targetUrl)}\`;
-const response = await fetch(proxyUrl);
-const html = await response.text();</code></pre>
+const response = await fetch("/api/page-fetch", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ url: targetUrl }),
+});
+const { html } = await response.json();</code></pre>
 
 <h2>Formatting HTML with DOMParser</h2>
 <p>Once we have the raw text HTML, it needs to be interpreted. Instead of trying to extract data with complex regular expressions (RegEx), I use the built-in <code>DOMParser</code> API. This creates a virtual document tree where I can navigate just like on a real website using <code>document.querySelector</code>.</p>
@@ -3226,7 +3232,7 @@ const html = await response.text();</code></pre>
 const doc = parser.parseFromString(html, "text/html");
 
 // Extracting data
-const title = doc.querySelector("title")?.innerText;
+const title = doc.querySelector("title")?.textContent;
 const description = doc.querySelector('meta[name="description"]')?.getAttribute("content");
 const h1Count = doc.querySelectorAll("h1").length;</code></pre>
 
@@ -3244,7 +3250,7 @@ const h1Count = doc.querySelectorAll("h1").length;</code></pre>
 </ul>
 
 <h2>Private and Secure</h2>
-<p>The biggest advantage of this solution is that <strong>all processes happen on the client side</strong>. I don't send your data to any server or save your searches. This is the essence of my "Lab Tech" philosophy: powerful tools that respect privacy.</p>
+<p>The analysis <strong>runs in your browser</strong>: the server only fetches the public HTML of the page you enter and stores nothing about your searches. This is the essence of my "Lab Tech" philosophy: powerful tools that respect privacy.</p>
 
 <p>Try the tool for yourself in the Lab section and see how your own website performs!</p>
     `
@@ -3253,7 +3259,7 @@ const h1Count = doc.querySelectorAll("h1").length;</code></pre>
     id: 102,
     title: "Weboldal sebességmérés modern eszközökkel: Így működik a Sebességtesztem",
     slug: "igy-mukodik-a-sebessegteszt",
-    excerpt: "Nem kell mindig Lighthouse! Ismerd meg, hogyan mérheted weboldalad betöltési sebességét, az erőforrások nagyságát és a TTFB értéket közvetlenül a böngésződben.",
+    excerpt: "Nem kell mindig Lighthouse! Ismerd meg, hogyan mérheted weboldalad betöltési sebességét, az erőforrások nagyságát és a TTFB értéket egyetlen kattintással.",
     category: "Technical",
     date: "2025. május 15.",
     readTime: "12 perc",
@@ -3265,13 +3271,13 @@ const h1Count = doc.querySelectorAll("h1").length;</code></pre>
 <figure class="w-full md:w-[45%] float-none md:float-right md:ml-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="Web Performance" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
 
 <h2>Miért fontos a sebesség mérése?</h2>
-<p>A Google adatai szerint ha egy oldal betöltése 1 másodpercről 3-ra nő, a visszafordulási arány (bounce rate) 32%-kal ugrik meg. Ahhoz, hogy optimalizálni tudjunk, először mérnünk kell. Az eszközöm a böngészők beépített <code>Performance</code> API-ját és egy egyedi mérési logikát használ az adatok gyűjtéséhez.</p>
+<p>A Google adatai szerint ha egy oldal betöltése 1 másodpercről 3-ra nő, a visszafordulási arány (bounce rate) 32%-kal ugrik meg. Ahhoz, hogy optimalizálni tudjunk, először mérnünk kell. Az eszközöm a szerveroldali lekérés közben méri az időket (<code>performance.now()</code>) és a ténylegesen átvitt bájtokat.</p>
 
 <h2>A mérési metódus: TTFB és Load Time</h2>
 <p>Az eszközöm két fő fázisra bontja a mérést:</p>
 <ol>
   <li><strong>TTFB (Time to First Byte):</strong> Ez azt méri, mennyi idő telik el a kérés elküldése és az első bájt megérkezése között. Ez kritikus a szerver válaszidejének megértéséhez.</li>
-  <li><strong>Total Load Time:</strong> A teljes folyamat, amíg a HTML, a képek és a szkriptek betöltődnek és a böngésző alkalmassá válik az interakcióra.</li>
+  <li><strong>Teljes letöltési idő:</strong> Amíg a teljes HTML dokumentum megérkezik, az esetleges átirányításokkal együtt.</li>
 </ol>
 
 <pre><code>// Elméleti példa a mérésre
@@ -3283,18 +3289,18 @@ const fullLoad = performance.now() - start;</code></pre>
 
 <figure class="w-full md:w-[45%] float-none md:float-left md:mr-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800" alt="Data Visualization" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
 
-<h2>A Waterfall (Vízesés) diagram szimulálása</h2>
-<p>Egy igazi profi sebességmérő megmutatja, melyik erőforrás mennyi ideig töltődik. Mivel a böngészők Cross-Origin korlátozásai miatt nem érhetünk el minden részletet külső oldalakról, az eszközöm egy okos szimulációt használ a válaszidők és a fájlméretek alapján, hogy vizualizálja a "vízesés" szerű betöltődést.</p>
+<h2>Erőforrások feltérképezése</h2>
+<p>A letöltött HTML-ből az eszköz megszámolja a külső és inline szkripteket, a stíluslapokat, a képeket és az iframe-eket. Nem szimulál időzítéseket – csak valódi, mért adatokat mutat.</p>
 
-<p>Ez segít a felhasználónak felismerni, ha egy túl nagy kép vagy egy lassú script akadályozza (blokkolja) az oldal megjelenítését.</p>
+<p>Ez segít felismerni, ha egy oldal túl sok szkriptet vagy képet tölt be, ami lassíthatja a megjelenítést.</p>
 
-<h2>Helyi mérés, szerver nélkül</h2>
-<p>Ahogy az SEO ellenőrzőnél, itt is fontos szempont volt, hogy a mérés <strong>szervermentes</strong> legyen. Nem használok külső API-kat (mint a Lighthouse vagy a PageSpeed Insights), így a mérés azonnali, és az adatok soha nem hagyják el a gépedet. Ez lehetővé teszi a fejlesztőknek, hogy gyorsan, "inkognitóban" teszteljenek bármilyen oldalt.</p>
+<h2>Mérés a szerverünkről</h2>
+<p>A böngészők biztonsági szabályai (CORS) miatt egy másik weboldalt közvetlenül nem lehet lemérni, ezért a lekérést egy saját, védett végpont végzi: csak nyilvános címeket enged, szigorú idő- és méretkorláttal. Nem használ külső API-kat (mint a Lighthouse vagy a PageSpeed Insights), és semmit nem ment el.</p>
 
 <p>Használd az eszközt a saját projekteden, és találd meg a szűk keresztmetszeteket!</p>
     `,
     titleEn: "Measuring website speed with modern tools: How my Speed Test works",
-    excerptEn: "You don't always need Lighthouse! Learn how to measure your website's loading speed, resource sizes, and TTFB directly in your browser.",
+    excerptEn: "You don't always need Lighthouse! Learn how to measure your website's loading speed, resource sizes, and TTFB with a single click.",
     categoryEn: "Technical",
     contentEn: `
 <p class="lead">Speed is not just a convenience factor – it is one of the most important pillars of SEO and user experience. I'll show you how I built my own Speed Test tool to help you understand the website loading process.</p>
@@ -3302,13 +3308,13 @@ const fullLoad = performance.now() - start;</code></pre>
 <figure class="w-full md:w-[45%] float-none md:float-right md:ml-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="Web Performance" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
 
 <h2>Why measuring speed is important?</h2>
-<p>According to Google's data, if a page load increases from 1 second to 3, the bounce rate jumps by 32%. To optimize, we must first measure. My tool uses the browser's built-in <code>Performance</code> API and custom measurement logic to collect data.</p>
+<p>According to Google's data, if a page load increases from 1 second to 3, the bounce rate jumps by 32%. To optimize, we must first measure. My tool measures timings (<code>performance.now()</code>) and the actually transferred bytes while fetching the page on the server.</p>
 
 <h2>The measurement method: TTFB and Load Time</h2>
 <p>My tool breaks down the measurement into two main phases:</p>
 <ol>
   <li><strong>TTFB (Time to First Byte):</strong> This measures how much time passes between sending the request and receiving the first byte. This is critical for understanding server response time.</li>
-  <li><strong>Total Load Time:</strong> The entire process until HTML, images, and scripts load and the browser becomes interactive.</li>
+  <li><strong>Total download time:</strong> Until the complete HTML document has arrived, including any redirects.</li>
 </ol>
 
 <pre><code>// Theoretical example for measurement
@@ -3320,13 +3326,13 @@ const fullLoad = performance.now() - start;</code></pre>
 
 <figure class="w-full md:w-[45%] float-none md:float-left md:mr-8 mb-8 mt-2 overflow-hidden rounded-2xl shadow-xl border border-white/10 clear-both md:clear-none"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800" alt="Data Visualization" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700" /></figure>
 
-<h2>Simulating the Waterfall diagram</h2>
-<p>A real pro speed tester shows which resource takes how long to load. Since browser Cross-Origin restrictions prevent us from accessing every detail from external sites, my tool uses a smart simulation based on response times and file sizes to visualize the "waterfall-like" loading.</p>
+<h2>Mapping the resources</h2>
+<p>From the downloaded HTML the tool counts external and inline scripts, stylesheets, images and iframes. It doesn't simulate any timings – it only shows real, measured data.</p>
 
-<p>This helps users recognize if an oversized image or a slow script is hindering (blocking) the page display.</p>
+<p>This helps you spot when a page loads too many scripts or images, which can slow down rendering.</p>
 
-<h2>Local measurement, without a server</h2>
-<p>As with the SEO checker, it was important for the measurement to be <strong>serverless</strong>. I don't use external APIs (like Lighthouse or PageSpeed Insights), so the measurement is immediate, and the data never leaves your computer. This allows developers to quickly test any site "incognito".</p>
+<h2>Measured from our server</h2>
+<p>Browser security rules (CORS) don't allow measuring another website directly, so the request is made by my own protected endpoint: public addresses only, with strict time and size limits. It doesn't use external APIs (like Lighthouse or PageSpeed Insights) and stores nothing.</p>
 
 <p>Use the tool on your own project and find the bottlenecks!</p>
     `

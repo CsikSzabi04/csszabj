@@ -1,71 +1,56 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 interface TypeWriterProps {
-  texts: string[];
+  texts: readonly string[];
   speed?: number;
+  pause?: number;
   className?: string;
   cursorClassName?: string;
 }
 
-export default function TypeWriter({ texts, speed = 80, className = "", cursorClassName = "" }: TypeWriterProps) {
-  const [displayText, setDisplayText] = useState(texts[0] || "");
-  const [textIndex, setTextIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+interface TypingState {
+  index: number;
+  length: number;
+  deleting: boolean;
+}
+
+/** Types each text, pauses, deletes it and moves on to the next one – forever. */
+export default function TypeWriter({ texts, speed = 80, pause = 2500, className = "", cursorClassName = "" }: TypeWriterProps) {
+  // Start with the first text fully written, so the server-rendered HTML is meaningful.
+  const [state, setState] = useState<TypingState>(() => ({ index: 0, length: texts[0]?.length ?? 0, deleting: false }));
+
+  const count = texts.length;
+  const current = count > 0 ? texts[state.index % count] : "";
+  const length = Math.min(state.length, current.length);
 
   useEffect(() => {
-    // Don't run if texts array is empty
-    if (!texts || texts.length === 0) return;
+    if (count === 0) return;
 
-    const currentText = texts[textIndex];
-    
-    const type = () => {
-      if (displayText.length < currentText.length) {
-        setDisplayText(currentText.slice(0, displayText.length + 1));
-        timeoutRef.current = setTimeout(type, speed);
-      } else {
-        // Finished typing, wait then delete or move to next
-        timeoutRef.current = setTimeout(() => {
-          if (textIndex < texts.length - 1) {
-            setTextIndex(textIndex + 1);
-            setDisplayText("");
-          } else {
-            // Start deleting
-            setIsTyping(false);
-          }
-        }, 2500);
-      }
-    };
-
-    const deleteText = () => {
-      if (displayText.length > 0) {
-        setDisplayText(displayText.slice(0, -1));
-        timeoutRef.current = setTimeout(deleteText, speed / 2);
-      } else {
-        // Move to next text
-        setTextIndex((textIndex + 1) % texts.length);
-        setIsTyping(true);
-      }
-    };
-
-    if (isTyping) {
-      timeoutRef.current = setTimeout(type, speed);
+    let next: TypingState;
+    let delay: number;
+    if (!state.deleting && length < current.length) {
+      next = { ...state, length: length + 1 };
+      delay = speed;
+    } else if (!state.deleting) {
+      next = { ...state, length, deleting: true };
+      delay = pause;
+    } else if (length > 0) {
+      next = { ...state, length: length - 1 };
+      delay = speed / 2;
     } else {
-      timeoutRef.current = setTimeout(deleteText, speed / 2);
+      next = { index: (state.index + 1) % count, length: 0, deleting: false };
+      delay = speed * 4;
     }
 
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [textIndex, texts, speed, isTyping, displayText.length]);
+    const timer = setTimeout(() => setState(next), delay);
+    return () => clearTimeout(timer);
+  }, [state, current, length, count, speed, pause]);
 
   return (
-    <span className={className}>
-      {displayText}
+    <span className={className} aria-hidden="true">
+      {current.slice(0, length)}
       <span className={`animate-pulse ${cursorClassName}`}>|</span>
     </span>
   );

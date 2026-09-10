@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { MotionConfig } from "framer-motion";
 import SmoothScroll from "./components/SmoothScroll";
 import NoiseOverlay from "./components/NoiseOverlay";
 import Cursor from "./components/Cursor";
@@ -12,24 +12,30 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import LanguageToggle from "./components/LanguageToggle";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
-  const [showContent, setShowContent] = useState(false);
-
   return (
     <LanguageProvider>
-      <SmoothScroll>
-        <NoiseOverlay />
-        <Cursor />
-        <Startup onComplete={() => setShowContent(true)} />
-        {showContent && (
+      <MotionConfig reducedMotion="user">
+        <SmoothScroll>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100000] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black"
+          >
+            Ugrás a tartalomra
+          </a>
+          <NoiseOverlay />
+          <Cursor />
+          {/* The splash sits on top of the page; the content itself renders immediately
+              (server-rendered HTML, fast LCP, crawlable) instead of waiting for the animation. */}
+          <Startup />
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-grow">{children}</main>
+            <main id="main-content" className="flex-grow">{children}</main>
             <TechMarquee />
             <Footer />
             <LanguageToggle />
           </div>
-        )}
-      </SmoothScroll>
+        </SmoothScroll>
+      </MotionConfig>
     </LanguageProvider>
   );
 }

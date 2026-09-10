@@ -82,7 +82,9 @@ export default function FAQ() {
               className={`bg-[#0a0a0f] rounded-2xl border overflow-hidden transition-colors ${openIndex === index ? 'border-[#9b59b6]/30' : 'border-white/5 hover:border-white/10'}`}
             >
               <button
+                type="button"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                aria-expanded={openIndex === index}
                 className="w-full px-6 sm:px-8 py-5 flex items-center justify-between text-left gap-4"
               >
                 <span className={`font-medium pr-4 transition-colors ${openIndex === index ? 'text-[#9b59b6]' : 'text-white'}`}>{faq.question}</span>

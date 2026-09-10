@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import Projects from "../components/Projects";
 import Services from "../components/Services";
+
+export const metadata: Metadata = {
+  title: "Projektek",
+  description: "Csík Szabolcs Alex webes projektjei és szolgáltatásai: AI platformok, közösségi oldalak, webalkalmazások.",
+  alternates: { canonical: "/projects" },
+};
 
 export default function ProjectsPage() {
   return (

@@ -1,15 +1,10 @@
-"use client";
+import type { Metadata } from "next";
 
-import TechMarquee from "../components/TechMarquee";
+export const metadata: Metadata = {
+  title: "Eszközök",
+  description: "Saját fejlesztésű webes eszközök: QR kód generátor, képtömörítő, SEO ellenőrző, színkontraszt ellenőrző és sebességmérők.",
+};
 
-export default function ToolsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <>
-      {children}
-    </>
-  );
+export default function ToolsLayout({ children }: { children: React.ReactNode }) {
+  return children;
 }

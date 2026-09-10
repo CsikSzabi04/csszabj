@@ -10,9 +10,9 @@ export const personalInfo = {
   birthday: "2004. január 23.",
   github: "https://github.com/csikszabi04",
   linkedin: "https://linkedin.com/in/csszabj",
-  avatar: "https://i.imgur.com/M3iJpBH.png",
-  avatars: "https://i.imgur.com/go8utBV.png",
-  resume: "/resume.pdf",
+  avatar: "/images/avatar.png",
+  avatars: "/images/profile.png",
+  resume: "/Csik_Szabolcs_Alex_CV_FullHD.pdf",
 };
 
 export const skills = {
@@ -184,6 +184,17 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: "debater",
+    title: "Debater - Online Debate Platform",
+    category: "Közösségi Platform",
+    description: "A modern debate platform where users can start discussions, argue their positions, and explore different viewpoints through a clean, responsive interface.",
+    technologies: ["Next.js", "React", "Tailwind CSS", "API"],
+    live: "https://debaterweb.vercel.app/",
+    image: "/debaterweb.png",
+    mobileImage: "/debatermobile.png",
+    featured: true,
+  },
+  {
     id: "dbd-hub",
     title: "Dead by Daylight Community & Builds - DBD Hub",
     category: "Közösségi Portál",
@@ -263,8 +274,8 @@ export const softSkills = [
 ];
 
 export const stats = [
-  { value: "5+", label: "Befejezett Projektek" },
-  { value: "3+", label: "Éve tanulok Webfejleszt" },
-  { value: "5+", label: "Elégedett Ügyfelek" },
-  { value: "200+", label: "Oldal Megtekintések" },
+  { value: "5+", label: "Befejezett Projektek", labelEn: "Completed Projects" },
+  { value: "5+", label: "Éve tanulok webfejlesztést", labelEn: "Years Learning Web Dev" },
+  { value: "5+", label: "Elégedett Ügyfelek", labelEn: "Happy Clients" },
+  { value: "1000+", label: "Oldal Megtekintések", labelEn: "Page Views" },
 ];

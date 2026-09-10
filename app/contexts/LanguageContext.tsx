@@ -1,8 +1,16 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 
-type Language = "hu" | "en";
+export type Language = "hu" | "en";
 
 interface LanguageContextProps {
   language: Language;
@@ -12,7 +20,7 @@ interface LanguageContextProps {
 
 export const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
-const dictionary = {
+const dictionary: Record<Language, Record<string, string>> = {
   hu: {
     // Navigáció
     "nav.about": "Rólam",
@@ -28,7 +36,7 @@ const dictionary = {
     "hero.description": "Olyan webes alkalmazásokat építek, amik túlmutatnak a megszokott dizájnon. Minden pixel és kódsor a prémium felhasználói élményt és a lenyűgöző sebességet szolgálja.",
     "hero.contactBtn": "Kapcsolatfelvétel",
     "hero.projectsBtn": "Munkáim",
-    
+
     // About
     "about.title": "Rólam",
     "about.desc1": "A programozás nem csak a munkám, hanem a szenvedélyem. Mindig is lenyűgözött, hogyan lehet pár sor kóddal olyan rendszereket építeni, ami több ezer ember problémáit oldja meg.",
@@ -38,7 +46,7 @@ const dictionary = {
     "projects.title": "Legjobb Projektjeim",
     "projects.desc": "Számos érdekes kihívással teli projekten dolgoztam az elmúlt években. Íme néhány kiemelt munka, amire a legbüszkébb vagyok.",
     "projects.seeAll": "Összes projekt",
-    
+
     // Blog
     "blog.badge": "Blog",
     "blog.title": "Legújabb Írásaim",
@@ -56,12 +64,12 @@ const dictionary = {
     "contact.email": "Email cím",
     "contact.message": "Üzenet",
     "contact.send": "Küldés",
-    
+
     // Footer
     "footer.rights": "Minden jog fenntartva.",
     "footer.privacy": "Adatvédelmi irányelvek",
     "footer.terms": "Felhasználási feltételek",
-    
+
     "common.loading": "Betöltés..."
   },
   en: {
@@ -79,7 +87,7 @@ const dictionary = {
     "hero.description": "I build web applications that go beyond the usual design. Every pixel and line of code serves premium user experience and blazing fast performance.",
     "hero.contactBtn": "Get In Touch",
     "hero.projectsBtn": "My Work",
-    
+
     // About
     "about.title": "About Me",
     "about.desc1": "Programming isn't just my job, it's my passion. I've always been fascinated by how a few lines of code can build systems that solve problems for thousands of people.",
@@ -89,7 +97,7 @@ const dictionary = {
     "projects.title": "Featured Projects",
     "projects.desc": "I've worked on numerous exciting and challenging projects over the years. Here are some of the works I'm most proud to showcase.",
     "projects.seeAll": "All Projects",
-    
+
     // Blog
     "blog.badge": "Blog",
     "blog.title": "Latest Articles",
@@ -107,49 +115,74 @@ const dictionary = {
     "contact.email": "Email Address",
     "contact.message": "Message",
     "contact.send": "Send Message",
-    
+
     // Footer
     "footer.rights": "All rights reserved.",
     "footer.privacy": "Privacy Policy",
     "footer.terms": "Terms of Service",
-    
+
     "common.loading": "Loading..."
   }
 };
 
-export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-  const [language, setLanguageState] = useState<Language>("hu");
+const STORAGE_KEY = "language";
+const listeners = new Set<() => void>();
+// Used only when localStorage is unavailable (private mode / blocked storage).
+let memoryLanguage: Language | null = null;
+
+function isLanguage(value: unknown): value is Language {
+  return value === "hu" || value === "en";
+}
+
+function readLanguage(): Language {
+  if (memoryLanguage) return memoryLanguage;
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (isLanguage(stored)) return stored;
+  } catch {
+    // storage blocked – fall back to the browser language
+  }
+  return navigator.language?.toLowerCase().startsWith("en") ? "en" : "hu";
+}
+
+function subscribe(onChange: () => void) {
+  listeners.add(onChange);
+  // Keep several open tabs in sync.
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === STORAGE_KEY) onChange();
+  };
+  window.addEventListener("storage", onStorage);
+  return () => {
+    listeners.delete(onChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+// The server always renders Hungarian; the stored preference is applied right after hydration.
+const getServerLanguage = (): Language => "hu";
+
+export const LanguageProvider = ({ children }: { children: ReactNode }) => {
+  const language = useSyncExternalStore(subscribe, readLanguage, getServerLanguage);
 
   useEffect(() => {
-    // Client-side hydration of language
-    const storedLang = localStorage.getItem("language") as Language;
-    if (storedLang === "hu" || storedLang === "en") {
-      setLanguageState(storedLang);
-    } else {
-      // Default browser language handling
-      if (navigator.language.startsWith("en")) {
-        setLanguageState("en");
-      }
+    document.documentElement.lang = language;
+  }, [language]);
+
+  const setLanguage = useCallback((lang: Language) => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, lang);
+      memoryLanguage = null;
+    } catch {
+      memoryLanguage = lang;
     }
+    listeners.forEach((listener) => listener());
   }, []);
 
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    localStorage.setItem("language", lang);
-    // Beállítunk egy sütit is, hogy a server componentek (pl blog API) is lássák
-    document.cookie = `NEXT_LOCALE=${lang}; path=/; max-age=31536000`;
-  };
+  const t = useCallback((key: string): string => dictionary[language][key] ?? key, [language]);
 
-  const t = (key: string): string => {
-    // @ts-ignore
-    return dictionary[language][key] || key;
-  };
+  const value = useMemo(() => ({ language, setLanguage, t }), [language, setLanguage, t]);
 
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 };
 
 export const useLanguage = () => {

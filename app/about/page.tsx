@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import About from "../components/About";
 import Experience from "../components/Experience";
+
+export const metadata: Metadata = {
+  title: "Rólam",
+  description: "Ismerd meg Csík Szabolcs Alex full stack fejlesztőt: tapasztalat, tanulmányok és készségek.",
+  alternates: { canonical: "/about" },
+};
 
 export default function AboutPage() {
   return (

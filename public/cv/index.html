@@ -11,7 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
         @page {
             size: A4;
@@ -919,7 +919,25 @@
                         <!-- LEFT EXPERIENCE COLUMN -->
                         <div class="timeline">
                             <div class="tl-item">
-                                <span class="tl-date" data-en="2024 – Present">2024 – Jelenleg</span>
+                                <span class="tl-date" data-en="September 2026 – Present">2026. szeptember –
+                                    Jelenleg</span>
+                                <div class="tl-title" data-en="Dual-Study Computer Engineering Student">Duális
+                                    Mérnökinformatikus Hallgató</div>
+                                <div class="tl-sub" data-en="Phoenix Mechano – IT Department">Phoenix Mechano – IT
+                                    részleg</div>
+                                <ul>
+                                    <li><span data-en="Dual training programme with Neumann János University, GAMF Faculty">Duális
+                                            képzés a Neumann János Egyetem GAMF Karával</span></li>
+                                    <li><span data-en="Learning and understanding the company's IT systems">A vállalati IT
+                                            rendszerek megismerése és értelmezése</span></li>
+                                    <li><span data-en="Active Directory user onboarding">Active Directory
+                                            felhasználó-beléptetés</span></li>
+                                    <li><span data-en="Preparing for web JavaScript development starting next semester">Felkészülés
+                                            a következő félévben induló webes JavaScript fejlesztésre</span></li>
+                                </ul>
+                            </div>
+                            <div class="tl-item">
+                                <span class="tl-date">2025 – 2026</span>
                                 <div class="tl-title" data-en="Video Tutorial Creator">Videós Tananyag Készítő</div>
                                 <div class="tl-sub">Raunder</div>
                                 <ul>
@@ -933,6 +951,10 @@
                                             előkészítése, szövegírás, felvétel és leadás</span></li>
                                 </ul>
                             </div>
+                        </div>
+
+                        <!-- RIGHT EXPERIENCE COLUMN -->
+                        <div class="timeline">
                             <div class="tl-item">
                                 <span class="tl-date">2023 – 2025</span>
                                 <div class="tl-title" data-en="Programming Instructor">Programozási Oktató</div>
@@ -948,10 +970,6 @@
                                     <li><span data-en="Mentoring student projects">Diákprojektek mentorálása</span></li>
                                 </ul>
                             </div>
-                        </div>
-
-                        <!-- RIGHT EXPERIENCE COLUMN -->
-                        <div class="timeline">
                             <div class="tl-item">
                                 <span class="tl-date" data-en="August 2025 – January 2026">2025. augusztus – 2026.
                                     január</span>
@@ -964,19 +982,6 @@
                                             és termékismeret</span></li>
                                     <li><span data-en="Collecting market research data">Piackutatási adatok
                                             gyűjtése</span></li>
-                                </ul>
-                            </div>
-                            <div class="tl-item">
-                                <span class="tl-date" data-en="Summer 2022">2022. nyár</span>
-                                <div class="tl-title" data-en="Student Worker / Liaison">Diákmunkás / Kapcsolattartó</div>
-                                <div class="tl-sub">Hirös Ízek Kft.</div>
-                                <ul>
-                                    <li><span data-en="Supporting administrative tasks">Adminisztratív feladatok
-                                            támogatása</span></li>
-                                    <li><span data-en="Coordinating procurement processes">Beszerzési folyamatok
-                                            koordinációja</span></li>
-                                    <li><span data-en="Reporting and documentation">Riportkészítés és
-                                            dokumentáció</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -1098,11 +1103,11 @@
     </div>
 
     <!-- ===== Libraries ===== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-        const AVATAR_URL = 'https://i.imgur.com/M3iJpBH.png';
+        const AVATAR_URL = '/images/avatar.png';
         document.getElementById('avatar').style.backgroundImage = `url("${AVATAR_URL}")`;
 
         /* ---------- Date ---------- */
@@ -1273,7 +1278,7 @@
                     document.documentElement.scrollHeight,
                     card ? card.offsetHeight + 160 : 0
                 );
-                parent.postMessage({ type: 'cv-height', height: h }, '*');
+                if (parent !== window) parent.postMessage({ type: 'cv-height', height: h }, window.location.origin);
             }
             window.addEventListener('load', postHeight);
             window.addEventListener('resize', postHeight);

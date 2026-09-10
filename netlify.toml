@@ -3,14 +3,8 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "20"
+  # Node 20 is end-of-life; 22 is a supported LTS release.
+  NODE_VERSION = "22"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-# Környezeti változók contextusok szerint
-[context.production.environment]
-  NODE_ENV = "production"
-
-[context.deploy-preview.environment]
-  NODE_ENV = "development"

@@ -24,7 +24,7 @@ export default function Experience() {
           <div>
             <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
               <span className="w-10 h-10 bg-blue-900/30 rounded-xl flex items-center justify-center border border-blue-500/20">
-                <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </span>
@@ -37,18 +37,18 @@ export default function Experience() {
 
               {/* Timeline Items */}
               <div className="space-y-8">
-                {experience.map((exp, index) => (
+                {experience.map((exp) => (
                   <div key={exp.id} className="relative pl-10 sm:pl-12">
                     {/* Timeline Dot */}
                     <div className={`absolute left-0 top-2 w-10 h-10 rounded-full flex items-center justify-center ${
-                      exp.current 
-                        ? "bg-blue-600 shadow-lg shadow-blue-500/30" 
+                      exp.current
+                        ? "bg-blue-600 shadow-lg shadow-blue-500/30"
                         : "bg-[#171717] border-4 border-blue-900/30"
                     }`}>
                       {exp.current ? (
                         <span className="w-3 h-3 bg-white rounded-full animate-pulse" />
                       ) : (
-                        <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       )}
@@ -58,8 +58,8 @@ export default function Experience() {
                     <div className="bg-[#171717] rounded-2xl p-5 sm:p-8 border border-white/5 hover:border-blue-500/30 transition-all duration-300">
                       <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          exp.current 
-                            ? "bg-blue-900/30 text-blue-400" 
+                          exp.current
+                            ? "bg-blue-900/30 text-blue-400"
                             : "bg-white/5 text-zinc-400"
                         }`}>
                           {exp.date}
@@ -70,7 +70,7 @@ export default function Experience() {
                           </span>
                         )}
                       </div>
-                      
+
                       <h4 className="text-lg font-bold text-white mb-1">
                         {exp.title}
                       </h4>
@@ -80,7 +80,7 @@ export default function Experience() {
                       <p className="text-sm text-zinc-500 mb-4">
                         {exp.location}
                       </p>
-                      
+
                       <ul className="space-y-2">
                         {exp.description.map((item, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-zinc-400">
@@ -100,8 +100,7 @@ export default function Experience() {
           <div>
             <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
               <span className="w-10 h-10 bg-emerald-900/30 rounded-xl flex items-center justify-center border border-emerald-500/20">
-                <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
+                <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14v7" />
                 </svg>
@@ -115,11 +114,11 @@ export default function Experience() {
 
               {/* Timeline Items */}
               <div className="space-y-8">
-                {education.map((edu, index) => (
+                {education.map((edu) => (
                   <div key={edu.id} className="relative pl-10 sm:pl-12">
                     {/* Timeline Dot */}
                     <div className="absolute left-0 top-2 w-10 h-10 rounded-full flex items-center justify-center bg-[#171717] border-4 border-emerald-900/30">
-                      <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
@@ -129,7 +128,7 @@ export default function Experience() {
                       <span className="px-3 py-1 bg-emerald-900/30 text-emerald-400 rounded-full text-xs font-medium mb-3 inline-block">
                         {edu.date}
                       </span>
-                      
+
                       <h4 className="text-lg font-bold text-white mb-1">
                         {edu.title}
                       </h4>
@@ -139,7 +138,7 @@ export default function Experience() {
                       <p className="text-sm text-zinc-500 mb-4">
                         {edu.location}
                       </p>
-                      
+
                       <ul className="space-y-2">
                         {edu.description.map((item, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-zinc-400">

@@ -1,12 +1,13 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
+import { SITE_URL } from "./lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: '/private/',
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/api/"],
     },
-    sitemap: 'https://csszabj.netlify.app/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
