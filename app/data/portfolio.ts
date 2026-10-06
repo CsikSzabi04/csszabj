@@ -195,6 +195,18 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: "vharaz",
+    title: "Alexander x Vharaz - Dark Fantasy Webcomic",
+    category: "Webképregény",
+    description: "An original dark fantasy webcomic with an immersive, book-like reader featuring realistic page-flip animations and a cinematic, atmospheric design.",
+    technologies: ["React", "Vite", "PageFlip", "JavaScript"],
+    live: "https://vharazcomic.vercel.app/",
+    github: "https://github.com/CsikSzabi04/Vharaz_comic",
+    image: "/vharaz.png",
+    mobileImage: "/vharaz_mobile.png",
+    featured: true,
+  },
+  {
     id: "dbd-hub",
     title: "Dead by Daylight Community & Builds - DBD Hub",
     category: "Közösségi Portál",
