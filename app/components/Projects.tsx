@@ -46,28 +46,19 @@ export default function Projects() {
 
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
-          <span className="inline-block px-5 py-2.5 bg-blue-900/20 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            {en ? "My Projects" : "Projektjeim"}
-          </span>
+        <div className="enter-up text-center mb-20">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6">
             {en ? "Selected Works" : "Legjobb Projektjeim"}
           </h2>
           <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
             {en ? "A showcase of my premium projects featuring modern tech stacks and creative solutions." : "A legbüszkébb munkáim, amelyek a legnagyobb hatást érték el."}
           </p>
-        </motion.div>
+        </div>
 
         {/* Featured Projects Stack */}
         <div className="flex flex-col gap-12 lg:gap-24 mb-20">
           {featuredProjects.map((project, index) => (
-            <FeaturedProjectCard key={project.id} project={project} index={index} viewLabel={en ? "View Project" : "Megtekintés"} />
+            <FeaturedProjectCard key={project.id} project={project} index={index} priority={index === 0} viewLabel={en ? "View Project" : "Megtekintés"} />
           ))}
         </div>
 
@@ -119,7 +110,7 @@ export default function Projects() {
                     </div>
 
                     <h4 className="text-2xl font-bold text-white mb-3">{project.title}</h4>
-                    <p className="text-zinc-400 text-sm mb-6 flex-grow">{project.description}</p>
+                    <p className="text-zinc-400 text-sm mb-6 flex-grow">{en ? project.description : project.descriptionHu ?? project.description}</p>
 
                     <div className="flex items-center justify-between gap-4 mt-auto">
                       <div className="flex flex-wrap gap-2">

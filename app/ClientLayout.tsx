@@ -10,18 +10,26 @@ import Footer from "./components/Footer";
 import TechMarquee from "./components/TechMarquee";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import LanguageToggle from "./components/LanguageToggle";
+import { useLanguage } from "./contexts/LanguageContext";
+
+function SkipLink() {
+  const { language } = useLanguage();
+  return (
+    <a
+      href="#main-content"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100000] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black"
+    >
+      {language === "en" ? "Skip to content" : "Ugrás a tartalomra"}
+    </a>
+  );
+}
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
     <LanguageProvider>
       <MotionConfig reducedMotion="user">
         <SmoothScroll>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100000] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black"
-          >
-            Ugrás a tartalomra
-          </a>
+          <SkipLink />
           <NoiseOverlay />
           <Cursor />
           {/* The splash sits on top of the page; the content itself renders immediately

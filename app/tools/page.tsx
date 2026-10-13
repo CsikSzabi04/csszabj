@@ -3,12 +3,15 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { QrCode, Image as ImageIcon, Search, ArrowRight, Beaker, Gauge, Activity } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const tools = [
   {
     id: "qr",
     title: "QR Kód Generátor",
+    titleEn: "QR Code Generator",
     description: "Professzionális QR kódok készítése egyedi színekkel, mérettel és hibajavítási szinttel.",
+    descriptionEn: "Create professional QR codes with custom colors, size and error correction level.",
     icon: QrCode,
     color: "#9b59b6",
     link: "/tools/qr"
@@ -16,7 +19,9 @@ const tools = [
   {
     id: "compressor",
     title: "Képtömörítő",
+    titleEn: "Image Compressor",
     description: "Szabályozható mértékű képtömörítés közvetlenül a böngészőben, feltöltés nélkül.",
+    descriptionEn: "Adjustable image compression right in your browser, with no upload.",
     icon: ImageIcon,
     color: "#00a8ff",
     link: "/tools/compressor"
@@ -24,7 +29,9 @@ const tools = [
   {
     id: "seo",
     title: "SEO Ellenőrző",
+    titleEn: "SEO Checker",
     description: "Weboldalak metaadatainak, címsorainak és technikai SEO beállításainak elemzése.",
+    descriptionEn: "Analyze a website's metadata, headings and technical SEO setup.",
     icon: Search,
     color: "#00ff41",
     link: "/tools/seo"
@@ -32,7 +39,9 @@ const tools = [
   {
     id: "contrast",
     title: "Színkontraszt Ellenőrző",
+    titleEn: "Color Contrast Checker",
     description: "Webes színpárok kontrasztarányának ellenőrzése akadálymentességi szempontból (WCAG).",
+    descriptionEn: "Check the contrast ratio of web color pairs for accessibility (WCAG).",
     icon: Beaker,
     color: "#ff2d2d",
     link: "/tools/contrast"
@@ -40,7 +49,9 @@ const tools = [
   {
     id: "speed",
     title: "Sebességteszt",
+    titleEn: "Speed Test",
     description: "Weboldalak válaszidejének, letöltési méretének és erőforrásainak valós mérése.",
+    descriptionEn: "Real measurement of a website's response time, download size and resources.",
     icon: Gauge,
     color: "#f39c12",
     link: "/tools/speed"
@@ -48,7 +59,9 @@ const tools = [
   {
     id: "netspeed",
     title: "Internet Sebességmérő",
+    titleEn: "Internet Speed Test",
     description: "Hálózat letöltési sebességének és stabilitásának tesztelése a böngészőben.",
+    descriptionEn: "Test your network's download speed and stability in the browser.",
     icon: Activity,
     color: "#00ffff",
     link: "/tools/netspeed"
@@ -56,6 +69,9 @@ const tools = [
 ];
 
 export default function ToolsPage() {
+  const { language } = useLanguage();
+  const en = language === "en";
+
   return (
     <div className="min-h-screen bg-[#050508] text-white pt-32 pb-0 px-4 relative overflow-hidden">
       {/* Background HUD Elements */}
@@ -74,16 +90,13 @@ export default function ToolsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#9b59b6]/10 border border-[#9b59b6]/20 rounded-full text-[#9b59b6] text-sm font-mono mb-6">
-            <Beaker className="w-4 h-4" aria-hidden="true" />
-            <span>LABORATÓRIUM // EXPERIMENTAL</span>
-          </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-            Saját <span className="text-[#9b59b6] drop-shadow-[0_0_15px_rgba(155,89,182,0.5)]">Gyártásaim</span>
+            {en ? "My " : "Saját "}<span className="text-[#9b59b6] drop-shadow-[0_0_15px_rgba(155,89,182,0.5)]">{en ? "Creations" : "Gyártásaim"}</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Saját fejlesztésű eszközeim a mindennapi munka megkönnyítésére.
-            A feldolgozás a böngésződben történik; az URL-alapú eszközök csak a megadott oldal nyilvános HTML-jét kérik le a szerveren keresztül.
+            {en
+              ? "Tools I built myself to make everyday work easier. Processing happens in your browser; the URL-based tools only fetch the public HTML of the page you enter, through the server."
+              : "Saját fejlesztésű eszközeim a mindennapi munka megkönnyítésére. A feldolgozás a böngésződben történik; az URL-alapú eszközök csak a megadott oldal nyilvános HTML-jét kérik le a szerveren keresztül."}
           </p>
         </motion.div>
 
@@ -111,12 +124,12 @@ export default function ToolsPage() {
                     <tool.icon className="w-8 h-8" aria-hidden="true" />
                   </div>
 
-                  <h2 className="text-xl font-bold mb-3 group-hover:text-white transition-colors">{tool.title}</h2>
+                  <h2 className="text-xl font-bold mb-3 group-hover:text-white transition-colors">{en ? tool.titleEn : tool.title}</h2>
 
-                  <p className="text-gray-500 text-sm leading-relaxed mb-6">{tool.description}</p>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-6">{en ? tool.descriptionEn : tool.description}</p>
 
                   <div className="flex items-center gap-2 text-sm font-mono" style={{ color: tool.color }}>
-                    <span>INDÍTÁS</span>
+                    <span>{en ? "LAUNCH" : "INDÍTÁS"}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                   </div>
                 </div>

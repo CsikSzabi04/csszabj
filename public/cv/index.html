@@ -1103,8 +1103,6 @@
     </div>
 
     <!-- ===== Libraries ===== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         const AVATAR_URL = '/images/avatar.png';
@@ -1134,6 +1132,9 @@
             const next = document.documentElement.getAttribute('data-lang') === 'en' ? 'hu' : 'en';
             setLang(next);
             showToast(next === 'en' ? 'Switched to English' : 'Átváltva magyarra');
+            if (window.parent !== window) {
+                window.parent.postMessage({ type: 'cv-lang', lang: next }, window.location.origin);
+            }
         }
 
         /* ---------- Toast ---------- */
@@ -1144,6 +1145,28 @@
             t.classList.add('show');
             clearTimeout(toastTimer);
             toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+        }
+
+        /* ---------- Export libraries: loaded on first use, not on every page view ---------- */
+        const EXPORT_LIBS = {
+            html2canvas: { src: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', integrity: 'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H' },
+            jspdf: { src: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', integrity: 'sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk' }
+        };
+        const libLoads = {};
+        function loadLib(name) {
+            if (!libLoads[name]) {
+                libLoads[name] = new Promise((resolve, reject) => {
+                    const el = document.createElement('script');
+                    el.src = EXPORT_LIBS[name].src;
+                    el.integrity = EXPORT_LIBS[name].integrity;
+                    el.crossOrigin = 'anonymous';
+                    el.referrerPolicy = 'no-referrer';
+                    el.onload = resolve;
+                    el.onerror = () => { delete libLoads[name]; reject(new Error('Could not load ' + name)); };
+                    document.head.appendChild(el);
+                });
+            }
+            return libLoads[name];
         }
 
         /* ---------- Wait for fonts + avatar before capturing ---------- */
@@ -1158,7 +1181,7 @@
         }
 
         async function renderCanvas() {
-            await ensureAssets();
+            await Promise.all([loadLib('html2canvas'), ensureAssets()]);
             const el = document.getElementById('resume-content');
             return html2canvas(el, {
                 scale: 3,
@@ -1186,7 +1209,7 @@
                 const el = document.getElementById('resume-content');
                 const w = el.offsetWidth;
                 const h = el.offsetHeight;
-                const canvas = await renderCanvas();
+                const [canvas] = await Promise.all([renderCanvas(), loadLib('jspdf')]);
                 const imgData = canvas.toDataURL('image/jpeg', 0.95);
 
                 const { jsPDF } = window.jspdf;
@@ -1313,6 +1336,20 @@
                 } catch (err) { /* cross-origin or detached — ignore */ }
             }
             window.addEventListener('mousemove', forwardMouse);
+
+            // ----- Language sync: follow the site's language switch (same origin only). -----
+            function applyLang(lang) {
+                if ((lang === 'hu' || lang === 'en') && document.documentElement.getAttribute('data-lang') !== lang) {
+                    setLang(lang);
+                    setTimeout(postHeight, 50);
+                }
+            }
+            window.addEventListener('message', function (e) {
+                if (e.origin !== window.location.origin || e.source !== window.parent) return;
+                var d = e.data;
+                if (d && d.type === 'cv-set-lang') applyLang(d.lang);
+            });
+            try { applyLang(localStorage.getItem('language')); } catch (err) { /* storage blocked */ }
         })();
     </script>
 </body>

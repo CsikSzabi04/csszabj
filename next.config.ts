@@ -39,13 +39,20 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   images: {
+    // The default lists generate up to 15 widths per image (including 3840px), which bloats the
+    // srcset in the HTML and makes the optimizer resize huge screenshots for no visible gain.
+    deviceSizes: [640, 960, 1280, 1920],
+    imageSizes: [128, 256, 384],
     // Local images only without query strings, and remote images only in the exact form the
     // blog uses, so nobody can flood the optimizer (and its cache) with endless URL variants.
     localPatterns: [{ pathname: "/**", search: "" }],
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/photo-*", search: "?w=1200" },
     ],
-    minimumCacheTTL: 60 * 60 * 24 * 30,
+    // Kept short on purpose: optimized copies are cached by URL, so with a long TTL a replaced
+    // image (same file name in /public) keeps being served in its old version for weeks.
+    // After the TTL the server only compares the source's ETag, and browsers revalidate with a 304.
+    minimumCacheTTL: 60,
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];

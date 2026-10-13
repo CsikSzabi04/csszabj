@@ -1,21 +1,24 @@
 "use client";
 
 import { experience, education } from "../data/portfolio";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function Experience() {
+  const { language } = useLanguage();
+  const en = language === "en";
+
   return (
     <section id="experience" className="section relative">
       <div className="container-custom">
         {/* Section Header */}
         <div className="text-center mb-20">
-          <span className="inline-block px-5 py-2.5 bg-blue-900/30 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            Tapasztalat & Tanulmányok
-          </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
-            Eddigi Utam
+            {en ? "My Journey So Far" : "Eddigi Utam"}
           </h2>
           <p className="text-base sm:text-lg text-zinc-500 max-w-2xl mx-auto leading-relaxed px-4">
-            A szakmai tapasztalataim és tanulmányaim, amelyek hozzájárultak a fejlődésemhez.
+            {en
+              ? "My professional experience and studies that have contributed to my growth."
+              : "A szakmai tapasztalataim és tanulmányaim, amelyek hozzájárultak a fejlődésemhez."}
           </p>
         </div>
 
@@ -28,7 +31,7 @@ export default function Experience() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </span>
-              Szakmai Tapasztalat
+              {en ? "Professional Experience" : "Szakmai Tapasztalat"}
             </h3>
 
             <div className="relative">
@@ -62,27 +65,27 @@ export default function Experience() {
                             ? "bg-blue-900/30 text-blue-400"
                             : "bg-white/5 text-zinc-400"
                         }`}>
-                          {exp.date}
+                          {en ? exp.dateEn : exp.date}
                         </span>
                         {exp.current && (
                           <span className="px-3 py-1 bg-emerald-900/30 text-emerald-400 rounded-full text-xs font-medium">
-                            Jelenlegi
+                            {en ? "Current" : "Jelenlegi"}
                           </span>
                         )}
                       </div>
 
                       <h4 className="text-lg font-bold text-white mb-1">
-                        {exp.title}
+                        {en ? exp.titleEn : exp.title}
                       </h4>
                       <p className="text-blue-400 font-medium mb-3">
-                        {exp.company}
+                        {en && "companyEn" in exp ? exp.companyEn : exp.company}
                       </p>
                       <p className="text-sm text-zinc-500 mb-4">
                         {exp.location}
                       </p>
 
                       <ul className="space-y-2">
-                        {exp.description.map((item, idx) => (
+                        {(en ? exp.descriptionEn : exp.description).map((item, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-zinc-400">
                             <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
                             {item}
@@ -105,7 +108,7 @@ export default function Experience() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14v7" />
                 </svg>
               </span>
-              Tanulmányok
+              {en ? "Education" : "Tanulmányok"}
             </h3>
 
             <div className="relative">
@@ -126,21 +129,21 @@ export default function Experience() {
                     {/* Content Card */}
                     <div className="bg-[#171717] rounded-2xl p-5 sm:p-8 border border-white/5 hover:border-emerald-500/30 transition-all duration-300">
                       <span className="px-3 py-1 bg-emerald-900/30 text-emerald-400 rounded-full text-xs font-medium mb-3 inline-block">
-                        {edu.date}
+                        {en ? edu.dateEn : edu.date}
                       </span>
 
                       <h4 className="text-lg font-bold text-white mb-1">
-                        {edu.title}
+                        {en ? edu.titleEn : edu.title}
                       </h4>
                       <p className="text-emerald-400 font-medium mb-1">
-                        {edu.school}
+                        {en ? edu.schoolEn : edu.school}
                       </p>
                       <p className="text-sm text-zinc-500 mb-4">
                         {edu.location}
                       </p>
 
                       <ul className="space-y-2">
-                        {edu.description.map((item, idx) => (
+                        {(en ? edu.descriptionEn : edu.description).map((item, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-zinc-400">
                             <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0" />
                             {item}

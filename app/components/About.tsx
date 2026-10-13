@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { personalInfo, softSkills, languages } from "../data/portfolio";
 import { useLanguage } from "../contexts/LanguageContext";
+import { enterDelay } from "../lib/enter";
 
 export default function About() {
   const { language } = useLanguage();
@@ -11,8 +12,8 @@ export default function About() {
 
   const quickInfo = [
     { icon: "📧", label: "Email", value: personalInfo.email },
-    { icon: "📍", label: en ? "Location" : "Helyszín", value: personalInfo.location },
-    { icon: "🎂", label: en ? "Born" : "Született", value: en ? "January 23, 2004" : personalInfo.birthday },
+    { icon: "📍", label: en ? "Location" : "Helyszín", value: en ? personalInfo.locationEn : personalInfo.location },
+    { icon: "🎂", label: en ? "Born" : "Született", value: en ? personalInfo.birthdayEn : personalInfo.birthday },
     { icon: "💼", label: en ? "Status" : "Státusz", value: en ? "Available" : "Elérhető" },
   ];
 
@@ -43,33 +44,18 @@ export default function About() {
 
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
-          <span className="inline-block px-5 py-2.5 bg-blue-900/20 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            {en ? "About Me" : "Rólam"}
-          </span>
+        <div className="enter-up text-center mb-20">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             {en ? "Get To Know Me!" : "Ismerj Meg!"}
           </h2>
           <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
             {en ? "A passionate full stack developer who enjoys solving complex problems." : "Szenvedélyes full stack fejlesztő, aki élvezi a komplex problémák megoldását."}
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Left Column - Profile Image & Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
+          <div className="enter-up space-y-8">
             <div className="relative group">
               <div className="absolute -inset-4 bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-emerald-600/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative rounded-2xl overflow-hidden border border-white/10">
@@ -120,16 +106,10 @@ export default function About() {
                 </motion.div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Right Column - Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
+          <div style={enterDelay(0.1)} className="enter-up space-y-8">
             <div className="bg-[#0d0d0d] rounded-2xl p-6 sm:p-8 border border-white/5">
               <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                 <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
@@ -172,7 +152,7 @@ export default function About() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
-                    <span className="text-sm text-zinc-300">{skill.name}</span>
+                    <span className="text-sm text-zinc-300">{en ? skill.nameEn : skill.name}</span>
                   </motion.div>
                 ))}
               </div>
@@ -195,7 +175,7 @@ export default function About() {
                     className="bg-[#0d0d0d] rounded-xl p-4 border border-white/5"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-semibold text-white">{lang.name}</span>
+                      <span className="font-semibold text-white">{en ? lang.nameEn : lang.name}</span>
                       <span className="px-3 py-1 bg-blue-900/20 text-blue-400 rounded-full text-xs">
                         {lang.level}
                       </span>
@@ -213,7 +193,7 @@ export default function About() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

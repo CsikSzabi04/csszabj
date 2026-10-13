@@ -11,7 +11,6 @@ const NAV_ITEMS = [
   { href: "/about", key: "nav.about" },
   { href: "/projects", key: "nav.projects" },
   { href: "/blog", key: "nav.blog" },
-  { href: "/contact", key: "nav.contact" },
   { href: "/cv", key: "nav.cv" },
 ] as const;
 
@@ -19,7 +18,8 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const en = language === "en";
 
   useEffect(() => {
     let frame = 0;
@@ -74,7 +74,7 @@ export default function Header() {
             </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8 mr-4" aria-label="Fő navigáció">
+          <nav className="hidden lg:flex items-center gap-8 mr-4" aria-label={en ? "Main navigation" : "Fő navigáció"}>
             {NAV_ITEMS.map((item) => {
               const active = isActive(item.href);
               return (
@@ -106,7 +106,7 @@ export default function Header() {
               type="button"
               className="lg:hidden p-2 text-white hover:text-[#9b59b6] transition-colors rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-[#9b59b6]/60"
               onClick={() => setIsMobileMenuOpen((open) => !open)}
-              aria-label={isMobileMenuOpen ? "Menü bezárása" : "Menü megnyitása"}
+              aria-label={isMobileMenuOpen ? (en ? "Close menu" : "Menü bezárása") : (en ? "Open menu" : "Menü megnyitása")}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
             >
@@ -122,7 +122,7 @@ export default function Header() {
           {isMobileMenuOpen && (
             <motion.nav
               id="mobile-menu"
-              aria-label="Mobil navigáció"
+              aria-label={en ? "Mobile navigation" : "Mobil navigáció"}
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}

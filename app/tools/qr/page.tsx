@@ -6,6 +6,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { ArrowLeft, Download, RefreshCw, Palette, Type } from "lucide-react";
 import Link from "next/link";
 import { SITE_URL } from "../../lib/site";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 type ErrorLevel = "L" | "M" | "Q" | "H";
 
@@ -16,6 +17,9 @@ const CAPACITY_BYTES: Record<ErrorLevel, number> = { L: 2953, M: 2331, Q: 1663, 
 const PREVIEW_SIZE = 256;
 
 export default function QRGenerator() {
+  const { language } = useLanguage();
+  const en = language === "en";
+  const locale = en ? "en-US" : "hu-HU";
   const [text, setText] = useState(SITE_URL);
   const [bgColor, setBgColor] = useState("#ffffff");
   const [fgColor, setFgColor] = useState("#000000");
@@ -74,10 +78,10 @@ export default function QRGenerator() {
       <div className="container-custom max-w-5xl relative z-10">
         <Link href="/tools" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#9b59b6] transition-colors mb-8 group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-          <span className="font-mono text-sm uppercase tracking-widest">Vissza a Laborba</span>
+          <span className="font-mono text-sm uppercase tracking-widest">{en ? "Back to the Lab" : "Vissza a Laborba"}</span>
         </Link>
 
-        <h1 className="sr-only">QR kód generátor</h1>
+        <h1 className="sr-only">{en ? "QR code generator" : "QR kód generátor"}</h1>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Controls */}
@@ -91,12 +95,12 @@ export default function QRGenerator() {
                 id="qr-text"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="Írj be egy URL-t vagy szöveget..."
+                placeholder={en ? "Enter a URL or text..." : "Írj be egy URL-t vagy szöveget..."}
                 maxLength={4000}
                 className={`w-full bg-[#050508] border rounded-xl p-4 text-white focus:outline-none transition-all placeholder:text-gray-700 min-h-[120px] font-mono text-sm ${isTooLong ? "border-red-500/60" : "border-white/10 focus:border-[#9b59b6]/50"}`}
               />
               <p className={`mt-2 text-xs font-mono ${isTooLong ? "text-red-400" : "text-gray-600"}`}>
-                {byteLength} / {capacity} byte{isTooLong ? " – túl hosszú ehhez a hibajavítási szinthez" : ""}
+                {byteLength.toLocaleString(locale)} / {capacity.toLocaleString(locale)} {en ? "bytes" : "byte"}{isTooLong ? (en ? " – too long for this error correction level" : " – túl hosszú ehhez a hibajavítási szinthez") : ""}
               </p>
             </div>
 
@@ -108,14 +112,14 @@ export default function QRGenerator() {
 
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="qr-bg" className="block text-gray-500 text-xs font-mono uppercase mb-2">Háttérszín</label>
+                  <label htmlFor="qr-bg" className="block text-gray-500 text-xs font-mono uppercase mb-2">{en ? "Background Color" : "Háttérszín"}</label>
                   <div className="flex items-center gap-3">
                     <input id="qr-bg" type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="w-10 h-10 bg-transparent border-none cursor-pointer" />
                     <span className="text-sm font-mono text-gray-400">{bgColor}</span>
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="qr-fg" className="block text-gray-500 text-xs font-mono uppercase mb-2">Mintázat Színe</label>
+                  <label htmlFor="qr-fg" className="block text-gray-500 text-xs font-mono uppercase mb-2">{en ? "Pattern Color" : "Mintázat Színe"}</label>
                   <div className="flex items-center gap-3">
                     <input id="qr-fg" type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="w-10 h-10 bg-transparent border-none cursor-pointer" />
                     <span className="text-sm font-mono text-gray-400">{fgColor}</span>
@@ -125,7 +129,7 @@ export default function QRGenerator() {
 
               <div className="mt-8 space-y-6">
                 <div>
-                  <label htmlFor="qr-size" className="block text-gray-500 text-xs font-mono uppercase mb-2">Letöltési méret ({size}px)</label>
+                  <label htmlFor="qr-size" className="block text-gray-500 text-xs font-mono uppercase mb-2">{en ? "Download Size" : "Letöltési méret"} ({size}px)</label>
                   <input
                     id="qr-size"
                     type="range"
@@ -139,7 +143,7 @@ export default function QRGenerator() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span id="qr-margin-label" className="text-gray-500 text-xs font-mono uppercase">Fehér margó</span>
+                  <span id="qr-margin-label" className="text-gray-500 text-xs font-mono uppercase">{en ? "White Margin" : "Fehér margó"}</span>
                   <button
                     type="button"
                     role="switch"
@@ -153,8 +157,8 @@ export default function QRGenerator() {
                 </div>
 
                 <div>
-                  <span className="block text-gray-500 text-xs font-mono uppercase mb-2">Hibajavítási szint</span>
-                  <div className="flex gap-2" role="radiogroup" aria-label="Hibajavítási szint">
+                  <span className="block text-gray-500 text-xs font-mono uppercase mb-2">{en ? "Error Correction Level" : "Hibajavítási szint"}</span>
+                  <div className="flex gap-2" role="radiogroup" aria-label={en ? "Error correction level" : "Hibajavítási szint"}>
                     {LEVELS.map((l) => (
                       <button
                         key={l}
@@ -186,12 +190,12 @@ export default function QRGenerator() {
                     fgColor={fgColor}
                     level={level}
                     marginSize={includeMargin ? 4 : 0}
-                    title="Generált QR kód"
+                    title={en ? "Generated QR code" : "Generált QR kód"}
                     className="mx-auto"
                   />
                 ) : (
                   <div className="flex items-center justify-center text-center text-sm text-gray-500 font-mono" style={{ width: PREVIEW_SIZE, height: PREVIEW_SIZE }}>
-                    {isEmpty ? "Írj be szöveget a QR kódhoz" : "A szöveg túl hosszú"}
+                    {isEmpty ? (en ? "Enter text for the QR code" : "Írj be szöveget a QR kódhoz") : en ? "The text is too long" : "A szöveg túl hosszú"}
                   </div>
                 )}
               </div>
@@ -209,12 +213,12 @@ export default function QRGenerator() {
                 className="flex-1 flex items-center justify-center gap-2 bg-[#9b59b6] hover:bg-[#8e44ad] disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed text-white py-4 rounded-xl font-bold tracking-wide shadow-lg shadow-[#9b59b6]/20 transition-all enabled:hover:-translate-y-1 active:translate-y-0"
               >
                 <Download className="w-5 h-5" aria-hidden="true" />
-                PNG LETÖLTÉSE
+                {en ? "DOWNLOAD PNG" : "PNG LETÖLTÉSE"}
               </button>
               <button
                 type="button"
                 onClick={reset}
-                aria-label="Alaphelyzet"
+                aria-label={en ? "Reset" : "Alaphelyzet"}
                 className="w-16 flex items-center justify-center bg-gray-900 hover:bg-gray-800 text-gray-400 rounded-xl transition-colors"
               >
                 <RefreshCw className="w-5 h-5" aria-hidden="true" />
@@ -222,7 +226,9 @@ export default function QRGenerator() {
             </div>
 
             <p className="text-gray-600 text-[10px] font-mono text-center max-w-xs uppercase tracking-widest mt-4">
-              A generált QR kód azonnal beolvasható bármilyen eszközzel. Minden adat lokálisan kerül feldolgozásra.
+              {en
+                ? "The generated QR code can be scanned instantly with any device. All data is processed locally."
+                : "A generált QR kód azonnal beolvasható bármilyen eszközzel. Minden adat lokálisan kerül feldolgozásra."}
             </p>
           </motion.div>
         </div>

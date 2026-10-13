@@ -4,11 +4,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Clock, Zap, HardDrive, Globe, Loader2, Gauge, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { fetchPageViaServer } from "../../lib/page-fetch";
+import { fetchPageViaServer, PageFetchError, pageFetchErrorText } from "../../lib/page-fetch";
+import { useLanguage } from "../../contexts/LanguageContext";
 import { formatBytes } from "../../lib/format";
 
 interface ResourceCount {
-  label: string;
+  label: { hu: string; en: string };
   count: number;
   color: string;
 }
@@ -29,15 +30,15 @@ function countResources(html: string): ResourceCount[] {
   // Inert parse: nothing from the page is executed or downloaded.
   const doc = new DOMParser().parseFromString(html, "text/html");
   return [
-    { label: "Külső szkriptek", count: doc.querySelectorAll("script[src]").length, color: "#00a8ff" },
-    { label: "Inline szkriptek", count: doc.querySelectorAll("script:not([src])").length, color: "#9b59b6" },
-    { label: "Stíluslapok", count: doc.querySelectorAll('link[rel~="stylesheet" i]').length, color: "#00ff41" },
-    { label: "Képek", count: doc.querySelectorAll("img").length, color: "#ff2d2d" },
-    { label: "Iframe-ek", count: doc.querySelectorAll("iframe").length, color: "#f39c12" },
+    { label: { hu: "Külső szkriptek", en: "External scripts" }, count: doc.querySelectorAll("script[src]").length, color: "#00a8ff" },
+    { label: { hu: "Inline szkriptek", en: "Inline scripts" }, count: doc.querySelectorAll("script:not([src])").length, color: "#9b59b6" },
+    { label: { hu: "Stíluslapok", en: "Stylesheets" }, count: doc.querySelectorAll('link[rel~="stylesheet" i]').length, color: "#00ff41" },
+    { label: { hu: "Képek", en: "Images" }, count: doc.querySelectorAll("img").length, color: "#ff2d2d" },
+    { label: { hu: "Iframe-ek", en: "Iframes" }, count: doc.querySelectorAll("iframe").length, color: "#f39c12" },
   ];
 }
 
-function TimeCard({ title, timeMs, icon: Icon, alertThresholdMs }: { title: string; timeMs: number; icon: LucideIcon; alertThresholdMs: number }) {
+function TimeCard({ title, timeMs, icon: Icon, alertThresholdMs, locale }: { title: string; timeMs: number; icon: LucideIcon; alertThresholdMs: number; locale: string }) {
   const isAlert = timeMs > alertThresholdMs;
   const isWarning = timeMs > alertThresholdMs * 0.7;
 
@@ -51,7 +52,7 @@ function TimeCard({ title, timeMs, icon: Icon, alertThresholdMs }: { title: stri
         <div>
           <span className="text-gray-500 text-[10px] font-mono uppercase tracking-[0.2em] block mb-1">{title}</span>
           <span className={`text-2xl font-bold ${isAlert ? "text-red-500" : isWarning ? "text-yellow-500" : "text-white"}`}>
-            {Math.round(timeMs)} ms
+            {Math.round(timeMs).toLocaleString(locale)} ms
           </span>
         </div>
       </div>
@@ -60,10 +61,14 @@ function TimeCard({ title, timeMs, icon: Icon, alertThresholdMs }: { title: stri
 }
 
 export default function SpeedTest() {
+  const { language } = useLanguage();
+  const en = language === "en";
+  const locale = en ? "en-US" : "hu-HU";
   const [urlInput, setUrlInput] = useState("");
   const [isTesting, setIsTesting] = useState(false);
   const [stats, setStats] = useState<SpeedStats | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // `message` is the text supplied by the server route (already localized there); null means "use our own fallback".
+  const [error, setError] = useState<{ code: string | null } | null>(null);
 
   const runTest = async () => {
     if (!urlInput.trim() || isTesting) return;
@@ -85,7 +90,7 @@ export default function SpeedTest() {
         resources: countResources(page.html),
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Ismeretlen hiba a teszt során.");
+      setError({ code: err instanceof PageFetchError ? err.code : null });
     } finally {
       setIsTesting(false);
     }
@@ -102,7 +107,7 @@ export default function SpeedTest() {
       <div className="container-custom max-w-6xl relative z-10">
         <Link href="/tools" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#f39c12] transition-colors mb-8 group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-          <span className="font-mono text-sm uppercase tracking-widest">Vissza a Laborba</span>
+          <span className="font-mono text-sm uppercase tracking-widest">{en ? "Back to the Lab" : "Vissza a Laborba"}</span>
         </Link>
 
         <div className="grid lg:grid-cols-12 gap-8">
@@ -120,10 +125,11 @@ export default function SpeedTest() {
                 <span>Server Probe</span>
               </div>
 
-              <h1 className="text-2xl font-bold mb-2">Sebességteszt</h1>
+              <h1 className="text-2xl font-bold mb-2">{en ? "Speed Test" : "Sebességteszt"}</h1>
               <p className="text-gray-500 text-sm mb-6">
-                A HTML dokumentum valós mérése a szerverünkről: válaszidő (TTFB), teljes letöltési idő és a ténylegesen átvitt méret.
-                A képek és szkriptek betöltési ideje nem része a mérésnek.
+                {en
+                  ? "Real measurement of the HTML document from our server: response time (TTFB), total download time and the actual transferred size. The loading time of images and scripts is not part of the measurement."
+                  : "A HTML dokumentum valós mérése a szerverünkről: válaszidő (TTFB), teljes letöltési idő és a ténylegesen átvitt méret. A képek és szkriptek betöltési ideje nem része a mérésnek."}
               </p>
 
               <div className="relative mb-6">
@@ -133,8 +139,8 @@ export default function SpeedTest() {
                   inputMode="url"
                   value={urlInput}
                   onChange={(e) => setUrlInput(e.target.value)}
-                  placeholder="https://pelda.hu"
-                  aria-label="Weboldal címe"
+                  placeholder={en ? "https://example.com" : "https://pelda.hu"}
+                  aria-label={en ? "Website address" : "Weboldal címe"}
                   maxLength={2048}
                   autoComplete="url"
                   className="w-full bg-[#050508] border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white font-mono text-sm focus:border-[#f39c12]/40 focus:outline-none transition-all"
@@ -143,7 +149,7 @@ export default function SpeedTest() {
 
               {error && (
                 <div role="alert" className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-mono">
-                  {error}
+                  {error.code ? pageFetchErrorText(error.code, en) : en ? "Unknown error during the test." : "Ismeretlen hiba a teszt során."}
                 </div>
               )}
 
@@ -152,7 +158,7 @@ export default function SpeedTest() {
                 disabled={!urlInput.trim() || isTesting}
                 className="w-full bg-[#f39c12] hover:bg-[#e67e22] disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed text-black py-4 rounded-2xl font-black tracking-widest uppercase transition-all shadow-[0_10px_20px_rgba(243,156,18,0.1)] enabled:hover:-translate-y-1 flex items-center justify-center gap-2"
               >
-                {isTesting ? <><Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" /> TESZT FOLYAMATBAN...</> : "TESZT INDÍTÁSA"}
+                {isTesting ? <><Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" /> {en ? "TEST IN PROGRESS..." : "TESZT FOLYAMATBAN..."}</> : en ? "START TEST" : "TESZT INDÍTÁSA"}
               </button>
             </form>
           </motion.div>
@@ -168,19 +174,19 @@ export default function SpeedTest() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <TimeCard title="TTFB (Time To First Byte)" timeMs={stats.ttfbMs} icon={Zap} alertThresholdMs={800} />
-                    <TimeCard title="Teljes letöltés" timeMs={stats.totalMs} icon={Clock} alertThresholdMs={3000} />
+                    <TimeCard title="TTFB (Time To First Byte)" timeMs={stats.ttfbMs} icon={Zap} alertThresholdMs={800} locale={locale} />
+                    <TimeCard title={en ? "Total download" : "Teljes letöltés"} timeMs={stats.totalMs} icon={Clock} alertThresholdMs={3000} locale={locale} />
                   </div>
 
                   <div className="bg-[#0a0a0f] border border-white/5 rounded-3xl p-8">
-                    <h2 className="text-sm font-mono text-[#f39c12] uppercase tracking-[0.4em] mb-6">Erőforrások a HTML-ben</h2>
+                    <h2 className="text-sm font-mono text-[#f39c12] uppercase tracking-[0.4em] mb-6">{en ? "Resources in the HTML" : "Erőforrások a HTML-ben"}</h2>
 
                     <div className="space-y-4">
                       {stats.resources.map((resource) => (
-                        <div key={resource.label} className="relative pt-6">
+                        <div key={resource.label.hu} className="relative pt-6">
                           <div className="absolute top-0 left-0 flex justify-between w-full text-[10px] font-mono text-gray-500">
-                            <span>{resource.label}</span>
-                            <span>{resource.count} db</span>
+                            <span>{en ? resource.label.en : resource.label.hu}</span>
+                            <span>{resource.count.toLocaleString(locale)} {en ? "pcs" : "db"}</span>
                           </div>
                           <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
                             <div
@@ -194,22 +200,22 @@ export default function SpeedTest() {
 
                     <div className="mt-8 pt-8 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div>
-                        <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-1">Átvitt adat</span>
+                        <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-1">{en ? "Transferred data" : "Átvitt adat"}</span>
                         <span className="text-lg font-bold flex items-center gap-2"><HardDrive className="w-4 h-4 text-[#f39c12]" aria-hidden="true" /> {formatBytes(stats.transferBytes)}</span>
                       </div>
                       <div>
-                        <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-1">Kibontott méret</span>
+                        <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-1">{en ? "Uncompressed size" : "Kibontott méret"}</span>
                         <span className="text-lg font-bold">{formatBytes(stats.decodedBytes)}</span>
                       </div>
                       <div>
-                        <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-1">Tömörítés</span>
+                        <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-1">{en ? "Compression" : "Tömörítés"}</span>
                         <span className="text-lg font-bold">
-                          {stats.contentEncoding ? `${stats.contentEncoding}${compressionSaved !== null ? ` (−${compressionSaved}%)` : ""}` : "Nincs"}
+                          {stats.contentEncoding ? `${stats.contentEncoding}${compressionSaved !== null ? ` (−${compressionSaved}%)` : ""}` : en ? "None" : "Nincs"}
                         </span>
                       </div>
                       <div>
-                        <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-1">Átirányítások</span>
-                        <span className="text-lg font-bold">{stats.redirects}</span>
+                        <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-1">{en ? "Redirects" : "Átirányítások"}</span>
+                        <span className="text-lg font-bold">{stats.redirects.toLocaleString(locale)}</span>
                       </div>
                     </div>
                   </div>
@@ -224,9 +230,9 @@ export default function SpeedTest() {
                   <div className="w-20 h-20 bg-[#f39c12]/5 rounded-full flex items-center justify-center mb-6">
                     <Gauge className="w-10 h-10 text-[#f39c12]/50" aria-hidden="true" />
                   </div>
-                  <h2 className="text-xl font-bold text-gray-500">Készen áll a tesztre</h2>
+                  <h2 className="text-xl font-bold text-gray-500">{en ? "Ready to test" : "Készen áll a tesztre"}</h2>
                   <p className="text-gray-600 text-sm max-w-xs mt-2 uppercase font-mono tracking-widest">
-                    Add meg a weboldal címét a mérés indításához
+                    {en ? "Enter the website address to start the measurement" : "Add meg a weboldal címét a mérés indításához"}
                   </p>
                 </motion.div>
               )}

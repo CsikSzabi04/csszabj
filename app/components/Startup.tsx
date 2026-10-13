@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence, animate, useMotionValue, useTransform } from "framer-motion";
 
 const SPLASH_STORAGE_KEY = "cs-splash-seen";
-const SPLASH_DURATION_S = 1.6;
+const SPLASH_DURATION_S = 0.9;
 const LOADING_TEXTS = ["INITIALIZING", "LOADING ASSETS", "BUILDING UI", "WELCOME"];
 
 export default function Startup() {
@@ -45,7 +45,7 @@ export default function Startup() {
           aria-hidden="true"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[99999] bg-black flex flex-col items-center justify-center overflow-hidden"
         >
           {/* Animated background grid */}

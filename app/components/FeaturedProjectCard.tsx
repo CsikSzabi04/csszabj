@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Project } from "../data/portfolio";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface FeaturedProjectCardProps {
   project: Project;
@@ -10,16 +11,21 @@ interface FeaturedProjectCardProps {
   viewLabel: string;
   /** "large" is the home page showcase, "default" the projects page. */
   size?: "large" | "default";
+  /** Preload the screenshot (use for the first card when it is visible without scrolling). */
+  priority?: boolean;
 }
 
-export default function FeaturedProjectCard({ project, index, viewLabel, size = "default" }: FeaturedProjectCardProps) {
+export default function FeaturedProjectCard({ project, index, viewLabel, size = "default", priority = false }: FeaturedProjectCardProps) {
   const isEven = index % 2 === 0;
   const large = size === "large";
   const objectPosition = project.objectPosition === "left" ? "object-left" : "object-top";
+  const en = useLanguage().language === "en";
+  const category = en ? project.categoryEn ?? project.category : project.category;
+  const description = en ? project.description : project.descriptionHu ?? project.description;
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 50 }}
+      initial={priority ? false : { opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.1 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -36,7 +42,7 @@ export default function FeaturedProjectCard({ project, index, viewLabel, size = 
       <div className={`w-full md:w-1/2 p-6 sm:p-8 md:p-12 ${large ? "lg:p-20" : "lg:p-16"} flex flex-col justify-center relative z-10 ${isEven ? "md:order-1" : "md:order-2"}`}>
         <div className="mb-6">
           <div className="inline-block px-4 py-1.5 sm:px-5 sm:py-2 rounded-full border border-white/5 bg-white/[0.03] backdrop-blur-sm text-xs sm:text-sm text-zinc-300 mb-6 sm:mb-8 font-medium">
-            {project.category}
+            {category}
           </div>
 
           <h3 className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight leading-tight ${large ? "xl:text-6xl drop-shadow-lg" : ""}`}>
@@ -44,7 +50,7 @@ export default function FeaturedProjectCard({ project, index, viewLabel, size = 
           </h3>
 
           <p className={`text-zinc-400 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 max-w-xl font-light ${large ? "md:text-xl" : ""}`}>
-            {project.description}
+            {description}
           </p>
 
           <div className="flex flex-col gap-6">
@@ -57,6 +63,18 @@ export default function FeaturedProjectCard({ project, index, viewLabel, size = 
               >
                 {viewLabel}
               </a>
+              {project.downloadUrl && (
+                <a
+                  href={project.downloadUrl}
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-white bg-white/5 hover:bg-white/10 border border-white/15 transition-all duration-300"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" />
+                  </svg>
+                  {en ? "Download" : "Letöltés"}
+                </a>
+              )}
               {project.github && (
                 <a
                   href={project.github}
@@ -93,6 +111,7 @@ export default function FeaturedProjectCard({ project, index, viewLabel, size = 
             src={project.image}
             alt={project.title}
             fill
+            preload={priority}
             sizes="(min-width: 768px) 50vw, 100vw"
             className={`object-cover ${objectPosition}`}
           />
@@ -110,11 +129,32 @@ export default function FeaturedProjectCard({ project, index, viewLabel, size = 
             <div className={`absolute top-2 left-1/2 -translate-x-1/2 bg-[#18181b] rounded-full z-30 ${large ? "w-12 h-4" : "w-10 h-3"}`} />
             <Image
               src={project.mobileImage}
-              alt={`${project.title} – mobil nézet`}
+              alt={`${project.title} – ${en ? "mobile view" : "mobil nézet"}`}
               fill
               sizes={large ? "(min-width: 1024px) 208px, (min-width: 768px) 176px, 128px" : "(min-width: 1024px) 192px, (min-width: 768px) 160px, 112px"}
               className="object-cover object-top"
             />
+          </div>
+        )}
+
+        {/* Laptop mockup (desktop apps) */}
+        {project.laptopImage && (
+          <div
+            className={`absolute bottom-4 md:-bottom-8 ${isEven ? "-right-3 md:-right-6 lg:-right-8" : "-left-3 md:-left-6 lg:-left-8"} ${large ? "w-56 md:w-72 lg:w-80" : "w-48 md:w-64 lg:w-72"} z-20 drop-shadow-[0_20px_40px_rgba(0,0,0,0.55)] transform group-hover:-translate-y-4 transition-transform duration-700 ease-out`}
+          >
+            <div className="relative aspect-[16/10] rounded-t-xl bg-black border-[5px] md:border-[6px] border-b-0 border-[#18181b] overflow-hidden">
+              <div className="absolute top-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-zinc-700 z-30" aria-hidden="true" />
+              <Image
+                src={project.laptopImage}
+                alt={`${project.title} – ${en ? "in use" : "használat közben"}`}
+                fill
+                sizes={large ? "(min-width: 1024px) 320px, (min-width: 768px) 288px, 224px" : "(min-width: 1024px) 288px, (min-width: 768px) 256px, 192px"}
+                className="object-cover object-top"
+              />
+            </div>
+            <div className="relative -mx-2 md:-mx-3 h-2 md:h-3 rounded-b-xl bg-gradient-to-b from-[#34343b] to-[#1b1b20] border-t border-white/10" aria-hidden="true">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/5 h-1 rounded-b-md bg-[#0e0e11]" />
+            </div>
           </div>
         )}
       </div>

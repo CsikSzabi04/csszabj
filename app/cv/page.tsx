@@ -2,9 +2,11 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { FileDown, Download, Maximize2, X } from "lucide-react";
+import { Download, Maximize2, X } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { CV_PDF_PATH, SITE_URL } from "../lib/site";
+import { useLanguage } from "../contexts/LanguageContext";
+import { enterDelay } from "../lib/enter";
 
 // The embedded CV is designed at a fixed 1000px width (see public/cv/index.html).
 // The iframe is rendered at that native width and scaled to fill the available width, so the
@@ -17,12 +19,15 @@ const CV_MAX_HEIGHT = 12_000;
 const PDF_URL = `${SITE_URL}${CV_PDF_PATH}`;
 
 export default function CVPage() {
+  const { language, setLanguage } = useLanguage();
+  const en = language === "en";
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [scale, setScale] = useState(1);
   const [cvHeight, setCvHeight] = useState(1700); // sensible default to avoid layout jump
 
   const cvWrapRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const previewIframeRef = useRef<HTMLIFrameElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   // Scale the iframe so its 1000px design exactly fills the current wrapper width.
@@ -42,19 +47,41 @@ export default function CVPage() {
     return () => observer.disconnect();
   }, [recalcScale]);
 
+  // The embedded CV follows the site language: push it to the inline and the fullscreen frame
+  // whenever it changes or a frame (re)loads. The CV's own language button reports back below.
+  const pushLanguage = useCallback(
+    (frame: HTMLIFrameElement | null) => {
+      frame?.contentWindow?.postMessage({ type: "cv-set-lang", lang: language }, window.location.origin);
+    },
+    [language],
+  );
+
+  useEffect(() => {
+    pushLanguage(iframeRef.current);
+    pushLanguage(previewIframeRef.current);
+  }, [pushLanguage]);
+
   // The embedded CV reports its content height so the iframe can auto-size without a nested
   // scrollbar. Only messages from our own inline iframe are accepted, and the value is clamped.
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
-      if (event.origin !== window.location.origin || event.source !== iframeRef.current?.contentWindow) return;
-      const data = event.data as { type?: unknown; height?: unknown } | null;
-      if (!data || data.type !== "cv-height" || typeof data.height !== "number" || !Number.isFinite(data.height)) return;
+      if (event.origin !== window.location.origin) return;
+      const fromInline = event.source === iframeRef.current?.contentWindow;
+      const fromPreview = event.source === previewIframeRef.current?.contentWindow;
+      if (!fromInline && !fromPreview) return;
+      const data = event.data as { type?: unknown; height?: unknown; lang?: unknown } | null;
+      if (!data) return;
+      if (data.type === "cv-lang" && (data.lang === "hu" || data.lang === "en")) {
+        setLanguage(data.lang);
+        return;
+      }
+      if (!fromInline || data.type !== "cv-height" || typeof data.height !== "number" || !Number.isFinite(data.height)) return;
       setCvHeight(Math.min(Math.max(Math.round(data.height), CV_MIN_HEIGHT), CV_MAX_HEIGHT));
       recalcScale();
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, [recalcScale]);
+  }, [recalcScale, setLanguage]);
 
   // Fullscreen preview: lock page scroll, close on Escape, move focus into the dialog.
   useEffect(() => {
@@ -85,35 +112,30 @@ export default function CVPage() {
       </div>
 
       <div className="container-custom relative z-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#9b59b6]/10 border border-[#9b59b6]/20 rounded-full text-[#9b59b6] text-sm font-mono mb-6 shadow-[0_0_15px_rgba(155,89,182,0.3)] hover:shadow-[0_0_25px_rgba(155,89,182,0.5)] transition-shadow">
-            <FileDown className="w-4 h-4" aria-hidden="true" />
-            <span>Curriculum Vitae</span>
-          </div>
+        <div className="enter-up text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-            Szakmai <span className="text-[#9b59b6] drop-shadow-[0_0_15px_rgba(155,89,182,0.5)]">Önéletrajzom</span>
+            {en ? "My " : "Szakmai "}
+            <span className="text-[#9b59b6] drop-shadow-[0_0_15px_rgba(155,89,182,0.5)]">{en ? "Resume" : "Önéletrajzom"}</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Tekintsd meg az interaktív önéletrajzomat. Válts nyelvet, nagyítsd teljes
-            nézetbe, vagy mentsd el közvetlenül PDF / PNG formátumban a beépített eszköztárral.
+            {en
+              ? "Browse my interactive resume. Switch language, enlarge it to full view, or save it directly as PDF / PNG with the built-in toolbar."
+              : "Tekintsd meg az interaktív önéletrajzomat. Válts nyelvet, nagyítsd teljes nézetbe, vagy mentsd el közvetlenül PDF / PNG formátumban a beépített eszköztárral."}
           </p>
-        </motion.div>
+        </div>
 
         {/* Top row: Download + QR */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10"
-        >
+        <div style={enterDelay(0.1)} className="enter-up grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-10">
           <div className="p-6 sm:p-8 bg-[#0a0a0f] border border-white/5 rounded-3xl relative group hover:border-[#9b59b6]/30 transition-colors flex items-center gap-6">
             <div className="absolute -inset-1 bg-gradient-to-r from-[#9b59b6]/10 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative w-14 h-14 flex-shrink-0 rounded-2xl bg-[#9b59b6]/10 border border-[#9b59b6]/30 flex items-center justify-center text-[#9b59b6]">
               <Download className="w-7 h-7" aria-hidden="true" />
             </div>
             <div className="relative flex-1">
-              <h3 className="text-xl font-bold mb-1">Letöltés</h3>
-              <p className="text-gray-400 mb-4 text-sm">A legfrissebb önéletrajzom nyomtatható PDF formátumban.</p>
+              <h3 className="text-xl font-bold mb-1">{en ? "Download" : "Letöltés"}</h3>
+              <p className="text-gray-400 mb-4 text-sm">
+                {en ? "My latest resume as a printable PDF." : "A legfrissebb önéletrajzom nyomtatható PDF formátumban."}
+              </p>
               <div className="flex flex-wrap gap-2">
                 <a
                   href={CV_PDF_PATH}
@@ -129,7 +151,7 @@ export default function CVPage() {
                   data-hoverable
                   className="flex items-center justify-center gap-2 text-gray-300 hover:text-white font-medium px-4 py-2.5 rounded-xl transition-colors text-sm border border-white/10 hover:border-white/20"
                 >
-                  <Maximize2 className="w-4 h-4" aria-hidden="true" /> Teljes nézet
+                  <Maximize2 className="w-4 h-4" aria-hidden="true" /> {en ? "Full view" : "Teljes nézet"}
                 </button>
               </div>
             </div>
@@ -143,36 +165,33 @@ export default function CVPage() {
                 fgColor="#050508"
                 bgColor="#ffffff"
                 marginSize={0}
-                title="QR kód az önéletrajz PDF-hez"
+                title={en ? "QR code for the resume PDF" : "QR kód az önéletrajz PDF-hez"}
                 className="w-full h-full"
               />
             </div>
             <div className="flex-1">
-              <h3 className="text-xl font-bold mb-1">Szkenneld be</h3>
+              <h3 className="text-xl font-bold mb-1">{en ? "Scan it" : "Szkenneld be"}</h3>
               <p className="text-gray-400 text-sm">
-                Olvasd be a QR-kódot a telefonoddal, hogy azonnal megnyisd / letöltsd az önéletrajzomat.
+                {en
+                  ? "Scan the QR code with your phone to open / download my resume right away."
+                  : "Olvasd be a QR-kódot a telefonoddal, hogy azonnal megnyisd / letöltsd az önéletrajzomat."}
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Full-width live interactive CV */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="relative p-2 md:p-4 bg-[#0a0a0f]/50 border border-white/5 rounded-3xl backdrop-blur-sm"
-        >
+        <div style={enterDelay(0.2)} className="enter-up relative p-2 md:p-4 bg-[#0a0a0f]/50 border border-white/5 rounded-3xl backdrop-blur-sm">
           <div className="absolute inset-0 bg-[#9b59b6]/5 blur-3xl opacity-50 rounded-3xl pointer-events-none" />
 
           <button
             type="button"
             onClick={() => setIsPreviewOpen(true)}
             data-hoverable
-            aria-label="Nagyítás teljes nézetbe"
+            aria-label={en ? "Enlarge to full view" : "Nagyítás teljes nézetbe"}
             className="absolute top-5 right-5 md:top-7 md:right-7 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-[#9b59b6]/90 hover:bg-[#9b59b6] text-white text-sm font-medium shadow-[0_0_20px_rgba(155,89,182,0.6)] backdrop-blur-sm transition-all hover:scale-105"
           >
-            <Maximize2 className="w-4 h-4" aria-hidden="true" /> Nagyítás
+            <Maximize2 className="w-4 h-4" aria-hidden="true" /> {en ? "Zoom" : "Nagyítás"}
           </button>
 
           <div
@@ -183,9 +202,12 @@ export default function CVPage() {
             <iframe
               ref={iframeRef}
               src="/cv/index.html"
-              title="Csík Szabolcs Alex – Önéletrajz"
+              title={en ? "Csík Szabolcs Alex – Resume" : "Csík Szabolcs Alex – Önéletrajz"}
               loading="lazy"
-              onLoad={recalcScale}
+              onLoad={() => {
+                recalcScale();
+                pushLanguage(iframeRef.current);
+              }}
               style={{
                 width: CV_DESIGN_WIDTH,
                 height: cvHeight,
@@ -195,7 +217,7 @@ export default function CVPage() {
               }}
             />
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Fullscreen Preview / Lightbox */}
@@ -204,7 +226,7 @@ export default function CVPage() {
           <motion.div
             role="dialog"
             aria-modal="true"
-            aria-label="Önéletrajz teljes nézetben"
+            aria-label={en ? "Resume in full view" : "Önéletrajz teljes nézetben"}
             data-lenis-prevent
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -217,7 +239,7 @@ export default function CVPage() {
               type="button"
               onClick={() => setIsPreviewOpen(false)}
               data-hoverable
-              aria-label="Bezárás"
+              aria-label={en ? "Close" : "Bezárás"}
               className="absolute top-4 right-4 z-[110] p-2.5 bg-red-500/20 hover:bg-red-500/40 text-red-100 rounded-full transition-colors backdrop-blur-md border border-red-500/30"
             >
               <X className="w-6 h-6" aria-hidden="true" />
@@ -232,10 +254,12 @@ export default function CVPage() {
               onClick={(event) => event.stopPropagation()}
             >
               <iframe
+                ref={previewIframeRef}
                 src="/cv/index.html"
-                title="Csík Szabolcs Alex – Önéletrajz (teljes nézet)"
+                title={en ? "Csík Szabolcs Alex – Resume (full view)" : "Csík Szabolcs Alex – Önéletrajz (teljes nézet)"}
                 className="w-full h-full"
                 style={{ border: 0 }}
+                onLoad={() => pushLanguage(previewIframeRef.current)}
               />
             </motion.div>
           </motion.div>

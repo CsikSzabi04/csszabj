@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowLeftRight, CheckCircle2, XCircle, Droplet } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 interface ColorInput {
   /** Always a valid "#rrggbb" value (what the color picker and the calculation use). */
@@ -35,13 +36,16 @@ function contrastRatio(first: string, second: string): number {
 }
 
 function MetricCard({ title, passes, description }: { title: string; passes: boolean; description: string }) {
+  const { language } = useLanguage();
+  const en = language === "en";
+
   return (
     <div className="bg-[#0a0a0f] border border-white/5 p-6 rounded-2xl relative overflow-hidden group hover:border-white/10 transition-all">
       <div className={`absolute top-0 right-0 w-24 h-24 blur-3xl opacity-5 ${passes ? "bg-[#00ff41]" : "bg-red-500"}`} />
       <div className="flex items-start justify-between relative z-10">
         <div>
           <span className="text-gray-500 text-[10px] font-mono uppercase tracking-[0.2em] block mb-2">{title}</span>
-          <span className="text-xl font-bold block mb-1">{passes ? "Megfelel" : "Elbukott"}</span>
+          <span className="text-xl font-bold block mb-1">{passes ? (en ? "Pass" : "Megfelel") : en ? "Fail" : "Elbukott"}</span>
           <span className="text-xs text-gray-500">{description}</span>
         </div>
         <div className={`p-2 rounded-lg ${passes ? "bg-[#00ff41]/10 text-[#00ff41]" : "bg-red-500/10 text-red-500"}`}>
@@ -53,6 +57,8 @@ function MetricCard({ title, passes, description }: { title: string; passes: boo
 }
 
 function ColorField({ id, label, color, onChange }: { id: string; label: string; color: ColorInput; onChange: (next: ColorInput) => void }) {
+  const { language } = useLanguage();
+  const en = language === "en";
   const isInvalid = normalizeHex(color.text) === null;
 
   return (
@@ -61,7 +67,7 @@ function ColorField({ id, label, color, onChange }: { id: string; label: string;
       <div className={`flex items-center gap-4 bg-[#050508] border p-3 rounded-xl transition-colors ${isInvalid ? "border-red-500/50" : "border-white/10"}`}>
         <input
           type="color"
-          aria-label={`${label} – színválasztó`}
+          aria-label={`${label} – ${en ? "color picker" : "színválasztó"}`}
           value={color.hex}
           onChange={(e) => onChange({ hex: e.target.value, text: e.target.value.toUpperCase() })}
           className="w-12 h-12 bg-transparent border-none cursor-pointer rounded-lg"
@@ -81,12 +87,14 @@ function ColorField({ id, label, color, onChange }: { id: string; label: string;
           className="bg-transparent border-none text-white font-mono uppercase focus:outline-none flex-1 min-w-0"
         />
       </div>
-      {isInvalid && <p className="mt-2 text-xs text-red-400">Érvényes HEX színkódot adj meg (pl. #1A2B3C).</p>}
+      {isInvalid && <p className="mt-2 text-xs text-red-400">{en ? "Enter a valid HEX color code (e.g. #1A2B3C)." : "Érvényes HEX színkódot adj meg (pl. #1A2B3C)."}</p>}
     </div>
   );
 }
 
 export default function ContrastChecker() {
+  const { language } = useLanguage();
+  const en = language === "en";
   const [fg, setFg] = useState<ColorInput>({ hex: "#ffffff", text: "#FFFFFF" });
   const [bg, setBg] = useState<ColorInput>({ hex: "#000000", text: "#000000" });
 
@@ -105,10 +113,10 @@ export default function ContrastChecker() {
       <div className="container-custom max-w-5xl relative z-10">
         <Link href="/tools" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#ff2d2d] transition-colors mb-8 group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-          <span className="font-mono text-sm uppercase tracking-widest">Vissza a Laborba</span>
+          <span className="font-mono text-sm uppercase tracking-widest">{en ? "Back to the Lab" : "Vissza a Laborba"}</span>
         </Link>
 
-        <h1 className="sr-only">Színkontraszt ellenőrző</h1>
+        <h1 className="sr-only">{en ? "Color Contrast Checker" : "Színkontraszt ellenőrző"}</h1>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Controls */}
@@ -128,18 +136,18 @@ export default function ContrastChecker() {
                   className="flex items-center gap-2 text-xs font-mono uppercase text-gray-400 hover:text-white border border-white/10 hover:border-white/20 rounded-lg px-3 py-1.5 transition-colors"
                 >
                   <ArrowLeftRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  Csere
+                  {en ? "Swap" : "Csere"}
                 </button>
               </div>
 
               <div className="space-y-6">
-                <ColorField id="fg" label="Szöveg Színe (Foreground)" color={fg} onChange={setFg} />
-                <ColorField id="bg" label="Háttérszín (Background)" color={bg} onChange={setBg} />
+                <ColorField id="fg" label={en ? "Text Color (Foreground)" : "Szöveg Színe (Foreground)"} color={fg} onChange={setFg} />
+                <ColorField id="bg" label={en ? "Background Color" : "Háttérszín (Background)"} color={bg} onChange={setBg} />
               </div>
             </div>
 
             <div className="bg-[#0a0a0f] border border-white/5 p-6 rounded-2xl text-center">
-              <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-2">Kontrasztarány</span>
+              <span className="text-gray-500 text-[10px] font-mono uppercase tracking-widest block mb-2">{en ? "Contrast Ratio" : "Kontrasztarány"}</span>
               <span className={`text-4xl font-bold tabular-nums ${ratioColor}`} aria-live="polite">
                 {ratio.toFixed(2)}:1
               </span>
@@ -153,9 +161,11 @@ export default function ContrastChecker() {
               style={{ backgroundColor: bg.hex }}
             >
               <div style={{ color: fg.hex }}>
-                <h2 className="text-3xl font-bold mb-4">Nagy Szöveg (18pt+)</h2>
+                <h2 className="text-3xl font-bold mb-4">{en ? "Large Text (18pt+)" : "Nagy Szöveg (18pt+)"}</h2>
                 <p className="text-base leading-relaxed">
-                  Ez egy normál méretű (16px) bekezdés. A megfelelő színkontraszt elengedhetetlen a könnyű olvashatósághoz és az akadálymentes webes élményhez.
+                  {en
+                    ? "This is a normal-sized (16px) paragraph. Proper color contrast is essential for easy readability and an accessible web experience."
+                    : "Ez egy normál méretű (16px) bekezdés. A megfelelő színkontraszt elengedhetetlen a könnyű olvashatósághoz és az akadálymentes webes élményhez."}
                 </p>
               </div>
 
@@ -165,10 +175,10 @@ export default function ContrastChecker() {
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
-              <MetricCard title="WCAG AA Kicsi (4.5:1)" passes={passesAANormal} description="Normál szöveg esetén" />
-              <MetricCard title="WCAG AA Nagy (3.0:1)" passes={passesAALarge} description="Nagy szöveg / címsorok esetén" />
-              <MetricCard title="WCAG AAA Kicsi (7.0:1)" passes={passesAAANormal} description="Normál szöveg esetén" />
-              <MetricCard title="WCAG AAA Nagy (4.5:1)" passes={passesAAALarge} description="Nagy szöveg / címsorok esetén" />
+              <MetricCard title={en ? "WCAG AA Small (4.5:1)" : "WCAG AA Kicsi (4.5:1)"} passes={passesAANormal} description={en ? "For normal text" : "Normál szöveg esetén"} />
+              <MetricCard title={en ? "WCAG AA Large (3.0:1)" : "WCAG AA Nagy (3.0:1)"} passes={passesAALarge} description={en ? "For large text / headings" : "Nagy szöveg / címsorok esetén"} />
+              <MetricCard title={en ? "WCAG AAA Small (7.0:1)" : "WCAG AAA Kicsi (7.0:1)"} passes={passesAAANormal} description={en ? "For normal text" : "Normál szöveg esetén"} />
+              <MetricCard title={en ? "WCAG AAA Large (4.5:1)" : "WCAG AAA Nagy (4.5:1)"} passes={passesAAALarge} description={en ? "For large text / headings" : "Nagy szöveg / címsorok esetén"} />
             </div>
           </motion.div>
         </div>

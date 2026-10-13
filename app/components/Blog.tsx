@@ -36,23 +36,14 @@ export default function Blog({ posts }: { posts: BlogPostSummary[] }) {
 
       <div className="container-custom relative z-10">
         {/* Fejléc */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block px-5 py-2.5 bg-blue-900/20 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            Blog
-          </span>
+        <div className="enter-up text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             {en ? "Latest Articles" : "Legújabb Írásaim"}
           </h2>
           <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
             {en ? "Useful tips, tricks, guides, and personal stories from the web development world." : "Hasznos tippek, trükkök, útmutatók és személyes történetek a webfejlesztés világából."}
           </p>
-        </motion.div>
+        </div>
 
         {/* Kategória szűrő */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -79,7 +70,7 @@ export default function Blog({ posts }: { posts: BlogPostSummary[] }) {
             return (
               <Link href={`/blog/${post.slug}`} key={post.id} className="block h-full">
                 <motion.article
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={index < 3 ? false : { opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: Math.min(index, 5) * 0.08 }}
                   viewport={{ once: true }}

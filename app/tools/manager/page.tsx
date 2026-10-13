@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Database, Plus, Search, Trash2, Copy, Save, Check, Type, Palette, Code as CodeIcon, Server, Shield, XCircle } from "lucide-react";
+import { ArrowLeft, Plus, Search, Trash2, Copy, Save, Check, Type, Palette, Code as CodeIcon, Server, Shield, XCircle } from "lucide-react";
 import Link from "next/link";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 // --- IndexedDB Wrapper ---
 const DB_NAME = "LabAssetManagerDB";
@@ -83,7 +84,19 @@ function isAsset(value: unknown): value is Asset {
   );
 }
 
-const LOAD_ERROR = "Nem sikerült betölteni a mentett elemeket – az IndexedDB nem elérhető ebben a böngészőben.";
+const ERRORS = {
+  load: {
+    hu: "Nem sikerült betölteni a mentett elemeket – az IndexedDB nem elérhető ebben a böngészőben.",
+    en: "Could not load the saved items – IndexedDB is not available in this browser.",
+  },
+  save: {
+    hu: "A mentés nem sikerült (lehet, hogy betelt a böngésző tárhelye).",
+    en: "Saving failed (the browser storage may be full).",
+  },
+  delete: { hu: "A törlés nem sikerült.", en: "Deleting failed." },
+  copy: { hu: "A vágólapra másolás nem sikerült.", en: "Copying to the clipboard failed." },
+} as const;
+type ErrorKey = keyof typeof ERRORS;
 
 const getAllAssets = async (): Promise<Asset[]> => (await runRequest("readonly", (store) => store.getAll())).filter(isAsset);
 const getAssetsNewestFirst = async (): Promise<Asset[]> => (await getAllAssets()).sort((a, b) => b.createdAt - a.createdAt);
@@ -97,6 +110,9 @@ function TypeIcon({ type, className }: { type: AssetType; className?: string }) 
 }
 
 export default function AssetManager() {
+  const { language } = useLanguage();
+  const en = language === "en";
+
   const [assets, setAssets] = useState<Asset[]>([]);
   const [filterType, setFilterType] = useState<FilterType>("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -108,7 +124,7 @@ export default function AssetManager() {
   const [newTags, setNewTags] = useState("");
 
   const [copiedId, setCopiedId] = useState<number | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<ErrorKey | null>(null);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const refresh = useCallback(async () => {
@@ -116,7 +132,7 @@ export default function AssetManager() {
       setAssets(await getAssetsNewestFirst());
     } catch (err) {
       console.error("Failed to load assets from IndexedDB", err);
-      setError(LOAD_ERROR);
+      setError("load");
     }
   }, []);
 
@@ -128,7 +144,7 @@ export default function AssetManager() {
       })
       .catch((err) => {
         console.error("Failed to load assets from IndexedDB", err);
-        if (!cancelled) setError(LOAD_ERROR);
+        if (!cancelled) setError("load");
       });
     return () => {
       cancelled = true;
@@ -156,18 +172,18 @@ export default function AssetManager() {
       await refresh();
     } catch (err) {
       console.error("Failed to add asset", err);
-      setError("A mentés nem sikerült (lehet, hogy betelt a böngésző tárhelye).");
+      setError("save");
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("Biztosan törlöd ezt az elemet?")) return;
+    if (!window.confirm(en ? "Are you sure you want to delete this item?" : "Biztosan törlöd ezt az elemet?")) return;
     try {
       await deleteAsset(id);
       await refresh();
     } catch (err) {
       console.error("Failed to delete asset", err);
-      setError("A törlés nem sikerült.");
+      setError("delete");
     }
   };
 
@@ -179,7 +195,7 @@ export default function AssetManager() {
       copyTimer.current = setTimeout(() => setCopiedId(null), 2000);
     } catch (err) {
       console.error("Failed to copy text", err);
-      setError("A vágólapra másolás nem sikerült.");
+      setError("copy");
     }
   };
 
@@ -210,20 +226,18 @@ export default function AssetManager() {
       <div className="container-custom max-w-6xl relative z-10">
         <Link href="/tools" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#00ffff] transition-colors mb-8 group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-          <span className="font-mono text-sm uppercase tracking-widest">Vissza a Laborba</span>
+          <span className="font-mono text-sm uppercase tracking-widest">{en ? "Back to the Lab" : "Vissza a Laborba"}</span>
         </Link>
 
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="flex items-center gap-2 text-[#00ffff] mb-4 font-mono text-xs uppercase tracking-[0.3em]">
-              <Database className="w-4 h-4" aria-hidden="true" />
-              <span>Local Storage Node</span>
-            </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-4">Asset Manager</h1>
             <p className="text-gray-500 text-sm max-w-xl flex items-center gap-2">
               <Shield className="w-4 h-4 text-[#00ff41] flex-shrink-0" aria-hidden="true" />
-              Minden adat kizárólag ebben a böngészőben, az IndexedDB-ben tárolódik. Szerverre semmi nem kerül.
+              {en
+                ? "All data is stored only in this browser, in IndexedDB. Nothing is sent to a server."
+                : "Minden adat kizárólag ebben a böngészőben, az IndexedDB-ben tárolódik. Szerverre semmi nem kerül."}
             </p>
           </div>
 
@@ -234,13 +248,13 @@ export default function AssetManager() {
             className="bg-[#00ffff]/10 hover:bg-[#00ffff]/20 text-[#00ffff] border border-[#00ffff]/30 px-6 py-3 rounded-xl font-mono text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(0,255,255,0.2)]"
           >
             {isAdding ? <XCircle className="w-4 h-4" aria-hidden="true" /> : <Plus className="w-4 h-4" aria-hidden="true" />}
-            {isAdding ? "Mégse" : "Új Elem"}
+            {isAdding ? (en ? "Cancel" : "Mégse") : en ? "New Item" : "Új Elem"}
           </button>
         </div>
 
         {error && (
           <div role="alert" className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
-            {error}
+            {ERRORS[error][en ? "en" : "hu"]}
           </div>
         )}
 
@@ -261,7 +275,7 @@ export default function AssetManager() {
                   className="bg-[#0a0a0f] border border-[#00ffff]/30 rounded-3xl overflow-hidden shadow-[0_0_30px_rgba(0,255,255,0.05)]"
                 >
                   <div className="space-y-6 p-8">
-                    <div className="flex gap-4" role="radiogroup" aria-label="Elem típusa">
+                    <div className="flex gap-4" role="radiogroup" aria-label={en ? "Item type" : "Elem típusa"}>
                       {ASSET_TYPES.map((type) => (
                         <button
                           key={type}
@@ -279,8 +293,8 @@ export default function AssetManager() {
 
                     <input
                       type="text"
-                      placeholder="Név vagy Cím..."
-                      aria-label="Cím"
+                      placeholder={en ? "Name or title..." : "Név vagy Cím..."}
+                      aria-label={en ? "Title" : "Cím"}
                       value={newTitle}
                       maxLength={LIMITS.title}
                       onChange={(e) => setNewTitle(e.target.value)}
@@ -288,8 +302,8 @@ export default function AssetManager() {
                     />
 
                     <textarea
-                      placeholder="Tartalom (Prompt, Kód, Hex)..."
-                      aria-label="Tartalom"
+                      placeholder={en ? "Content (prompt, code, hex)..." : "Tartalom (Prompt, Kód, Hex)..."}
+                      aria-label={en ? "Content" : "Tartalom"}
                       value={newContent}
                       maxLength={LIMITS.content}
                       onChange={(e) => setNewContent(e.target.value)}
@@ -298,8 +312,8 @@ export default function AssetManager() {
 
                     <input
                       type="text"
-                      placeholder="Címkék (vesszővel elválasztva)..."
-                      aria-label="Címkék"
+                      placeholder={en ? "Tags (comma-separated)..." : "Címkék (vesszővel elválasztva)..."}
+                      aria-label={en ? "Tags" : "Címkék"}
                       value={newTags}
                       maxLength={LIMITS.tags * (LIMITS.tagLength + 2)}
                       onChange={(e) => setNewTags(e.target.value)}
@@ -312,7 +326,7 @@ export default function AssetManager() {
                       className="w-full bg-[#00ffff] hover:bg-[#00cccc] disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed text-black py-4 rounded-xl font-bold tracking-widest uppercase transition-all flex items-center justify-center gap-2"
                     >
                       <Save className="w-5 h-5" aria-hidden="true" />
-                      Mentés a Lokális Adatbázisba
+                      {en ? "Save to Local Database" : "Mentés a Lokális Adatbázisba"}
                     </button>
                   </div>
                 </motion.form>
@@ -325,8 +339,8 @@ export default function AssetManager() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" aria-hidden="true" />
                 <input
                   type="search"
-                  placeholder="Keresés tartalomban vagy címkékben..."
-                  aria-label="Keresés"
+                  placeholder={en ? "Search content or tags..." : "Keresés tartalomban vagy címkékben..."}
+                  aria-label={en ? "Search" : "Keresés"}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full bg-[#050508] border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:border-[#00ffff]/30 focus:outline-none transition-all"
@@ -339,10 +353,10 @@ export default function AssetManager() {
                     type="button"
                     onClick={() => setFilterType(type)}
                     aria-pressed={filterType === type}
-                    aria-label={type === "all" ? "Mind" : type}
+                    aria-label={type === "all" ? (en ? "All" : "Mind") : type}
                     className={`px-4 py-2.5 rounded-xl font-mono text-xs uppercase tracking-widest transition-all ${filterType === type ? "bg-[#00ffff]/20 text-[#00ffff] border border-[#00ffff]/30" : "bg-[#050508] text-gray-500 border border-white/10 hover:border-white/20"}`}
                   >
-                    {type === "all" ? "MIND" : <TypeIcon type={type} className="w-4 h-4" />}
+                    {type === "all" ? (en ? "ALL" : "MIND") : <TypeIcon type={type} className="w-4 h-4" />}
                   </button>
                 ))}
               </div>
@@ -358,7 +372,7 @@ export default function AssetManager() {
                     className="p-12 border border-dashed border-white/10 rounded-3xl text-center"
                   >
                     <Server className="w-12 h-12 text-gray-700 mx-auto mb-4" aria-hidden="true" />
-                    <p className="text-gray-500 font-mono text-sm uppercase tracking-widest">Nincs mentett adat</p>
+                    <p className="text-gray-500 font-mono text-sm uppercase tracking-widest">{en ? "No saved data" : "Nincs mentett adat"}</p>
                   </motion.div>
                 ) : (
                   filteredAssets.map((asset) => (
@@ -397,12 +411,12 @@ export default function AssetManager() {
                           className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white/5 hover:bg-[#00ffff]/10 text-gray-400 hover:text-[#00ffff] rounded-lg transition-colors text-xs font-mono"
                         >
                           {copiedId === asset.id ? <Check className="w-4 h-4" aria-hidden="true" /> : <Copy className="w-4 h-4" aria-hidden="true" />}
-                          {copiedId === asset.id ? "Másolva" : "Másolás"}
+                          {copiedId === asset.id ? (en ? "Copied" : "Másolva") : en ? "Copy" : "Másolás"}
                         </button>
                         <button
                           type="button"
                           onClick={() => asset.id !== undefined && handleDelete(asset.id)}
-                          aria-label={`${asset.title} törlése`}
+                          aria-label={en ? `Delete ${asset.title}` : `${asset.title} törlése`}
                           className="flex items-center justify-center p-2 bg-white/5 hover:bg-red-500/10 text-gray-400 hover:text-red-500 rounded-lg transition-colors"
                         >
                           <Trash2 className="w-4 h-4" aria-hidden="true" />
@@ -424,7 +438,7 @@ export default function AssetManager() {
 
                 <div className="space-y-4">
                   <div className="flex justify-between items-center border-b border-white/5 pb-4">
-                    <span className="text-gray-500 text-sm">Összes Elem</span>
+                    <span className="text-gray-500 text-sm">{en ? "Total Items" : "Összes Elem"}</span>
                     <span className="text-2xl font-bold">{assets.length}</span>
                   </div>
                   <div className="flex justify-between items-center border-b border-white/5 pb-4">
@@ -444,7 +458,7 @@ export default function AssetManager() {
                 <div className="mt-8 pt-6 border-t border-white/5 text-[10px] font-mono text-gray-600 space-y-2">
                   <div className="flex justify-between"><span>DB_NAME</span><span>{DB_NAME}</span></div>
                   <div className="flex justify-between"><span>STORAGE</span><span>IndexedDB</span></div>
-                  <div className="flex justify-between"><span>SCOPE</span><span>Csak ez a böngésző</span></div>
+                  <div className="flex justify-between"><span>SCOPE</span><span>{en ? "This browser only" : "Csak ez a böngésző"}</span></div>
                 </div>
               </div>
             </div>
