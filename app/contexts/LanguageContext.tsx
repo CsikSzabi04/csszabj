@@ -29,6 +29,7 @@ const dictionary: Record<Language, Record<string, string>> = {
     "nav.blog": "Blog",
     "nav.tools": "Eszközök",
     "nav.cv": "Önéletrajz",
+    "nav.files": "Fájlok",
   },
   en: {
     "nav.about": "About",
@@ -36,6 +37,7 @@ const dictionary: Record<Language, Record<string, string>> = {
     "nav.blog": "Blog",
     "nav.tools": "Tools",
     "nav.cv": "CV",
+    "nav.files": "Files",
   },
 };
 

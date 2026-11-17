@@ -14,12 +14,43 @@ const NAV_ITEMS = [
   { href: "/cv", key: "nav.cv" },
 ] as const;
 
+// Owner-only link to the private files page; shown only while signed in.
+const FILES_ITEM = { href: "/files", key: "nav.files" } as const;
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
   const pathname = usePathname();
   const { t, language } = useLanguage();
   const en = language === "en";
+  const navItems = authenticated ? [...NAV_ITEMS, FILES_ITEM] : NAV_ITEMS;
+
+  // The session cookie is httpOnly, so ask the server whether the owner is signed in.
+  // Login/logout do a full navigation (remounting the header), and also fire "auth:changed".
+  useEffect(() => {
+    let controller: AbortController | null = null;
+    const check = async () => {
+      controller?.abort();
+      const current = new AbortController();
+      controller = current;
+      try {
+        const res = await fetch("/api/auth/session", { cache: "no-store", signal: current.signal });
+        const data: unknown = res.ok ? await res.json() : null;
+        if (!current.signal.aborted) {
+          setAuthenticated(Boolean(data && (data as { authenticated?: unknown }).authenticated === true));
+        }
+      } catch {
+        if (!current.signal.aborted) setAuthenticated(false);
+      }
+    };
+    check();
+    window.addEventListener("auth:changed", check);
+    return () => {
+      window.removeEventListener("auth:changed", check);
+      controller?.abort();
+    };
+  }, []);
 
   useEffect(() => {
     let frame = 0;
@@ -55,6 +86,9 @@ export default function Header() {
     };
   }, [isMobileMenuOpen]);
 
+  // The private files app is full-screen and carries the site navigation in its own sidebar.
+  if (pathname?.startsWith("/files")) return null;
+
   const closeMenu = () => setIsMobileMenuOpen(false);
   const isActive = (href: string) => pathname === href || Boolean(pathname?.startsWith(`${href}/`));
 
@@ -75,7 +109,7 @@ export default function Header() {
           </Link>
 
           <nav className="hidden lg:flex items-center gap-8 mr-4" aria-label={en ? "Main navigation" : "Fő navigáció"}>
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               const active = isActive(item.href);
               return (
                 <Link
@@ -129,7 +163,7 @@ export default function Header() {
               transition={{ duration: 0.2, ease: "easeOut" }}
               className="absolute top-full left-0 right-0 mt-3 p-4 bg-[#0a0a0f]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.6)] flex flex-col gap-4 lg:hidden origin-top z-40"
             >
-              {NAV_ITEMS.map((item, index) => (
+              {navItems.map((item, index) => (
                 <Fragment key={item.href}>
                   {index > 0 && <div className="h-px w-full bg-white/5" />}
                   <Link

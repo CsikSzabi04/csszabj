@@ -1,10 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function LanguageToggle() {
   const { language, setLanguage } = useLanguage();
+  // The private files app is full-screen and has its own HU/EN switch (in Appearance).
+  const hidden = usePathname()?.startsWith("/files");
+  if (hidden) return null;
 
   const handleToggle = () => {
     setLanguage(language === "hu" ? "en" : "hu");

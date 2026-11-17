@@ -18,6 +18,7 @@ export default function Footer() {
     { href: "/projects", label: en ? "Projects" : "Projektek" },
     { href: "/blog", label: "Blog" },
     { href: "/tools", label: en ? "Tools" : "Eszközök" },
+    { href: "/login", label: en ? "Sign in" : "Bejelentkezés" },
   ];
 
   return (

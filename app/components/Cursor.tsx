@@ -1,16 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 const INTERACTIVE_SELECTOR = "a, button, summary, label, select, [role='button'], [data-hoverable], .hoverable";
 
 export default function Cursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  // The private files app uses its own arrow cursor (app/files/Vault.tsx).
+  const off = Boolean(usePathname()?.startsWith("/files"));
 
   useEffect(() => {
     // Only for precise pointers (mouse / trackpad); touch devices keep their native behaviour.
-    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (off || !window.matchMedia("(pointer: fine)").matches) return;
     const ring = ringRef.current;
     const dot = dotRef.current;
     if (!ring || !dot) return;
@@ -72,8 +75,9 @@ export default function Cursor() {
       cancelAnimationFrame(frame);
       root.classList.remove("has-custom-cursor");
     };
-  }, []);
+  }, [off]);
 
+  if (off) return null;
   return (
     <>
       {/* Outer ring */}

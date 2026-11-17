@@ -2,6 +2,16 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV !== "production";
 
+// The private files page uploads straight to Supabase Storage through one-time signed URLs.
+function originOf(url: string | undefined): string {
+  try {
+    return url ? new URL(url).origin : "";
+  } catch {
+    return "";
+  }
+}
+const supabaseOrigin = originOf(process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL);
+
 // Next.js bootstraps pages with inline scripts and framer-motion writes inline styles, so
 // 'unsafe-inline' is needed without a nonce setup (which would force every page to render
 // dynamically). Every other source is locked to an explicit allowlist.
@@ -11,12 +21,13 @@ const contentSecurityPolicy = [
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://cdnjs.cloudflare.com`,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com",
   "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com",
-  "img-src 'self' data: blob: https://images.unsplash.com",
-  `connect-src 'self' https://speed.cloudflare.com${isDev ? " ws: wss:" : ""}`,
+  // Supabase origin: signed URLs for the private files page (thumbnails, previews, own background).
+  `img-src 'self' data: blob: https://images.unsplash.com${supabaseOrigin ? ` ${supabaseOrigin}` : ""}`,
+  `connect-src 'self' https://speed.cloudflare.com${supabaseOrigin ? ` ${supabaseOrigin}` : ""}${isDev ? " ws: wss:" : ""}`,
   "frame-src 'self'",
   "frame-ancestors 'self'",
   "worker-src 'self' blob:",
-  "media-src 'self'",
+  `media-src 'self'${supabaseOrigin ? ` ${supabaseOrigin}` : ""}`,
   "manifest-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",
