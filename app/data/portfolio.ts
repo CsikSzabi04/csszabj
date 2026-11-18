@@ -68,24 +68,71 @@ export const skills = {
   ],
 };
 
+// Kept in sync with the CV (public/cv/index.html). `location` may be empty (then it isn't shown).
 export const experience = [
+  {
+    id: 4,
+    title: "Duális Mérnökinformatikus Hallgató",
+    titleEn: "Dual-Study Computer Engineering Student",
+    company: "Phoenix Mechano – IT részleg",
+    companyEn: "Phoenix Mechano – IT Department",
+    location: "",
+    start: "2026-09", // sort key (YYYY-MM)
+    date: "2026. szeptember – Jelenleg",
+    dateEn: "September 2026 – Present",
+    current: true,
+    description: [
+      "Duális képzés a Neumann János Egyetem GAMF Karával",
+      "A vállalati IT rendszerek megismerése és értelmezése",
+      "Active Directory felhasználó-beléptetés",
+      "Felkészülés a következő félévben induló webes JavaScript fejlesztésre",
+    ],
+    descriptionEn: [
+      "Dual training programme with Neumann János University, GAMF Faculty",
+      "Learning and understanding the company's IT systems",
+      "Active Directory user onboarding",
+      "Preparing for web JavaScript development starting next semester",
+    ],
+  },
+  {
+    id: 5,
+    title: "Videós Tananyag Készítő",
+    titleEn: "Video Tutorial Creator",
+    company: "Raunder",
+    location: "",
+    start: "2025-01", // sort key (YYYY-MM)
+    date: "2025 – 2026",
+    dateEn: "2025 – 2026",
+    current: false,
+    description: [
+      "Videós oktatóanyagok rögzítése OBS-ben",
+      "Tartalomkészítés Canva és VS Code segítségével",
+      "Főként TypeScript, JavaScript, JSX és TSX témák feldolgozása",
+      "Anyagok előkészítése, szövegírás, felvétel és leadás",
+    ],
+    descriptionEn: [
+      "Recording video tutorials in OBS",
+      "Content creation with Canva and VS Code",
+      "Covering mainly TypeScript, JavaScript, JSX and TSX topics",
+      "Preparing materials, scriptwriting, recording and delivery",
+    ],
+  },
   {
     id: 1,
     title: "Promóter",
     titleEn: "Promoter",
     company: "Candy & Haier - MediaMarkt Kecskemét",
     location: "Kecskemét",
-    date: "2025. augusztus -",
-    dateEn: "August 2025 -",
-    current: true,
+    start: "2025-08", // sort key (YYYY-MM)
+    date: "2025. augusztus – 2026. január",
+    dateEn: "August 2025 – January 2026",
+    current: false,
     description: [
-      "Promóter a MediaMarkt Kecskemét üzletében Candy és Haier háztartági gépek promóciója",
       "Termékbemutatók és értékesítési támogatás",
       "Ügyfélkommunikáció és termékismeret",
       "Piackutatási adatok gyűjtése",
     ],
     descriptionEn: [
-      "Promoter at the MediaMarkt Kecskemét store, promoting Candy and Haier home appliances",
       "Product demos and sales support",
       "Customer communication and product expertise",
       "Collecting market research data",
@@ -98,6 +145,7 @@ export const experience = [
     company: "Dr.Code Oktatási Központ",
     companyEn: "Dr.Code Education Center",
     location: "Kecskemét",
+    start: "2023-01", // sort key (YYYY-MM)
     date: "2023 - 2025",
     dateEn: "2023 - 2025",
     current: false,
@@ -120,6 +168,7 @@ export const experience = [
     titleEn: "Student Worker / Liaison",
     company: "Hirös Ízek Kft.",
     location: "Kecskemét",
+    start: "2022-06", // sort key (YYYY-MM)
     date: "2022 nyár",
     dateEn: "Summer 2022",
     current: false,
@@ -144,6 +193,7 @@ export const education = [
     school: "Neumann János Egyetem GAMF Kar",
     schoolEn: "Neumann János University, GAMF Faculty",
     location: "Kecskemét",
+    start: "2025-09", // sort key (YYYY-MM)
     date: "2025 - Jelenleg",
     dateEn: "2025 - Present",
     description: [
@@ -162,6 +212,7 @@ export const education = [
     school: "Kecskeméti SZC Kandó Kálmán Technikum",
     schoolEn: "Kandó Kálmán Technical School (Kecskemét SZC)",
     location: "Kecskemét",
+    start: "2020-09", // sort key (YYYY-MM)
     date: "2020 - 2025",
     dateEn: "2020 - 2025",
     description: [
@@ -180,6 +231,7 @@ export const education = [
     school: "Kecskeméti SZC Gróf Károlyi Sándor Technikum",
     schoolEn: "Gróf Károlyi Sándor Technical School (Kecskemét SZC)",
     location: "Kecskemét",
+    start: "2020-01", // sort key (YYYY-MM)
     date: "2020",
     dateEn: "2020",
     description: [
@@ -214,6 +266,8 @@ export interface Project {
   downloadUrl?: string;
   featured?: boolean;
   objectPosition?: string;
+  /** "development" shows an "In development / Fejlesztés alatt" badge on the card. */
+  status?: "development";
 }
 
 export const projects: Project[] = [
@@ -242,18 +296,6 @@ export const projects: Project[] = [
     image: "/lumen.png",
     laptopImage: "/lumen_in_use.png",
     featured: true,
-  },
-  {
-    id: "aurigpt",
-    title: "AuriGPT - AI Assistant",
-    category: "AI Assistant",
-    description: "A sleek conversational AI assistant powered by large language models, delivering fast and helpful responses through a clean, modern interface.",
-    descriptionHu: "Letisztult, beszélgetős MI-asszisztens nagy nyelvi modellekre építve, amely gyors és hasznos válaszokat ad egy modern, áttekinthető felületen.",
-    technologies: ["Next.js", "React", "AI API", "Tailwind CSS"],
-    live: "https://aurigpt.vercel.app/",
-    image: "/aurigpt.png",
-    mobileImage: "/aurigpt_mobile.png",
-    featured: false,
   },
   {
     id: "debater",
@@ -296,6 +338,34 @@ export const projects: Project[] = [
     mobileImage: "/dbdmobile.png",
     featured: true,
   },
+  // The "other projects" grid shows the non-featured entries in this order (2 per row).
+  {
+    id: "gamehub",
+    title: "Game Data Hub",
+    category: "Webalkalmazás",
+    categoryEn: "Web Application",
+    description: "Video game data management platform with comprehensive game database, user profiles, and interactive features.",
+    descriptionHu: "Videojáték-adatkezelő platform átfogó játékadatbázissal, felhasználói profilokkal és interaktív funkciókkal.",
+    technologies: ["React", "API", "Tailwind CSS"],
+    live: "https://gamedatahub.netlify.app/",
+    github: "https://github.com/csikszabi04/gamehub",
+    image: "/gamehubpc.png",
+    mobileImage: "/gamehubmobile.png",
+    featured: false,
+  },
+  {
+    id: "bankreminder",
+    title: "Bank Reminder - Bills & Subscriptions",
+    category: "Pénzügyi alkalmazás (PWA)",
+    categoryEn: "Finance App (PWA)",
+    description: "Installable PWA for bill and subscription reminders with spending tracking, monthly category breakdowns, budgets and money-saving tips. Bank sync is optional and read-only — it never initiates a payment.",
+    descriptionHu: "Telepíthető PWA számla- és előfizetés-emlékeztetőkkel, költségkövetéssel, havi kategóriánkénti kimutatással, költségkeretekkel és spórolási tippekkel. A banki szinkron opcionális és csak olvas — fizetést soha nem indít.",
+    technologies: ["Next.js", "Supabase", "PWA", "Tailwind CSS"],
+    live: "https://bankreminder.vercel.app/",
+    github: "https://github.com/CsikSzabi04/bank_reminder",
+    image: "/bankreminder.png",
+    featured: false,
+  },
   {
     id: "forarch",
     title: "ForArch - Forecast Archaeology Engine",
@@ -311,18 +381,17 @@ export const projects: Project[] = [
     objectPosition: "left", // Custom position request
   },
   {
-    id: "gamehub",
-    title: "Game Data Hub",
-    category: "Webalkalmazás",
-    categoryEn: "Web Application",
-    description: "Video game data management platform with comprehensive game database, user profiles, and interactive features.",
-    descriptionHu: "Videojáték-adatkezelő platform átfogó játékadatbázissal, felhasználói profilokkal és interaktív funkciókkal.",
-    technologies: ["React", "API", "Tailwind CSS"],
-    live: "https://gamedatahub.netlify.app/",
-    github: "https://github.com/csikszabi04/gamehub",
-    image: "/gamehubpc.png",
-    mobileImage: "/gamehubmobile.png",
+    id: "aurigpt",
+    title: "AuriGPT - AI Assistant",
+    category: "AI Assistant",
+    description: "A sleek conversational AI assistant powered by large language models, delivering fast and helpful responses through a clean, modern interface.",
+    descriptionHu: "Letisztult, beszélgetős MI-asszisztens nagy nyelvi modellekre építve, amely gyors és hasznos válaszokat ad egy modern, áttekinthető felületen.",
+    technologies: ["Next.js", "React", "AI API", "Tailwind CSS"],
+    live: "https://aurigpt.vercel.app/",
+    image: "/aurigpt.png",
+    mobileImage: "/aurigpt_mobile.png",
     featured: false,
+    status: "development",
   },
 ];
 

@@ -10,7 +10,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 const NAV_ITEMS = [
   { href: "/about", key: "nav.about" },
   { href: "/projects", key: "nav.projects" },
-  { href: "/blog", key: "nav.blog" },
+  { href: "/creative", key: "nav.creative" },
   { href: "/cv", key: "nav.cv" },
 ] as const;
 
@@ -19,6 +19,7 @@ const FILES_ITEM = { href: "/files", key: "nav.files" } as const;
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const pathname = usePathname();
@@ -52,11 +53,15 @@ export default function Header() {
     };
   }, []);
 
+  // Visible only at the top of the page: it slides away once you scroll down and comes back
+  // only when you are back at the top (scrolling up a little does not bring it back).
   useEffect(() => {
     let frame = 0;
     const update = () => {
       frame = 0;
-      setScrolled(window.scrollY > 20);
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      setHidden(y > 8);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -93,7 +98,12 @@ export default function Header() {
   const isActive = (href: string) => pathname === href || Boolean(pathname?.startsWith(`${href}/`));
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4 pointer-events-none">
+    <div
+      className={`fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4 pointer-events-none transition-transform duration-300 ease-out will-change-transform ${
+        // Keyboard focus (Tab) keeps it visible; a mouse click on a link must not (:focus-visible, not :focus-within).
+        hidden && !isMobileMenuOpen ? "-translate-y-[140%] has-[:focus-visible]:translate-y-0" : "translate-y-0"
+      }`}
+    >
       <header
         className={`pointer-events-auto transition-all duration-300 w-full max-w-[1100px] relative ${scrolled ? "mt-0" : "mt-2"}`}
       >
@@ -130,10 +140,11 @@ export default function Header() {
           {/* CTA Button & Mobile Toggle */}
           <div className="flex items-center gap-3">
             <Link
-              href="/tools"
+              href="/overview"
+              aria-current={isActive("/overview") ? "page" : undefined}
               className="hidden sm:flex bg-gradient-to-r from-[rgba(155,89,182,0.5)] via-[rgba(142,68,173,0.5)] to-[rgba(108,92,231,0.5)] text-white px-5 md:px-6 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-semibold tracking-wide transition-all duration-300 shadow-[0_0_15px_rgba(155,89,182,0.4)] hover:shadow-[0_0_25px_rgba(155,89,182,0.6)] hover:-translate-y-0.5 whitespace-nowrap"
             >
-              {t("nav.tools")}
+              {t("nav.overview")}
             </Link>
 
             <button
@@ -179,11 +190,12 @@ export default function Header() {
 
               {/* Mobile CTA (only on very small screens where the main CTA is hidden) */}
               <Link
-                href="/tools"
+                href="/overview"
                 onClick={closeMenu}
+                aria-current={isActive("/overview") ? "page" : undefined}
                 className="mt-2 text-center sm:hidden w-full bg-gradient-to-r from-[#9b59b6] to-[#8e44ad] text-white px-6 py-3 rounded-xl text-sm font-bold tracking-wide shadow-[0_0_15px_rgba(155,89,182,0.4)]"
               >
-                {t("nav.tools")}
+                {t("nav.overview")}
               </Link>
             </motion.nav>
           )}

@@ -756,6 +756,25 @@
                 align-items: flex-start;
             }
         }
+
+        /* Site cursor (copy of app/globals.css: this iframe is a separate document). Placed last so
+           it overrides the cursor: pointer rules above. */
+        :root {
+            --cur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 32 32'%3E%3Cpath d='M12 10L26.5 19.2L19.4 21L16.6 28.4Z' fill='%23fff' stroke='%23000' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") 16 13, default;
+            --cur-click: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52' viewBox='0 0 32 32'%3E%3Cpath d='M12 10L26.5 19.2L19.4 21L16.6 28.4Z' fill='%23fff' stroke='%23000' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") 20 16, pointer;
+        }
+
+        html {
+            cursor: var(--cur);
+        }
+
+        :is(a[href], button:not(:disabled), summary, label, select, [role="button"], .context-menu-item) {
+            cursor: var(--cur-click);
+        }
+
+        :is(input:not([type="range"], [type="file"], [type="checkbox"], [type="radio"], [type="submit"], [type="button"]), textarea, [contenteditable="true"]) {
+            cursor: text;
+        }
     </style>
 </head>
 
@@ -1294,6 +1313,10 @@
     <!-- ===== Embed helper: report height to parent so the iframe can auto-size ===== -->
     <script>
         (function () {
+            // Inline embed on /cv (?embed=fit): the parent sizes the iframe to the full content,
+            // so no scrollbars at all (the fullscreen preview keeps its own scrolling).
+            if (/[?&]embed=fit(&|$)/.test(location.search)) document.documentElement.style.overflow = 'hidden';
+
             function postHeight() {
                 var card = document.getElementById('resume-content');
                 var h = Math.max(
@@ -1312,30 +1335,6 @@
             setTimeout(postHeight, 300);
             setTimeout(postHeight, 1200);
             document.addEventListener('click', function () { setTimeout(postHeight, 50); });
-
-            // ----- Forward mouse movement to the parent so its custom cursor keeps
-            // tracking over this iframe (same-origin only). Coordinates are mapped
-            // from the iframe's internal viewport into the parent viewport, taking
-            // the iframe's on-screen scale into account. -----
-            function forwardMouse(e) {
-                var fe;
-                try { fe = window.frameElement; } catch (err) { return; }
-                if (!fe) return; // standalone (not embedded) — nothing to forward
-                var rect = fe.getBoundingClientRect();
-                var sx = fe.offsetWidth ? rect.width / fe.offsetWidth : 1;
-                var sy = fe.offsetHeight ? rect.height / fe.offsetHeight : 1;
-                var px = rect.left + e.clientX * sx;
-                var py = rect.top + e.clientY * sy;
-                try {
-                    var P = parent.MouseEvent || MouseEvent;
-                    // Dispatch on parent.document with bubbles:true so it reaches both
-                    // document- and window-level listeners in the parent.
-                    parent.document.dispatchEvent(new P('mousemove', {
-                        clientX: px, clientY: py, bubbles: true
-                    }));
-                } catch (err) { /* cross-origin or detached — ignore */ }
-            }
-            window.addEventListener('mousemove', forwardMouse);
 
             // ----- Language sync: follow the site's language switch (same origin only). -----
             function applyLang(lang) {

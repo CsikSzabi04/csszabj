@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { personalInfo } from "../data/portfolio";
 import { useLanguage } from "../contexts/LanguageContext";
+import { signOut, useAuthenticated } from "../lib/use-auth";
 
 const TECHNOLOGIES = ["React", "Next.js", "Node.js", "TypeScript", "Tailwind CSS", "MongoDB", "PostgreSQL", "Git"];
 
@@ -11,15 +13,23 @@ export default function Footer() {
   const en = language === "en";
   const currentYear = new Date().getFullYear();
   const phoneHref = `tel:${personalInfo.phone.replace(/\s/g, "")}`;
+  const authenticated = useAuthenticated();
+  const router = useRouter();
 
   const navLinks = [
     { href: "/", label: en ? "Home" : "Kezdőlap" },
     { href: "/about", label: en ? "About Me" : "Rólam" },
     { href: "/projects", label: en ? "Projects" : "Projektek" },
-    { href: "/blog", label: "Blog" },
-    { href: "/tools", label: en ? "Tools" : "Eszközök" },
-    { href: "/login", label: en ? "Sign in" : "Bejelentkezés" },
+    { href: "/creative", label: en ? "Creative" : "Alkotások" },
+    { href: "/overview", label: en ? "Overview" : "Áttekintés" },
   ];
+  const navItemClass = "text-zinc-500 hover:text-blue-400 transition-colors flex items-center gap-2 group";
+  const navDot = <span className="w-1.5 h-1.5 bg-zinc-700 rounded-full group-hover:bg-blue-500 transition-colors" />;
+
+  async function onSignOut() {
+    await signOut();
+    router.refresh();
+  }
 
   return (
     <footer className="bg-[#050505] pt-20">
@@ -75,12 +85,25 @@ export default function Footer() {
             <ul className="space-y-4">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-zinc-500 hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 bg-zinc-700 rounded-full group-hover:bg-blue-500 transition-colors" />
+                  <Link href={link.href} className={navItemClass}>
+                    {navDot}
                     {link.label}
                   </Link>
                 </li>
               ))}
+              <li>
+                {authenticated ? (
+                  <button type="button" onClick={() => void onSignOut()} className={navItemClass}>
+                    {navDot}
+                    {en ? "Sign out" : "Kijelentkezés"}
+                  </button>
+                ) : (
+                  <Link href="/login" className={navItemClass}>
+                    {navDot}
+                    {en ? "Sign in" : "Bejelentkezés"}
+                  </Link>
+                )}
+              </li>
             </ul>
           </div>
 

@@ -59,7 +59,7 @@ export default function FeaturedProjectCard({ project, index, viewLabel, size = 
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`px-8 py-3.5 rounded-full font-semibold text-white transition-all duration-300 ${isEven ? "bg-purple-600 hover:bg-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.3)]" : "bg-blue-600 hover:bg-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.3)]"}`}
+                className="px-8 py-3.5 rounded-full font-semibold text-zinc-900 bg-gradient-to-r from-white via-zinc-100 to-zinc-300 hover:from-zinc-50 hover:to-zinc-200 transition-colors duration-300"
               >
                 {viewLabel}
               </a>

@@ -23,8 +23,9 @@ const contentSecurityPolicy = [
   "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com",
   // Supabase origin: signed URLs for the private files page (thumbnails, previews, own background).
   `img-src 'self' data: blob: https://images.unsplash.com${supabaseOrigin ? ` ${supabaseOrigin}` : ""}`,
-  `connect-src 'self' https://speed.cloudflare.com${supabaseOrigin ? ` ${supabaseOrigin}` : ""}${isDev ? " ws: wss:" : ""}`,
-  "frame-src 'self'",
+  `connect-src 'self'${supabaseOrigin ? ` ${supabaseOrigin}` : ""}${isDev ? " ws: wss:" : ""}`,
+  // youtube-nocookie: the old video edits on /creative (loaded only after a click).
+  "frame-src 'self' https://www.youtube-nocookie.com",
   "frame-ancestors 'self'",
   "worker-src 'self' blob:",
   `media-src 'self'${supabaseOrigin ? ` ${supabaseOrigin}` : ""}`,
@@ -67,6 +68,15 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  // Removed sections; keep old (indexed) links working: the blog became Creative, the tools became Overview.
+  async redirects() {
+    return [
+      { source: "/blog", destination: "/creative", permanent: true },
+      { source: "/blog/:slug*", destination: "/creative", permanent: true },
+      { source: "/tools", destination: "/overview", permanent: true },
+      { source: "/tools/:path*", destination: "/overview", permanent: true },
+    ];
   },
 };
 

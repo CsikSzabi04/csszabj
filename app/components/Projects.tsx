@@ -24,7 +24,8 @@ export default function Projects() {
     <section className="section relative py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className="absolute inset-0 opacity-[0.02]" style={{
+        {/* Masked so the pattern fades in/out instead of starting at a hard line under the header */}
+        <div className="absolute inset-0 opacity-[0.02] [mask-image:linear-gradient(to_bottom,transparent,black_20rem,black_calc(100%-16rem),transparent)]" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2h-2v20h-2v2h-2v20h-2v2h-2v20h-2v2h-2v20h-2v2h-2v20h-2v2h-2v20H20v-2.5zM0 20h20v2H0v-2zm0 4h20v2H0v-2zm0 4h20v2H0v-2z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
         }} />
 
@@ -107,6 +108,12 @@ export default function Projects() {
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      {project.status === "development" && (
+                        <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-amber-300/30 bg-black/65 px-3 py-1 text-xs font-semibold text-amber-200 backdrop-blur-md">
+                          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-300" aria-hidden="true" />
+                          {en ? "In development" : "Fejlesztés alatt"}
+                        </span>
+                      )}
                     </div>
 
                     <h4 className="text-2xl font-bold text-white mb-3">{project.title}</h4>

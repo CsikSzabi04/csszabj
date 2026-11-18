@@ -31,8 +31,10 @@ export default function BestProjects() {
   const { language } = useLanguage();
   const en = language === "en";
 
+  // The darkening fades in instead of starting at the section edge: a flat bg-black/50 cut a
+  // hard horizontal line across the starfield right below the hero.
   return (
-    <section className="section relative py-32 overflow-hidden bg-black/50">
+    <section className="section relative py-32 overflow-hidden bg-[linear-gradient(to_bottom,transparent,rgba(0,0,0,0.2)_12rem,rgba(0,0,0,0.5)_28rem)]">
       <div className="container-custom relative z-10">
         {/* Section Header */}
         <motion.div

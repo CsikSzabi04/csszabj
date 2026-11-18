@@ -11,7 +11,9 @@ import { enterDelay } from "../lib/enter";
 // The embedded CV is designed at a fixed 1000px width (see public/cv/index.html).
 // The iframe is rendered at that native width and scaled to fill the available width, so the
 // in-document PDF/PNG export always captures the full-quality desktop layout.
-const CV_DESIGN_WIDTH = 1000;
+// 1000px card + 2 × 16px body padding; at exactly 1000px the card overflowed and the iframe
+// showed scrollbars on both axes.
+const CV_DESIGN_WIDTH = 1032;
 const CV_MAX_SCALE = 1.6; // allow upscaling so the CV fills wide screens
 const CV_MIN_HEIGHT = 600;
 const CV_MAX_HEIGHT = 12_000;
@@ -100,22 +102,13 @@ export default function CVPage() {
   }, [isPreviewOpen]);
 
   return (
-    <div className="min-h-screen bg-[#050508] text-white pt-32 pb-20 px-4 relative overflow-hidden">
-      {/* Background HUD Elements */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(155,89,182,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(155,89,182,0.05)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
-        <motion.div
-          className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#9b59b6]/30 to-transparent"
-          animate={{ y: ["0vh", "100vh"] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
-
+    // Transparent on purpose: the site-wide star field shows through (no grid / scan line).
+    <div className="min-h-screen text-white pt-32 pb-20 px-4 relative overflow-hidden">
       <div className="container-custom relative z-10">
         <div className="enter-up text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
             {en ? "My " : "Szakmai "}
-            <span className="text-[#9b59b6] drop-shadow-[0_0_15px_rgba(155,89,182,0.5)]">{en ? "Resume" : "Önéletrajzom"}</span>
+            <span className="text-[#9b59b6]">{en ? "Resume" : "Önéletrajzom"}</span>
           </h1>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
             {en
@@ -201,7 +194,8 @@ export default function CVPage() {
           >
             <iframe
               ref={iframeRef}
-              src="/cv/index.html"
+              src="/cv/index.html?embed=fit"
+              scrolling="no"
               title={en ? "Csík Szabolcs Alex – Resume" : "Csík Szabolcs Alex – Önéletrajz"}
               loading="lazy"
               onLoad={() => {

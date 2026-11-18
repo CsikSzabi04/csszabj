@@ -53,24 +53,7 @@ body {
   padding: 0;
 }
 
-/* Star Wars space effect with lightsaber glows */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image:
-    radial-gradient(circle at 20% 80%, rgba(0, 168, 255, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(255, 45, 45, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 40% 60%, rgba(155, 89, 182, 0.06) 0%, transparent 30%),
-    radial-gradient(circle at 60% 30%, rgba(0, 255, 65, 0.05) 0%, transparent 30%);
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Star field effect */
+/* Star field effect (the coloured background blobs were removed on purpose: plain black + stars) */
 body::after {
   content: '';
   position: fixed;
@@ -131,14 +114,29 @@ html {
   background: #050505;
 }
 
-/* Custom cursor – the Cursor component adds this class only for precise pointers (mouse/trackpad) */
-.has-custom-cursor,
-.has-custom-cursor * {
-  cursor: none !important;
+/* Site-wide cursor: the triangle arrow (no tail) first made for the Files app. Hotspots scale with
+   the size (16,13 @44px → 20,16 @52px). app/files/Vault.tsx reuses these variables, and
+   public/cv/index.html carries a copy because the iframe is a separate document.
+   These rules are deliberately unlayered so they beat Tailwind's cursor-pointer/-default utilities. */
+:root {
+  --cur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 32 32'%3E%3Cpath d='M12 10L26.5 19.2L19.4 21L16.6 28.4Z' fill='%23fff' stroke='%23000' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") 16 13, default;
+  --cur-click: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52' viewBox='0 0 32 32'%3E%3Cpath d='M12 10L26.5 19.2L19.4 21L16.6 28.4Z' fill='%23fff' stroke='%23000' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") 20 16, pointer;
 }
 
-.has-custom-cursor :is(input, textarea, select, [contenteditable="true"]) {
-  cursor: text !important;
+html,
+.cursor-default {
+  cursor: var(--cur);
+}
+
+:is(a[href], button:not(:disabled), summary, label, select, [role="button"], [role="menuitem"], [role="switch"],
+  input:is([type="range"], [type="file"], [type="checkbox"], [type="radio"], [type="submit"], [type="button"]),
+  [data-hoverable], .hoverable, .cursor-pointer) {
+  cursor: var(--cur-click);
+}
+
+:is(input:not([type="range"], [type="file"], [type="checkbox"], [type="radio"], [type="submit"], [type="button"]),
+  textarea, [contenteditable="true"]) {
+  cursor: text;
 }
 
 /* Intro splash: hidden before first paint when it was already shown in this session */
@@ -406,6 +404,20 @@ h1, h2, h3, h4, h5, h6 {
 .enter-scale {
   animation: enter-scale 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: var(--enter-delay, 0s);
+}
+
+/* Route transition (app/template.tsx): every page fades in. Opacity only on purpose: a transform
+   on this wrapper would become the containing block of position:fixed children (the /files app,
+   modals) while the animation runs. */
+@keyframes page-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* backwards, not both: an opacity animation that stays "in effect" (fill forwards) keeps the wrapper a
+   stacking context forever, which trapped the /files app's z-40 under the tech marquee's z-20. */
+.page-fade {
+  animation: page-fade 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 /* Respect the OS "reduce motion" setting */

@@ -23,7 +23,7 @@ import {
   LogOut,
   Newspaper,
   User,
-  Wrench,
+  Radar,
   Check,
   ChevronRight,
   CircleAlert,
@@ -81,12 +81,9 @@ type Dialog =
   | { t: "deletePartition"; part: Partition };
 type MenuState = { item: Item | null; x: number; y: number; sheet: boolean; fromButton: boolean }; // item null = background menu
 
-// ClimarkAI's arrow cursor (triangle, no tail); hotspots scale with the size (12,10 @32 → 16,13 @44 → 20,16 @52).
-const CURSOR_PATH =
-  "%3Cpath d='M12 10L26.5 19.2L19.4 21L16.6 28.4Z' fill='%23fff' stroke='%23000' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E";
-const cursorSvg = (px: number) => `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='${px}' height='${px}' viewBox='0 0 32 32'%3E${CURSOR_PATH}")`;
+// The arrow cursor itself (--cur / --cur-click) is defined site-wide in app/globals.css; the vault
+// only pins it on every element so nested widgets can't fall back to native cursors.
 const CURSOR_CSS = `
-.vault{--cur:${cursorSvg(44)} 16 13,default;--cur-click:${cursorSvg(52)} 20 16,pointer}
 .vault,.vault *{cursor:var(--cur)}
 .vault :is(button:not(:disabled),a[href],select,label,summary,[role=menuitem],[role=listitem],[role=switch],input[type=range],input[type=file]){cursor:var(--cur-click)}
 .vault :is(input:not([type=range]):not([type=file]),textarea){cursor:text}
@@ -96,9 +93,9 @@ const CURSOR_CSS = `
 const SITE_NAV = [
   { href: "/about", key: "nav.about", icon: User },
   { href: "/projects", key: "nav.projects", icon: Briefcase },
-  { href: "/blog", key: "nav.blog", icon: Newspaper },
+  { href: "/creative", key: "nav.creative", icon: Newspaper },
   { href: "/cv", key: "nav.cv", icon: IdCard },
-  { href: "/tools", key: "nav.tools", icon: Wrench },
+  { href: "/overview", key: "nav.overview", icon: Radar },
 ] as const;
 
 // ---------- small helpers ----------
