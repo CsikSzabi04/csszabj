@@ -28,8 +28,16 @@ export const TIKTOK_VIDEOS = [
   { en: "The most skilled characters", hu: "A legképzettebb karakterek" },
 ];
 
-export const WATTPAD_STORY = {
-  title: "The Consultant",
-  url: "https://www.wattpad.com/story/386494029-the-consultant",
-  cover: "/creative/the-consultant.jpg",
-};
+// Published Wattpad stories (public /story/ URLs; covers downloaded from Wattpad into public/creative).
+export const WATTPAD_STORIES = [
+  {
+    title: "Bloodline: Crimson Pages",
+    url: "https://www.wattpad.com/story/398032755-bloodline-crimson-pages",
+    cover: "/creative/bloodline-crimson-pages.jpg",
+  },
+  {
+    title: "The Consultant",
+    url: "https://www.wattpad.com/story/386494029-the-consultant",
+    cover: "/creative/the-consultant.jpg",
+  },
+];

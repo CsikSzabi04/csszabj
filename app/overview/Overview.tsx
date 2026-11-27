@@ -6,15 +6,16 @@ import { useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Shuffle } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { projects } from "../data/portfolio";
-import { TIKTOK_PROFILE, TIKTOK_VIDEOS, WATTPAD_PROFILE, WATTPAD_STORY, YOUTUBE_VIDEOS } from "../data/media";
+import { TIKTOK_PROFILE, TIKTOK_VIDEOS, WATTPAD_PROFILE, WATTPAD_STORIES, YOUTUBE_VIDEOS } from "../data/media";
 import { enterDelay } from "../lib/enter";
 import styles from "./overview.module.css";
 
 type Video = (typeof YOUTUBE_VIDEOS)[number];
 type TikTok = (typeof TIKTOK_VIDEOS)[number];
+type Story = (typeof WATTPAD_STORIES)[number];
 
 const RING1_COUNT = 4; // YouTube thumbnails
-const RING2_YT = 1; // + one more YouTube video, three TikToks and the Wattpad story on the outer ring
+const RING2_YT = 1; // + one more YouTube video, three TikToks and every Wattpad story on the outer ring
 const TIKTOK_COUNT = 3;
 
 const PHRASES = [
@@ -182,18 +183,18 @@ function TikTokItem({ label }: { label: string }) {
   );
 }
 
-function WattpadItem({ label }: { label: string }) {
+function WattpadItem({ story }: { story: Story }) {
   return (
     <a
-      href={WATTPAD_STORY.url}
+      href={story.url}
       target="_blank"
       rel="noopener noreferrer"
       data-hoverable
-      title={label}
-      aria-label={`Wattpad: ${label}`}
+      title={story.title}
+      aria-label={`Wattpad: ${story.title}`}
       className={`${orbitLink} ${styles.wattpad} relative aspect-[2/3] overflow-hidden rounded-md border border-[#ff6122]/60 bg-black shadow-[0_8px_24px_rgba(0,0,0,0.55)]`}
     >
-      <Image src={WATTPAD_STORY.cover} alt="" fill sizes="74px" className="object-cover" />
+      <Image src={story.cover} alt="" fill sizes="74px" className="object-cover" />
       <span className="absolute -right-0 top-0 flex h-4 w-4 items-center justify-center rounded-bl-md bg-[#ff6122] text-[9px] font-black text-white sm:h-5 sm:w-5 sm:text-[11px]">
         W
       </span>
@@ -232,13 +233,11 @@ export default function Overview() {
 
   const tiktokLabel = (video: TikTok) => (en ? video.en : video.hu);
   const ring1 = picks.yt.slice(0, RING1_COUNT).map((video) => <YouTubeItem key={video.id} video={video} />);
-  const ring2: ReactNode[] = [
-    ...picks.tiktok.map((video) => <TikTokItem key={video.en} label={tiktokLabel(video)} />),
-    <WattpadItem key="wattpad" label={WATTPAD_STORY.title} />,
-    ...picks.yt.slice(RING1_COUNT).map((video) => <YouTubeItem key={video.id} video={video} />),
-  ];
-  // Interleave: TikTok, YouTube, TikTok, Wattpad, TikTok … so the same kinds don't bunch up.
-  const ring2Order = [ring2[0], ring2[4], ring2[1], ring2[3], ring2[2]].filter(Boolean);
+  const tiktoks = picks.tiktok.map((video) => <TikTokItem key={video.en} label={tiktokLabel(video)} />);
+  const stories = WATTPAD_STORIES.map((story) => <WattpadItem key={story.url} story={story} />);
+  const extraYt = picks.yt.slice(RING1_COUNT).map((video) => <YouTubeItem key={video.id} video={video} />);
+  // Interleaved (TikTok, Wattpad, TikTok, YouTube, TikTok, Wattpad) so the same kinds don't bunch up.
+  const ring2Order: ReactNode[] = [tiktoks[0], stories[0], tiktoks[1], extraYt[0], tiktoks[2], stories[1]].filter(Boolean);
 
   return (
     // Transparent on purpose: the site-wide star field (body::after in globals.css) shows through.
@@ -258,7 +257,7 @@ export default function Overview() {
             </span>
             <span className="text-emerald-400">✓</span>
             <span>
-              {projects.length} {en ? "projects" : "projekt"} · {YOUTUBE_VIDEOS.length} YouTube · {TIKTOK_VIDEOS.length} TikTok · 1 Wattpad
+              {projects.length} {en ? "projects" : "projekt"} · {YOUTUBE_VIDEOS.length} YouTube · {TIKTOK_VIDEOS.length} TikTok · {WATTPAD_STORIES.length} Wattpad
             </span>
             <button
               type="button"

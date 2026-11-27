@@ -8,6 +8,12 @@ interface TypeWriterProps {
   pause?: number;
   className?: string;
   cursorClassName?: string;
+  /**
+   * Reserve the space of the largest text up front, so the layout below never moves while typing
+   * (e.g. a two-line "Csík / Szabolcs" next to a one-line "Tester"). Every text is laid out
+   * invisibly in the same grid cell; the cell takes the size of the biggest one at the current width.
+   */
+  reserveSpace?: boolean;
 }
 
 interface TypingState {
@@ -17,7 +23,14 @@ interface TypingState {
 }
 
 /** Types each text, pauses, deletes it and moves on to the next one – forever. */
-export default function TypeWriter({ texts, speed = 80, pause = 2500, className = "", cursorClassName = "" }: TypeWriterProps) {
+export default function TypeWriter({
+  texts,
+  speed = 80,
+  pause = 2500,
+  className = "",
+  cursorClassName = "",
+  reserveSpace = false,
+}: TypeWriterProps) {
   // Start with the first text fully written, so the server-rendered HTML is meaningful.
   const [state, setState] = useState<TypingState>(() => ({ index: 0, length: texts[0]?.length ?? 0, deleting: false }));
 
@@ -48,10 +61,28 @@ export default function TypeWriter({ texts, speed = 80, pause = 2500, className 
     return () => clearTimeout(timer);
   }, [state, current, length, count, speed, pause]);
 
+  const cursor = <span className={`animate-pulse ${cursorClassName}`}>|</span>;
+
+  if (!reserveSpace) {
+    return (
+      <span className={className} aria-hidden="true">
+        {current.slice(0, length)}
+        {cursor}
+      </span>
+    );
+  }
+
   return (
-    <span className={className} aria-hidden="true">
-      {current.slice(0, length)}
-      <span className={`animate-pulse ${cursorClassName}`}>|</span>
+    <span className={`grid ${className}`} aria-hidden="true">
+      {texts.map((text) => (
+        <span key={text} className="invisible [grid-area:1/1]">
+          {text}|
+        </span>
+      ))}
+      <span className="[grid-area:1/1]">
+        {current.slice(0, length)}
+        {cursor}
+      </span>
     </span>
   );
 }

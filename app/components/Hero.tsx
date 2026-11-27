@@ -42,6 +42,7 @@ export default function Hero() {
                 <TypeWriter
                   texts={typewriterTexts}
                   speed={100}
+                  reserveSpace
                   className="text-white"
                   cursorClassName="text-[#9b59b6]"
                 />
